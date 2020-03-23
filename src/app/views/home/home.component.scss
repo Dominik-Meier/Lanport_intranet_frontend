@@ -1,0 +1,25 @@
+.nav-bar {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 20vw;
+  height: 100vh;
+}
+
+.nav-item-nav-bar {
+  position: fixed;
+  left: 20vw;
+  top: 0px;
+  width: 80vw;
+  height: 7.5vh;
+  background: #C4C4C4;
+}
+
+.information {
+  position: fixed;
+  left: 20vw;
+  top: 7.5vh;
+  width: 80vw;
+  height: 92.5vh;
+  background: rgba(196, 142, 125, 0.76);
+}

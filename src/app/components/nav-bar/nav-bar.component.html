@@ -1,1 +1,20 @@
-<p>nav-bar works!</p>
+<div class="nav-bar">
+  <div class="header">
+    <h1 class="header-h1" align="center">Intranet</h1>
+  </div>
+
+  <div class="body">
+    <div *ngFor="let navItem of navBarItems">
+      <div>{{navItem.getName()}}</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <img src="assets/img/LanPort.png"  width="100%" height="auto">
+  </div>
+
+
+</div>
+
+<hr class="line-header">
+<hr class="line-footer">

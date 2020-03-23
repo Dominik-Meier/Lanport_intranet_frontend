@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {NavBarItemService} from "../../services/nav-bar-item.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
+  navBarItems = this.navBarItemService.getNavBarItems();
 
-  constructor() { }
+  constructor( private navBarItemService: NavBarItemService) { }
 
   ngOnInit(): void {
+
   }
 
 }
