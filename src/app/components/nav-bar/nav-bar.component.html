@@ -1,16 +1,18 @@
 <div class="nav-bar">
   <div class="header">
-    <h1 class="header-h1" align="center">Intranet</h1>
+    <div class="label-box">
+      <label class="header-intranet">Intranet</label>
+    </div>
   </div>
 
   <div class="body">
     <div *ngFor="let navItem of navBarItems">
-      <app-nav-bar-item [name]="navItem.getName()"></app-nav-bar-item>
+      <app-nav-bar-item [navItem]="navItem" [active]="navItem.getActive()"></app-nav-bar-item>
     </div>
   </div>
 
   <div class="footer">
-    <img src="assets/img/LanPort.png"  width="100%" height="auto">
+    <img src="assets/img/LanPort.png"  width="100%" height="auto" class="img">
   </div>
 
 

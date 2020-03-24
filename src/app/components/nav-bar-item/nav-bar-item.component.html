@@ -1,5 +1,5 @@
 <div class="nav-bar-item">
-  <div class="nav-bar-item-box">
-    <label class="nav-bar-item-box-label">{{name}}</label>
+  <div class="nav-bar-item-box" #navbaritemdivcontainer (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" (click)="onSelect($event)">
+    <label class="nav-bar-item-box-label">{{navItem.getName()}}</label>
   </div>
 </div>

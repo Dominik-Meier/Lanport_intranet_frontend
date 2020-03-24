@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, SimpleChanges} from '@angular/core';
 import {NavBarItemService} from "../../services/nav-bar-item.service";
 
 @Component({
@@ -12,7 +12,9 @@ export class NavBarComponent implements OnInit {
   constructor( private navBarItemService: NavBarItemService) { }
 
   ngOnInit(): void {
-
+    this.navBarItemService.navBarItemsObservable.subscribe( navBarItems => {
+      this.navBarItems = navBarItems;
+    })
   }
 
 }
