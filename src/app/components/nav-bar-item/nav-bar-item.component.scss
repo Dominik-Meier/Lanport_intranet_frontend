@@ -1,0 +1,24 @@
+@import "src/app/app.component";
+
+.nav-bar-item {
+  position: relative;
+  height: $nav-bar-item-line-height;
+  width: $nav-bar-item-line-width;
+  padding: 2vh 2.5vw;
+}
+
+.nav-bar-item-box{
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(190, 190, 190, 0.916667) 17.71%, rgba(255, 255, 255, 0) 100%), rgba(51, 121, 179, 0.75);
+  border: 2px solid #416371;
+  box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 3vh;
+}
+
+.nav-bar-item-box-label{
+  display: block;
+  line-height: $nav-bar-item-line-height;
+  text-align: center;
+}

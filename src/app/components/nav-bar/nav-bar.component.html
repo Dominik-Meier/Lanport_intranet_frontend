@@ -5,7 +5,7 @@
 
   <div class="body">
     <div *ngFor="let navItem of navBarItems">
-      <div>{{navItem.getName()}}</div>
+      <app-nav-bar-item [name]="navItem.getName()"></app-nav-bar-item>
     </div>
   </div>
 
