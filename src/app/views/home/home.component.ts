@@ -1,4 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
+import {AuthService} from "../../services/auth-service.service";
+import {OAuthService} from "angular-oauth2-oidc";
+import {environment} from "../../../environments/environment";
+import {LanpartyService} from "../../services/dataServices/lanparty.service";
+import {NavBarItemService} from "../../services/nav-bar-item.service";
 
 @Component({
   selector: 'app-home',
@@ -6,10 +18,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
+  public activeNavBarItem;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private lanpartyService: LanpartyService,
+    private navBarItemService: NavBarItemService,
+    private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
-  }
+    if (environment.production === true && this.authService.isLoggedOut()) {
+      console.log('You need to be logged in');
+      window.location.href = 'https://www.lanport.ch/login';
+    }
 
+    // Load the Component associated to the NavBarItem
+    this.navBarItemService.activeNavBarItemsObservable.subscribe( activeNavItem => {
+      this.activeNavBarItem = activeNavItem;
+      this.dynamicElementInsertionPoint.clear();
+      if (this.activeNavBarItem.component) {
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.component);
+        const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
+      }
+    });
+  }
 }

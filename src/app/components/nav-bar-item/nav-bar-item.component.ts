@@ -17,20 +17,12 @@ import {NavBarItemService} from "../../services/nav-bar-item.service";
   templateUrl: './nav-bar-item.component.html',
   styleUrls: ['./nav-bar-item.component.scss']
 })
-export class NavBarItemComponent implements OnInit, OnChanges {
+export class NavBarItemComponent implements OnChanges {
   @ViewChild('navbaritemdivcontainer') private element: ElementRef;
   @Input() navItem: NavBarItem;
   @Input() active: boolean;
 
-
-  constructor(private navBarItemService: NavBarItemService,
-              private iterableDiffers: IterableDiffers) {
-
-  }
-
-  ngOnInit(): void {
-
-  }
+  constructor(private navBarItemService: NavBarItemService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.navItem.getActive()) {
@@ -45,8 +37,6 @@ export class NavBarItemComponent implements OnInit, OnChanges {
       }
     }
   }
-
-
 
   onMouseEnter(event) {
     event.target.classList.remove('nav-bar-item-box');
@@ -63,7 +53,4 @@ export class NavBarItemComponent implements OnInit, OnChanges {
   onSelect(event) {
     this.navBarItemService.setNewActiveItem(this.navItem);
   }
-
-
-
 }

@@ -12,7 +12,7 @@
   </div>
 
   <div class="footer">
-    <img src="assets/img/LanPort.png"  width="100%" height="auto" class="img">
+    <img src="assets/img/LanPort.png"  width="100%" height="auto" class="img" (click)="onLPLogoClick($event)">
   </div>
 
 
@@ -20,3 +20,7 @@
 
 <hr class="line-header">
 <hr class="line-footer">
+
+<mat-icon class="settings">settings</mat-icon>
+<mat-icon class="user" (click)="onClickUser($event)">account_circle</mat-icon>
+

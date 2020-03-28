@@ -1,42 +1,40 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import * as moment from "moment";
-import {User} from "../models/User";
-import {shareReplay} from "rxjs/operators";
-import 'rxjs/add/operator/shareReplay';
+import { CookieService } from 'ngx-cookie-service';
 
+// https://www.malcontentboffin.com/2017/11/Angular-Third-Party-Cookies.html
 // https://blog.angular-university.io/angular-jwt-authentication/
+// https://itnext.io/angular-8-how-to-use-cookies-14ab3f2e93fc?gi=108e16bfef9a
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private cookieService: CookieService) {
   }
 
   login(email:string, password:string ) {
-    return this.http.post<User>('/api/login', {email, password}).subscribe( res => {
-      this.setSession(res);
-      //TODO check if shareReplay is correct here!
-      shareReplay(1);
-    })
+    // TODO activate this method!
+    // return this.http.post<User>('/api/login', {email, password})
+    //   .pipe(map( res => this.setSession(res)));
   }
+
 
   //TODO this is with request over lanport.ch auth
-
-  private setSession(authResult) {
-    const expiresAt = moment().add(authResult.expiresIn,'second');
-
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
-  }
-
-  logout() {
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expires_at");
-  }
-
   public isLoggedIn() {
-    return moment().isBefore(this.getExpiration());
+    const phpsessid = this.cookieService.get('PHPSESSID');
+    const sess = this.cookieService.get('sess');
+
+    if (window.location.hostname === 'localhost') {
+      this.cookieService.set('PHPSESSID', 'test-PHPSESSID', 10000)
+      this.cookieService.set('sess', 'test-sess', 10000)
+    }
+
+    return !!(phpsessid && sess);
+
   }
 
   isLoggedOut() {

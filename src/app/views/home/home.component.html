@@ -3,12 +3,18 @@
     <app-nav-bar></app-nav-bar>
   </div>
 
+
   <div class="nav-item-nav-bar">
     <p>home works!</p>
+    <div *ngIf="activeNavBarItem">
+      {{activeNavBarItem.name}}
+    </div>
   </div>
 
   <div class="information">
-
+    <div>
+      <ng-template #dynamicElementInsertionPoint></ng-template>
+    </div>
   </div>
 
 

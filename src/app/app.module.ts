@@ -8,21 +8,36 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarItemComponent } from './components/nav-bar-item/nav-bar-item.component';
+import { MatIconModule} from "@angular/material/icon";
+import { ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from "@angular/material/card";
+import { CookieService } from 'ngx-cookie-service';
+import { TournamentComponent } from './components/tournament/tournament.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavBarComponent,
-    NavBarItemComponent
+    NavBarItemComponent,
+    TournamentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatCardModule,
   ],
-  providers: [],
+  exports: [
+    MatIconModule,
+    MatCardModule
+  ],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 

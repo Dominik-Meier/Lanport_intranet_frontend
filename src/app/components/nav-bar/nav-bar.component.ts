@@ -17,4 +17,12 @@ export class NavBarComponent implements OnInit {
     })
   }
 
+  onClickUser(event) {
+
+  }
+
+  onLPLogoClick(event) {
+    window.location.href = 'https://www.lanport.ch';
+  }
+
 }

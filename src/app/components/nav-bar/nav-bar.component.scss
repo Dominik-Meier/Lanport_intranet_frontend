@@ -60,9 +60,21 @@
   text-align: center;
   align: center;
   line-height: 5vh;
-  font-size: 4vh;
+  font-size: 3vw;
 }
 
 .img {
   padding: 0.5vh 0px 0px 0px;
+}
+
+.settings {
+  position: absolute;
+  top: 1.75vh;
+  left: 1.5vw;
+}
+
+.user {
+  position: absolute;
+  top: 1.75vh;
+  left: 17.5vw;
 }
