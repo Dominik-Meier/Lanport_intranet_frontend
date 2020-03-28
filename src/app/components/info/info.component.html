@@ -1,0 +1,9 @@
+<div class="registerOptionsBar">
+  <table class="registerOptionsTable">
+    <th *ngFor="let register of registerOptions" class="registerItem">
+      <app-info-register-item [registerItem]="register" [active]="register.getActive()"></app-info-register-item>
+    </th>
+  </table>
+</div>
+
+<p>info works!</p>

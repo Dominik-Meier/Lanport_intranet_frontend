@@ -16,7 +16,6 @@ export class LanpartyService{
   init(): void {
     this.getLanpartiesBackend().subscribe( res => {
       this.lanparties = res;
-      console.log(res);
     })
   }
 
@@ -40,7 +39,6 @@ export class LanpartyService{
   mapJSONToLanartyArray(data: any): Lanparty[] {
     const result: Lanparty[] = [];
     data.forEach( lanparty => result.push(new Lanparty(lanparty.name, lanparty.active, lanparty.startDate, lanparty.endDate)));
-    console.log(result);
     return result;
   }
 }

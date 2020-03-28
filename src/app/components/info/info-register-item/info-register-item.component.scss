@@ -1,0 +1,24 @@
+@import "src/app/app.component";
+
+.register-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.register-item-box{
+  width: 100%;
+  height: 100%;
+}
+
+.register-item-box-hover{
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(180deg, rgba(44, 62, 80, 0.5) 0%, rgba(125, 152, 174, 0.5) 19.79%, rgba(255, 255, 255, 0) 100%);
+}
+
+
+.register-item-box-label{
+  font-size: 1vw;
+}

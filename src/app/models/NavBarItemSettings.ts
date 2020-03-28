@@ -1,7 +1,7 @@
 import { Type} from "@angular/core";
 import {RegisterOptionItem} from "./registerOptionItem";
 
-export class NavBarItem {
+export class NavBarItemSettings {
   private name: string;
   private options: RegisterOptionItem[];
   private active: boolean;
@@ -16,10 +16,6 @@ export class NavBarItem {
 
   getName() {
     return this.name;
-  }
-
-  getOptions(): RegisterOptionItem[] {
-    return this.options;
   }
 
   getActive() {

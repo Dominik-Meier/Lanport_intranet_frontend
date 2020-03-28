@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {NavBarItem} from "../models/NavBarItem";
 import {Subject} from "rxjs";
 import {TournamentComponent} from "../components/tournament/tournament.component";
+import {InfoComponent} from "../components/info/info.component";
+import {RegisterOptionItem} from "../models/registerOptionItem";
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +22,23 @@ export class NavBarItemService {
 
   constructor() {
     //TODO test cases remove those later
-    this.addNavBarItem( new NavBarItem('Tournament', ['test1-1', 'test1-2'], TournamentComponent));
-    this.addNavBarItem( new NavBarItem('test2', ['test2-1', 'test2-2']));
-    this.addNavBarItem( new NavBarItem('test3', ['test3-1', 'test3-2']));
+    this.addNavBarItem( new NavBarItem('Infos', [
+      new RegisterOptionItem('Allgemein'),
+      new RegisterOptionItem('Essenszeiten'),
+      new RegisterOptionItem('Preise')], InfoComponent));
+    this.addNavBarItem( new NavBarItem('Tournament', [
+      new RegisterOptionItem('Infos'),
+      new RegisterOptionItem('Tournaments'),
+      new RegisterOptionItem('Anmeldung'),
+      new RegisterOptionItem('Preise')], TournamentComponent));
+    this.addNavBarItem( new NavBarItem('Custom Tournaments', [
+      new RegisterOptionItem('Infos'),
+      new RegisterOptionItem('Tournaments'),
+      new RegisterOptionItem('Anmeldung'),
+      new RegisterOptionItem('Preise')]));
+    this.addNavBarItem( new NavBarItem('Sponsoren', [new RegisterOptionItem('Sponsoren')]));
+    this.addNavBarItem( new NavBarItem('Slideshow', [new RegisterOptionItem('Slides'), new RegisterOptionItem('Do it!')]));
+    this.addNavBarItem( new NavBarItem('Feedback', [new RegisterOptionItem('Give it to me!')]));
   }
 
   getNavBarItems() {

@@ -1,0 +1,17 @@
+<div class="nav-bar">
+  <app-nav-bar-settings></app-nav-bar-settings>
+</div>
+
+<div class="information">
+  <p>home works!</p>
+  <div *ngIf="activeNavBarItem">
+    {{activeNavBarItem.name}}
+  </div>
+  <div>
+    <ng-template #dynamicElementInsertionPoint></ng-template>
+  </div>
+</div>
+
+
+
+

@@ -1,31 +1,22 @@
-import {
-  AfterViewChecked,
-  Component,
-  ComponentFactoryResolver,
-  OnInit,
-  ViewChild,
-  ViewContainerRef
-} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {AuthService} from "../../services/auth-service.service";
-import {OAuthService} from "angular-oauth2-oidc";
-import {environment} from "../../../environments/environment";
 import {LanpartyService} from "../../services/dataServices/lanparty.service";
-import {NavBarItemService} from "../../services/nav-bar-item.service";
-import {RegisterItemComponent} from "../../components/interfaces/registerItem.component";
+import {environment} from "../../../environments/environment";
+import {AdminPageService} from "../../services/admin-page.service";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-home-settings',
+  templateUrl: './home-settings.component.html',
+  styleUrls: ['./home-settings.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeSettingsComponent implements OnInit {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   public activeNavBarItem;
 
   constructor(
     private authService: AuthService,
     private lanpartyService: LanpartyService,
-    private navBarItemService: NavBarItemService,
+    private adminPageService: AdminPageService,
     private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
@@ -35,13 +26,12 @@ export class HomeComponent implements OnInit {
     }
 
     // Load the Component associated to the NavBarItem
-    this.navBarItemService.activeNavBarItemsObservable.subscribe( activeNavItem => {
+    this.adminPageService.activeNavBarItemsObservable.subscribe( activeNavItem => {
       this.activeNavBarItem = activeNavItem;
       this.dynamicElementInsertionPoint.clear();
       if (this.activeNavBarItem.component) {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.component);
         const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-        (<RegisterItemComponent>componentRef.instance).registerOptions = this.activeNavBarItem.getOptions();
       }
     });
   }

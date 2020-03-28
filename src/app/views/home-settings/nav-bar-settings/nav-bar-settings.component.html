@@ -1,13 +1,13 @@
 <div class="nav-bar">
   <div class="header">
     <div class="label-box">
-      <label class="header-intranet">Intranet</label>
+      <label class="header-intranet">Settings</label>
     </div>
   </div>
 
   <div class="body">
     <div *ngFor="let navItem of navBarItems">
-      <app-nav-bar-item [navItem]="navItem" [active]="navItem.getActive()"></app-nav-bar-item>
+      <app-nav-bar-item-settings [navItem]="navItem" [active]="navItem.getActive()"></app-nav-bar-item-settings>
     </div>
   </div>
 
