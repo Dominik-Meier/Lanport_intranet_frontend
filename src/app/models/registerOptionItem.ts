@@ -1,13 +1,17 @@
-import { Type} from "@angular/core";
+import {Component, Type} from "@angular/core";
+import {DynamicComponentDataProvider} from "./interfaces/dynamicComponentDataProvider";
+import {ComponentWithNameComponent} from "../components/interfaces/componentWithName.component";
 
-export class RegisterOptionItem {
+export class RegisterOptionItem implements DynamicComponentDataProvider{
   private name: string;
   private active: boolean;
-  private component: Type<any>;
+  data: any;
+  private component: ComponentWithNameComponent;
 
-  constructor(name: string, component: Type<any> = null) {
+  constructor(name: string, data: any, component: ComponentWithNameComponent = null) {
     this.name = name;
     this.active = false;
+    this.data = data;
     this.component = component;
   }
 
@@ -21,5 +25,19 @@ export class RegisterOptionItem {
 
   setActive(active: boolean) {
     this.active = active;
+  }
+
+  getComponent(): ComponentWithNameComponent {
+    return this.component;
+  }
+
+  toJSON() {
+    const name = this.component ? this.component.componentName : '';
+    return {
+      'name': this.name,
+      'active': this.active,
+      'data': this.data,
+      'component': name
+    }
   }
 }

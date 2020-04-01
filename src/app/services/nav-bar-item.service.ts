@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {NavBarItem} from "../models/NavBarItem";
 import {Subject} from "rxjs";
-import {TournamentComponent} from "../components/tournament/tournament.component";
-import {InfoComponent} from "../components/info/info.component";
 import {RegisterOptionItem} from "../models/registerOptionItem";
+import {DynamicRegisterOptionsComponent} from "../components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options.component";
+import {HtmlDisplayerComponent} from "../components/1_registerOptions-Component/html-displayer/html-displayer.component";
+import {AppConfigService} from "./app-config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,25 +21,20 @@ export class NavBarItemService {
   private activeNavBarItem: NavBarItem;
 
 
-  constructor() {
-    //TODO test cases remove those later
-    this.addNavBarItem( new NavBarItem('Infos', [
-      new RegisterOptionItem('Allgemein'),
-      new RegisterOptionItem('Essenszeiten'),
-      new RegisterOptionItem('Preise')], InfoComponent));
-    this.addNavBarItem( new NavBarItem('Tournament', [
-      new RegisterOptionItem('Infos'),
-      new RegisterOptionItem('Tournaments'),
-      new RegisterOptionItem('Anmeldung'),
-      new RegisterOptionItem('Preise')], TournamentComponent));
-    this.addNavBarItem( new NavBarItem('Custom Tournaments', [
-      new RegisterOptionItem('Infos'),
-      new RegisterOptionItem('Tournaments'),
-      new RegisterOptionItem('Anmeldung'),
-      new RegisterOptionItem('Preise')]));
-    this.addNavBarItem( new NavBarItem('Sponsoren', [new RegisterOptionItem('Sponsoren')]));
-    this.addNavBarItem( new NavBarItem('Slideshow', [new RegisterOptionItem('Slides'), new RegisterOptionItem('Do it!')]));
-    this.addNavBarItem( new NavBarItem('Feedback', [new RegisterOptionItem('Give it to me!')]));
+  constructor(private appConfigService: AppConfigService) {
+    this.appConfigService.configObservable.subscribe( newConfig => {
+      this.navBarItems = newConfig;
+      this.navBarItemsSubject.next(this.getNavBarItems());
+    })
+  }
+
+  applyNewNavBar(newConfig: NavBarItem[]) {
+    this.appConfigService.createAppConfig(this.navBarItems).subscribe( newNavBarItems => {
+      console.log(newNavBarItems);
+      this.navBarItems = newConfig;
+      this.navBarItemsSubject.next(this.getNavBarItems());
+      console.log('NavBarItem Service set new config');
+    });
   }
 
   getNavBarItems() {

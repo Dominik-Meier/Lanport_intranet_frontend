@@ -1,14 +1,4 @@
-import {
-  Component,
-  DoCheck,
-  ElementRef,
-  Input,
-  IterableDiffers,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import {NavBarItem} from "../../models/NavBarItem";
 import {NavBarItemService} from "../../services/nav-bar-item.service";
 

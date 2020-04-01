@@ -3,6 +3,7 @@ import {Subject} from "rxjs";
 import {NavBarItem} from "../models/NavBarItem";
 import {TournamentComponent} from "../components/tournament/tournament.component";
 import {NavBarItemSettings} from "../models/NavBarItemSettings";
+import {SetAppNavigationComponent} from "../components/3_settings_components/set-app-navigation/set-app-navigation.component";
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,12 @@ export class AdminPageService {
 
 
   constructor() {
-    //TODO test cases remove those later
-    this.addNavBarItem( new NavBarItemSettings('Lanparty', []));
-    this.addNavBarItem( new NavBarItemSettings('Tournament', []));
-    this.addNavBarItem( new NavBarItemSettings('Gamemode', []));
-    this.addNavBarItem( new NavBarItemSettings('Tournamenttype', []));
+    //This is the navigation tree ob the settings!
+    this.addNavBarItem( new NavBarItemSettings('App Navigation', [], SetAppNavigationComponent));
+    // this.addNavBarItem( new NavBarItemSettings('Lanparty', []));
+    // this.addNavBarItem( new NavBarItemSettings('Tournament', []));
+    // this.addNavBarItem( new NavBarItemSettings('Gamemode', []));
+    // this.addNavBarItem( new NavBarItemSettings('Tournamenttype', []));
   }
 
   getNavBarItems() {

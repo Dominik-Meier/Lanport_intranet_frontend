@@ -1,0 +1,12 @@
+<div class="registerOptionsBar">
+  <table class="registerOptionsTable">
+    <th *ngFor="let register of registerOptions" class="registerItem">
+      <app-register-item [registerItem]="register" [active]="register.getActive()" (itemSelected)="activeRegisterOptionChange($event)"></app-register-item>
+    </th>
+  </table>
+</div>
+
+<div class="registerOptionContent">
+  <ng-template #dynamicElementInsertionPoint></ng-template>
+<!--  <app-html-displayer [htmlString]="activeRegisterOption" *ngIf="activeRegisterOption"></app-html-displayer>-->
+</div>

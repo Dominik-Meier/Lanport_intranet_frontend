@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
       if (this.activeNavBarItem.component) {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.component);
         const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-        (<RegisterItemComponent>componentRef.instance).registerOptions = this.activeNavBarItem.getOptions();
+        (<RegisterItemComponent>componentRef.instance).data = this.activeNavBarItem.getOptions();
       }
     });
   }

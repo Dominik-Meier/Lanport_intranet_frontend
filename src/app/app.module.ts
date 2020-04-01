@@ -11,15 +11,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarItemComponent } from './components/nav-bar-item/nav-bar-item.component';
 import { NavBarItemSettingsComponent} from "./views/home-settings/nav-bar-item/nav-bar-item-settings.component";
 import { MatIconModule} from "@angular/material/icon";
-import { ReactiveFormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from "@angular/material/card";
 import { CookieService } from 'ngx-cookie-service';
 import { TournamentComponent } from './components/tournament/tournament.component';
 import { HomeSettingsComponent } from './views/home-settings/home-settings.component';
-import { InfoComponent } from './components/info/info.component';
-import { InfoRegisterItemComponent } from './components/info/info-register-item/info-register-item.component'
+import { RegisterItemComponent } from './components/register-item/register-item.component';
+import { DynamicRegisterOptionsComponent } from './components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options.component';
+import { HtmlDisplayerComponent } from './components/1_registerOptions-Component/html-displayer/html-displayer.component';
+import { SetAppNavigationComponent } from './components/3_settings_components/set-app-navigation/set-app-navigation.component'
+import {MatTableModule} from "@angular/material/table";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { MatButtonModule } from "@angular/material/button"
+import {MatInputModule} from "@angular/material/input";
+import { DynamicRegisterOptionsConfigurationComponent } from './components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options-configuration/dynamic-register-options-configuration.component';
 
+
+//TODO Send link of app to ben :)
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,8 +40,11 @@ import { InfoRegisterItemComponent } from './components/info/info-register-item/
     NavBarItemSettingsComponent,
     TournamentComponent,
     HomeSettingsComponent,
-    InfoComponent,
-    InfoRegisterItemComponent,
+    RegisterItemComponent,
+    DynamicRegisterOptionsComponent,
+    HtmlDisplayerComponent,
+    SetAppNavigationComponent,
+    DynamicRegisterOptionsConfigurationComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +55,12 @@ import { InfoRegisterItemComponent } from './components/info/info-register-item/
     ReactiveFormsModule,
     HttpClientModule,
     MatCardModule,
+    MatTableModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
   ],
   exports: [
     MatIconModule,
