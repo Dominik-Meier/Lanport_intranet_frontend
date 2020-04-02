@@ -23,13 +23,18 @@ export class RegisterOptionItem implements DynamicComponentDataProvider{
     return this.active;
   }
 
+  getComponent(): ComponentWithNameComponent {
+    return this.component;
+  }
+
+  setName(name: string) {
+    this.name = name;
+  }
+
   setActive(active: boolean) {
     this.active = active;
   }
 
-  getComponent(): ComponentWithNameComponent {
-    return this.component;
-  }
 
   toJSON() {
     const name = this.component ? this.component.componentName : '';

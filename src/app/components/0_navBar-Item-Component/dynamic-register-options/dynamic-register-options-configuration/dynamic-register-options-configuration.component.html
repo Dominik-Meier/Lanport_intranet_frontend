@@ -1,3 +1,72 @@
-<p>dynamic-register-options-configuration works!</p>
-<p>{{this.navBarItem.getName()}}</p>
-<p>{{this.navBarItem.getOptions()}}</p>
+<!--Toolbar-->
+<div class="toolbar">
+  <label>{{navBarItem.getName()}}</label>
+  <div class="button-box">
+    <button mat-raised-button (click)="addRegisterOption($event)"> Add </button>
+  </div>
+  <div class="button-box">
+    <button mat-raised-button color="warn" (click)="applyConfig($event)"> Apply </button>
+  </div>
+</div>
+
+<!--Nav Bar Items Navigation set Up-->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--Table Select -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>Selected</th>
+    <td *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!--Table Name -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let row">
+      <mat-form-field [style.fontSize]="12">
+        <textarea matInput [ngModel]="row.name" (ngModelChange)="changeName($event, row)"
+                  cdkTextareaAutosize="1"
+                  cdkAutosizeMaxRows="1"
+        ></textarea>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!--Table Component -->
+  <ng-container matColumnDef="componentName">
+    <th mat-header-cell *matHeaderCellDef>Used Component</th>
+    <td mat-cell *matCellDef="let row" >
+      <maf-form-field>
+        <mat-select [(value)]="row.component" (selectionChange)="selectionChanged($event, row)">
+          <mat-option *ngFor="let innerCop of innerComponents.keys()" [value]="innerComponents.get(innerCop)">
+            {{innerCop}}
+          </mat-option>
+        </mat-select>
+      </maf-form-field>
+    </td>
+  </ng-container>
+
+  <!--Table Data -->
+  <ng-container matColumnDef="data">
+    <th mat-header-cell *matHeaderCellDef>Data</th>
+    <td mat-cell *matCellDef="let row" >
+      <button mat-raised-button (click)="openDialog(row)"> Set Data </button>
+    </td>
+  </ng-container>
+
+  <!--Table Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let row" >
+      <mat-icon (click)="deleteItem($event, row)">delete_forever</mat-icon>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+</table>

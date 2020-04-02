@@ -26,7 +26,9 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { MatButtonModule } from "@angular/material/button"
 import {MatInputModule} from "@angular/material/input";
+import { MatDialog, MatDialogRef, MatDialogModule } from "@angular/material/dialog";
 import { DynamicRegisterOptionsConfigurationComponent } from './components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options-configuration/dynamic-register-options-configuration.component';
+import { HtmlDisplayerConfigurationComponent } from './components/1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component';
 
 
 //TODO Send link of app to ben :)
@@ -45,6 +47,7 @@ import { DynamicRegisterOptionsConfigurationComponent } from './components/0_nav
     HtmlDisplayerComponent,
     SetAppNavigationComponent,
     DynamicRegisterOptionsConfigurationComponent,
+    HtmlDisplayerConfigurationComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ import { DynamicRegisterOptionsConfigurationComponent } from './components/0_nav
     MatButtonModule,
     MatInputModule,
     FormsModule,
+    MatDialogModule,
   ],
   exports: [
     MatIconModule,
