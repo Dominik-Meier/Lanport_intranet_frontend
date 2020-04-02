@@ -28,6 +28,10 @@ export class NavBarItem {
     return this.active;
   }
 
+  getComponent() {
+    return this.component;
+  }
+
   setName(name: string) {
     this.name = name;
 }
