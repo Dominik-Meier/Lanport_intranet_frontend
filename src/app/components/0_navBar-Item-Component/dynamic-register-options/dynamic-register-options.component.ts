@@ -3,6 +3,7 @@ import {RegisterOptionItem} from "../../../models/registerOptionItem";
 import {RegisterItemComponent} from "../../interfaces/registerItem.component";
 import {HtmlDisplayerComponent} from "../../1_registerOptions-Component/html-displayer/html-displayer.component";
 import {ComponentWithNameComponent} from "../../interfaces/componentWithName.component";
+import {DataDisplyerComponent} from "../../interfaces/dataDisplayer.component";
 
 @Component({
   selector: 'app-dynamic-register-options',
@@ -43,13 +44,7 @@ export class DynamicRegisterOptionsComponent extends ComponentWithNameComponent 
     //TODO is working but maybe check the error
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeRegisterOption.getComponent());
     const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-
-    //TODO check if not better over DataDisplayer interface -> code does not need changes later when more components are added!
-    if (componentRef.instance instanceof HtmlDisplayerComponent) {
-      (<HtmlDisplayerComponent>componentRef.instance).registerItem = this.activeRegisterOption;
-    } else {
-      //TODO create other component cases
-    }
+    (<DataDisplyerComponent>componentRef.instance).data = this.activeRegisterOption;
   }
 
 }

@@ -1,1 +1,11 @@
-<p>html-displayer-configuration works!</p>
+<h1 mat-dialog-title>Anzeige Text - {{data.name}}</h1>
+<div mat-dialog-content>
+<!--  <ckeditor [editor]="Editor" [(ngModel)]="displayedString"></ckeditor>-->
+  <ckeditor [editor]="Editor" [(ngModel)]="displayedString" (ready)="onReady($event)"></ckeditor>
+  <ckeditor [editor]="Editor" data="<p>hey</p>" (ready)="onReady($event)" [config]="config"></ckeditor>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="displayedString" cdkFocusInitial>Ok</button>
+</div>

@@ -78,6 +78,7 @@ export class SetAppNavigationComponent implements OnInit {
     console.log('Not supported yet!');
   }
 
+  //TODO there is some times an error about the loaded component
   loadSubComponent(navBarItem: NavBarItem) {
     this.dynamicElementInsertionPoint.clear();
     if(navBarItem.getComponent()) {

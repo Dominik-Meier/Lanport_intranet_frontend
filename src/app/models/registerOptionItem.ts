@@ -23,6 +23,10 @@ export class RegisterOptionItem implements DynamicComponentDataProvider{
     return this.active;
   }
 
+  getData() {
+    return this.data;
+  }
+
   getComponent(): ComponentWithNameComponent {
     return this.component;
   }
@@ -33,6 +37,10 @@ export class RegisterOptionItem implements DynamicComponentDataProvider{
 
   setActive(active: boolean) {
     this.active = active;
+  }
+
+  setData(data: any) {
+    this.data = data;
   }
 
 

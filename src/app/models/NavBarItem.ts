@@ -4,7 +4,6 @@ import {ComponentWithNameComponent} from "../components/interfaces/componentWith
 
 export class NavBarItem {
   private name: string;
-  //TODO make this variable not always RegisterOptionITem
   /** Data for further components*/
   private data: any[];
   private active: boolean;

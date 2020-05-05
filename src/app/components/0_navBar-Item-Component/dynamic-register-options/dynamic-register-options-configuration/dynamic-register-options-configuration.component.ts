@@ -74,15 +74,13 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   }
 
   openDialog(row): void {
-    //TODO link component
     const dialogRef = this.dialog.open( HtmlDisplayerConfigurationComponent, {
       width: '50vw',
-      data: {data: row.data}
+      data: {data: row.getData(), name: row.getName()}
     });
 
     dialogRef.afterClosed().subscribe( result => {
-      //TODO what to do with the result
-      console.log(result);
+      result ? row.setData(result) : null;
     })
   }
 }

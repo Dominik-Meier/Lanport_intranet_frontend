@@ -26,4 +26,12 @@ export class Lanparty {
   getEndDate() {
     return this.endDate
   }
+
+  setStartDate(date: Date) {
+    this.startDate = date;
+  }
+
+  setEndDate(date: Date) {
+    this.endDate = date;
+  }
 }

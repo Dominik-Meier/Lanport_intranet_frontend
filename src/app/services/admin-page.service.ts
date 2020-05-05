@@ -4,6 +4,7 @@ import {NavBarItem} from "../models/NavBarItem";
 import {TournamentComponent} from "../components/tournament/tournament.component";
 import {NavBarItemSettings} from "../models/NavBarItemSettings";
 import {SetAppNavigationComponent} from "../components/3_settings_components/set-app-navigation/set-app-navigation.component";
+import {LanpartySettingsComponent} from "../components/3_settings_components/lanparty-settings/lanparty-settings.component";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class AdminPageService {
   constructor() {
     //This is the navigation tree ob the settings!
     this.addNavBarItem( new NavBarItemSettings('App Navigation', [], SetAppNavigationComponent));
-    // this.addNavBarItem( new NavBarItemSettings('Lanparty', []));
+    this.addNavBarItem( new NavBarItemSettings('Lanparty', [], LanpartySettingsComponent));
     // this.addNavBarItem( new NavBarItemSettings('Tournament', []));
     // this.addNavBarItem( new NavBarItemSettings('Gamemode', []));
     // this.addNavBarItem( new NavBarItemSettings('Tournamenttype', []));

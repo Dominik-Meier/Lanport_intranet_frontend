@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarItemComponent } from './components/nav-bar-item/nav-bar-item.component';
 import { NavBarItemSettingsComponent} from "./views/home-settings/nav-bar-item/nav-bar-item-settings.component";
 import { MatIconModule} from "@angular/material/icon";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from "@angular/material/card";
 import { CookieService } from 'ngx-cookie-service';
@@ -21,14 +21,19 @@ import { RegisterItemComponent } from './components/register-item/register-item.
 import { DynamicRegisterOptionsComponent } from './components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options.component';
 import { HtmlDisplayerComponent } from './components/1_registerOptions-Component/html-displayer/html-displayer.component';
 import { SetAppNavigationComponent } from './components/3_settings_components/set-app-navigation/set-app-navigation.component'
-import {MatTableModule} from "@angular/material/table";
-import {MatSelectModule} from "@angular/material/select";
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import { MatTableModule} from "@angular/material/table";
+import { MatSelectModule} from "@angular/material/select";
+import { MatCheckboxModule} from "@angular/material/checkbox";
 import { MatButtonModule } from "@angular/material/button"
-import {MatInputModule} from "@angular/material/input";
+import { MatInputModule} from "@angular/material/input";
 import { MatDialog, MatDialogRef, MatDialogModule } from "@angular/material/dialog";
 import { DynamicRegisterOptionsConfigurationComponent } from './components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options-configuration/dynamic-register-options-configuration.component';
 import { HtmlDisplayerConfigurationComponent } from './components/1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component';
+import { LanpartySettingsComponent } from './components/3_settings_components/lanparty-settings/lanparty-settings.component';
+import { MatDatepickerModule} from "@angular/material/datepicker";
+import { MatNativeDateModule } from '@angular/material/core';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 
 
 //TODO Send link of app to ben :)
@@ -48,6 +53,7 @@ import { HtmlDisplayerConfigurationComponent } from './components/1_registerOpti
     SetAppNavigationComponent,
     DynamicRegisterOptionsConfigurationComponent,
     HtmlDisplayerConfigurationComponent,
+    LanpartySettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,10 +71,13 @@ import { HtmlDisplayerConfigurationComponent } from './components/1_registerOpti
     MatInputModule,
     FormsModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    CKEditorModule,
   ],
   exports: [
     MatIconModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
