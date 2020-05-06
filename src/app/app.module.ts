@@ -33,6 +33,7 @@ import { LanpartySettingsComponent } from './components/3_settings_components/la
 import { MatDatepickerModule} from "@angular/material/datepicker";
 import { MatNativeDateModule } from '@angular/material/core';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { GamemodeSettingsComponent } from './components/3_settings_components/gamemode-settings/gamemode-settings.component';
 
 
 
@@ -54,6 +55,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     DynamicRegisterOptionsConfigurationComponent,
     HtmlDisplayerConfigurationComponent,
     LanpartySettingsComponent,
+    GamemodeSettingsComponent,
   ],
   imports: [
     BrowserModule,

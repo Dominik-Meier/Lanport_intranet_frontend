@@ -71,8 +71,6 @@ export class LanpartySettingsComponent implements OnInit {
   }
 
   applyConfig(event) {
-    for( const lanparty of this.lanparties) {
-      this.lanpartyService.saveLanparties(this.lanparties);
-    }
+    this.lanpartyService.saveLanparties(this.lanparties);
   }
 }

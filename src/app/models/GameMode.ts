@@ -2,12 +2,14 @@ export class GameMode {
   private id: number;
   private name: string;
   private game: string;
+  private teamSize: number;
   private rules: any;
 
-  constructor(id: number, name: string, game: boolean, rules: any) {
+  constructor(id: number, name: string, game: string, teamSize: number, rules: any) {
     this.id = id;
     this.name = name;
     this.game = game;
+    this.teamSize = teamSize;
     this.rules = rules;
   }
 
@@ -23,6 +25,10 @@ export class GameMode {
     return this.game;
   }
 
+  getTeamSize() {
+    return this.teamSize;
+  }
+
   getRules() {
     return this.rules;
   }
@@ -33,6 +39,10 @@ export class GameMode {
 
   setGame(game: string) {
     this.game = game;
+  }
+
+  setTeamSize(teamSize: number) {
+    this.teamSize = teamSize;
   }
 
   setRules(rules: any) {
