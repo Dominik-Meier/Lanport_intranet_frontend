@@ -40,34 +40,39 @@ export class LanpartySettingsComponent implements OnInit {
     console.log('lanparty: ', lans);
   }
 
-  startDateChanged(event, row) {
-    console.log('lanparties: ', this.lanparties);
-  }
-
-  endDateChanged(event, row) {
-    console.log('lanparties: ', this.lanparties);
-  }
-
   addLanparty(event) {
-    this.lanpartyService.addLanparty( new Lanparty('Placeholder', false, new Date( Date.now()), new Date( Date.now()))).subscribe( lan => {
-      this.lanparties.push(lan);
-      this.dataSource = new MatTableDataSource<Lanparty>(this.lanparties);
-    });
+    this.lanparties.push( new Lanparty(null, 'Placeholder', false, new Date( Date.now()), new Date( Date.now())));
+    this.dataSource = new MatTableDataSource<Lanparty>(this.lanparties);
   }
 
-  applyConfig(event) {
-    for( const lanparty of this.lanparties) {
-
-    }
+  changeName(event, row: Lanparty) {
+    row.setName(event);
   }
 
-  changeName(event, row) {
+  /**
+   * Set active flag of a lanaprty, only one lanaprty can be active at a time!
+   */
+  changeActive(event, row: Lanparty) {
+    this.lanparties.forEach( party => { party.setActive(false); });
+    row.setActive(event);
+  }
 
+  startDateChanged(event, row: Lanparty) {
+    row.setStartDate(event.value);
+  }
+
+  endDateChanged(event, row: Lanparty) {
+    row.setEndDate(event.value);
   }
 
   //TODO maybe creat a deleted flag not deleting acutaly?
   deleteLanparty(event, row) {
-
+    console.log('Not supported yet!');
   }
 
+  applyConfig(event) {
+    for( const lanparty of this.lanparties) {
+      this.lanpartyService.saveLanparties(this.lanparties);
+    }
+  }
 }

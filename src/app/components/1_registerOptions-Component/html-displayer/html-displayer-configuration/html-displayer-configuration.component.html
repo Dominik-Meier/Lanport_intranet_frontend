@@ -2,7 +2,6 @@
 <div mat-dialog-content>
 <!--  <ckeditor [editor]="Editor" [(ngModel)]="displayedString"></ckeditor>-->
   <ckeditor [editor]="Editor" [(ngModel)]="displayedString" (ready)="onReady($event)"></ckeditor>
-  <ckeditor [editor]="Editor" data="<p>hey</p>" (ready)="onReady($event)" [config]="config"></ckeditor>
 </div>
 
 <div mat-dialog-actions>

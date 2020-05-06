@@ -27,35 +27,54 @@ export class LanpartyService{
   private lanparitesSubject = new Subject<Lanparty[]>();
   public getLanpartiesObservable = this.lanparitesSubject.asObservable();
 
-
+  /**
+   * Local methodes to the frontend from here on!
+   */
 
   getLanparties() {
     return this.lanparties;
   }
 
-  //TODO map is not working correctly use map instead of tap => search example it is possible!
+  saveLanparties(lanparties: Lanparty[]) {
+    this.saveLanpartiesBackend(lanparties).subscribe( res => console.log(res))
+  }
+
+
+
+  /**
+   * Remote methodes to the backend from here on!
+   */
+
   getLanpartiesBackend(): Observable<Lanparty[]> {
     const targetURL = this.url + 'lanparties';
-    return this.http.get<Lanparty[]>(targetURL).pipe( tap(
-      data => this.mapJSONToLanartyArray(data),
-      error => console.log(error)
+    return this.http.get<Lanparty[]>(targetURL).pipe( map(
+      response => { return this.mapJSONToLanartyArray(response); }
     ));
   }
 
-  addLanparty(lanparty: Lanparty) {
+  saveLanpartiesBackend(lanparties: Lanparty[]): Observable<Lanparty[]> {
     const targetURL = this.url + 'lanparties';
-    return this.http.post(targetURL, lanparty).pipe(map( res => {
-      return this.mapJSONToLanparty(res);
-    }))
+    return this.http.put<Lanparty[]>(targetURL, lanparties).pipe(map(
+      response => { return this.mapJSONToLanartyArray(response); }
+    ));
   }
+
+  // Not needed atm!
+  // addLanparty(lanparty: Lanparty) {
+  //   const targetURL = this.url + 'lanparties';
+  //   return this.http.post(targetURL, lanparty).pipe(map( res => {
+  //     return this.mapJSONToLanparty(res);
+  //   }))
+  // }
 
   mapJSONToLanartyArray(data: any): Lanparty[] {
     const result: Lanparty[] = [];
-    data.forEach( lanparty => result.push(new Lanparty(lanparty.name, lanparty.active, lanparty.startDate, lanparty.endDate)));
+    data.forEach( lanparty => result.push(new Lanparty(lanparty.id, lanparty.name, lanparty.active, lanparty.startDate, lanparty.endDate)));
     return result;
   }
 
   mapJSONToLanparty(data: any): Lanparty {
-    return new Lanparty(data.name, data.active, data.startDate, data.endDate);
+    return new Lanparty(data.id, data.name, data.active, data.startDate, data.endDate);
   }
+
 }
