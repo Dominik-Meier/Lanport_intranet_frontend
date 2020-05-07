@@ -34,6 +34,7 @@ import { MatDatepickerModule} from "@angular/material/datepicker";
 import { MatNativeDateModule } from '@angular/material/core';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { GamemodeSettingsComponent } from './components/3_settings_components/gamemode-settings/gamemode-settings.component';
+import { TournamentTypeSettingsComponent } from './components/3_settings_components/tournament-type-settings/tournament-type-settings.component';
 
 
 
@@ -56,6 +57,7 @@ import { GamemodeSettingsComponent } from './components/3_settings_components/ga
     HtmlDisplayerConfigurationComponent,
     LanpartySettingsComponent,
     GamemodeSettingsComponent,
+    TournamentTypeSettingsComponent,
   ],
   imports: [
     BrowserModule,

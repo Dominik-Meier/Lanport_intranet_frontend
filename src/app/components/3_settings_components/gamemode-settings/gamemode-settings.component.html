@@ -39,6 +39,18 @@
     </td>
   </ng-container>
 
+  <!--Table Elimination -->
+  <ng-container matColumnDef="elimination">
+    <th mat-header-cell *matHeaderCellDef>Elimination</th>
+    <td mat-cell *matCellDef="let row">
+      <mat-form-field [style.fontSize]="12">
+        <textarea matInput [ngModel]="row.elimination" (ngModelChange)="changeElimination($event, row)"
+                  cdkTextareaAutosize="1"
+                  cdkAutosizeMaxRows="1"
+        ></textarea>
+      </mat-form-field>
+    </td>
+  </ng-container>
 
   <!--Table TeamSize -->
   <ng-container matColumnDef="teamSize">

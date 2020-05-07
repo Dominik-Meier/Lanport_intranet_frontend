@@ -36,7 +36,12 @@ export class GamemodeService {
   }
 
   saveGameModes(gameModes: GameMode[]) {
-    this.saveGameModesBackend(gameModes).subscribe( res => console.log(res))
+    this.saveGameModesBackend(gameModes).subscribe( () => {
+      this.getGameModesBackend().subscribe( res => {
+        this.gameModes = res;
+        this.gameModesSubject.next(this.gameModes);
+      })
+    })
   }
 
 
@@ -53,9 +58,7 @@ export class GamemodeService {
 
   saveGameModesBackend(gamemodes: GameMode[]): Observable<GameMode[]> {
     const targetURL = this.url + 'gamemodes';
-    return this.http.put<GameMode[]>(targetURL, gamemodes).pipe(map(
-      response => { return this.mapJSONToGameModeArray(response); }
-    ));
+    return this.http.put<GameMode[]>(targetURL, gamemodes);
   }
 
   mapJSONToGameModeArray(data: any): GameMode[] {

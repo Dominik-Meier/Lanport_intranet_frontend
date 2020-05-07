@@ -16,7 +16,7 @@ export class GamemodeSettingsComponent implements OnInit {
 
   /** Table parameters */
   dataSource: MatTableDataSource<GameMode>;
-  columnsToDisplay = ['name', 'game', 'teamSize', 'rules', 'actions'];
+  columnsToDisplay = ['name', 'game', 'elimination', 'teamSize', 'rules', 'actions'];
 
   constructor(private gameModeService: GamemodeService) { }
 
@@ -35,7 +35,7 @@ export class GamemodeSettingsComponent implements OnInit {
   }
 
   addGameMode(event) {
-    this.gameModes.push( new GameMode(null, 'Placeholder', 'Game X', 0, 'not supported yet'));
+    this.gameModes.push( new GameMode(null, 'Placeholder', 'Game X', 'Elimination', 0, 'not supported yet'));
     this.dataSource = new MatTableDataSource<GameMode>(this.gameModes);
   }
 
@@ -47,6 +47,9 @@ export class GamemodeSettingsComponent implements OnInit {
     row.setGame(event);
   }
 
+  changeElimination(event, row: GameMode) {
+    row.setElimination(event);
+  }
 
   changeTeamSize(event, row: GameMode) {
     row.setTeamSize(event);

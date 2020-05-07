@@ -36,7 +36,12 @@ export class LanpartyService{
   }
 
   saveLanparties(lanparties: Lanparty[]) {
-    this.saveLanpartiesBackend(lanparties).subscribe( res => console.log(res))
+    this.saveLanpartiesBackend(lanparties).subscribe( () => {
+      this.getLanpartiesBackend().subscribe( res => {
+        this.lanparties = res;
+        this.lanparitesSubject.next(this.lanparties);
+      })
+    })
   }
 
 
@@ -54,9 +59,7 @@ export class LanpartyService{
 
   saveLanpartiesBackend(lanparties: Lanparty[]): Observable<Lanparty[]> {
     const targetURL = this.url + 'lanparties';
-    return this.http.put<Lanparty[]>(targetURL, lanparties).pipe(map(
-      response => { return this.mapJSONToLanartyArray(response); }
-    ));
+    return this.http.put<Lanparty[]>(targetURL, lanparties);
   }
 
   // Not needed atm!
