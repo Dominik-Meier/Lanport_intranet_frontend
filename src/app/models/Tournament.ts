@@ -36,4 +36,12 @@ export class Tournament {
     return this.id;
   }
 
+  setName(name: string) {
+    this.name = name;
+  }
+
+  setLanparty(lanparty: Lanparty) {
+    this.lanparty = lanparty;
+  }
+
 }

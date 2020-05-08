@@ -54,7 +54,6 @@ export class AppConfigService {
   }
 
   mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
-    //TODO remove string from component and replace it with Component class;
     const resultArr: NavBarItem[] = [];
     for ( const element of data.data) {
       let componentOuter = null;

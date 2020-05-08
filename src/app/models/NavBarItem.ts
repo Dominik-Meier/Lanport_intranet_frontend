@@ -2,6 +2,7 @@ import {Component, Type} from "@angular/core";
 import {RegisterOptionItem} from "./registerOptionItem";
 import {ComponentWithNameComponent} from "../components/interfaces/componentWithName.component";
 
+//TODO add an active bool, to disable pages or NavBar Items
 export class NavBarItem {
   private name: string;
   /** Data for further components*/

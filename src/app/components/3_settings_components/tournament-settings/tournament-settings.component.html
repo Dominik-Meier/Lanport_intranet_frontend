@@ -1,0 +1,154 @@
+<!--Toolbar-->
+<div class="toolbar">
+  <label>Tournament Settings: </label>
+  <div class="button-box">
+    <button mat-raised-button (click)="addTournament($event)"> Add Tournament </button>
+  </div>
+  <div class="button-box">
+    <button mat-raised-button color="warn" (click)="applyConfig($event)"> Apply </button>
+  </div>
+</div>
+
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--Table Select -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>Selected</th>
+    <td *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!--Table Name -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let row">
+      <mat-form-field [style.fontSize]="12">
+        <textarea matInput [ngModel]="row.name" (ngModelChange)="changeName($event, row)"
+                  cdkTextareaAutosize="1"
+                  cdkAutosizeMaxRows="1"
+        ></textarea>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!--Table Lanparty -->
+  <ng-container matColumnDef="lanparty">
+    <th mat-header-cell *matHeaderCellDef>Lanparty</th>
+    <td mat-cell *matCellDef="let row" >
+      <maf-form-field>
+        <mat-select [(ngModel)]="row.lanparty" [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let lanparty of lanparties" [value]="lanparty">
+            {{lanparty.getName()}}
+          </mat-option>
+        </mat-select>
+      </maf-form-field>
+    </td>
+  </ng-container>
+
+  <!--Table Game Mode -->
+  <ng-container matColumnDef="gameMode">
+    <th mat-header-cell *matHeaderCellDef>Game Mode</th>
+    <td mat-cell *matCellDef="let row" >
+      <maf-form-field>
+        <mat-select [(ngModel)]="row.gameMode" [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let gamemode of gameModes" [value]="gamemode">
+            {{gamemode.getName()}}
+          </mat-option>
+        </mat-select>
+      </maf-form-field>
+    </td>
+  </ng-container>
+
+  <!--Table tournamentType -->
+  <ng-container matColumnDef="tournamentType">
+    <th mat-header-cell *matHeaderCellDef>Tournament Type</th>
+    <td mat-cell *matCellDef="let row" >
+      <maf-form-field>
+        <mat-select [(ngModel)]="row.tournamentType" [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let tournamentType of tournamentTypes" [value]="tournamentType">
+            {{tournamentType.getName()}}
+          </mat-option>
+        </mat-select>
+      </maf-form-field>
+    </td>
+  </ng-container>
+
+  <!--Table teamRegistration -->
+  <ng-container matColumnDef="teamRegistration">
+    <th mat-header-cell *matHeaderCellDef>Team Registration</th>
+    <td mat-cell *matCellDef="let row" >
+      <mat-checkbox [(ngModel)]="row.teamRegistration"> </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!--Table numberOfParticipants -->
+  <ng-container matColumnDef="numberOfParticipants">
+    <th mat-header-cell *matHeaderCellDef>Number of Participants</th>
+    <td mat-cell *matCellDef="let row">
+      <mat-form-field [style.fontSize]="12">
+        <textarea matInput [ngModel]="row.numberOfParticipants"
+                  cdkTextareaAutosize="1"
+                  cdkAutosizeMaxRows="1"
+        ></textarea>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!--Table published -->
+  <ng-container matColumnDef="published">
+    <th mat-header-cell *matHeaderCellDef>Published</th>
+    <td mat-cell *matCellDef="let row" >
+      <mat-checkbox [(ngModel)]="row.published"> </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!--Table started -->
+  <ng-container matColumnDef="started">
+    <th mat-header-cell *matHeaderCellDef>Started</th>
+    <td mat-cell *matCellDef="let row" >
+      <mat-checkbox [(ngModel)]="row.started"> </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!--Table startDate -->
+  <ng-container matColumnDef="startDate">
+    <th mat-header-cell *matHeaderCellDef>Start Date</th>
+    <td mat-cell *matCellDef="let row" >
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a Date" [(ngModel)]="row.startDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <!--Table finished -->
+  <ng-container matColumnDef="finished">
+    <th mat-header-cell *matHeaderCellDef>Finished</th>
+    <td mat-cell *matCellDef="let row" >
+      <mat-checkbox [(ngModel)]="row.finished"> </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!--Table Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let row" >
+      <mat-icon (click)="deleteTournament($event, row)">delete_forever</mat-icon>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+</table>
+
+<!-- Bottom component-->
+<div class="inserted-Configuration-Component">
+  <ng-template #dynamicElementInsertionPoint></ng-template>
+</div>

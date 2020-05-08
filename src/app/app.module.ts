@@ -35,6 +35,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { GamemodeSettingsComponent } from './components/3_settings_components/gamemode-settings/gamemode-settings.component';
 import { TournamentTypeSettingsComponent } from './components/3_settings_components/tournament-type-settings/tournament-type-settings.component';
+import { TournamentSettingsComponent } from './components/3_settings_components/tournament-settings/tournament-settings.component';
 
 
 
@@ -58,6 +59,7 @@ import { TournamentTypeSettingsComponent } from './components/3_settings_compone
     LanpartySettingsComponent,
     GamemodeSettingsComponent,
     TournamentTypeSettingsComponent,
+    TournamentSettingsComponent,
   ],
   imports: [
     BrowserModule,

@@ -36,15 +36,23 @@ export class SetAppNavigationComponent implements OnInit {
               private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
+    console.log('init nav app');
     this.appConfigService.configObservable.subscribe(res => {
-      this.config = res;
-      this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+      this.setConfig(res);
     });
+    this.setConfig(this.appConfigService.getConfig());
     this.selection.changed.asObservable().subscribe( event => {
       if(event.added) {
         this.loadSubComponent(event.added[0])
       }
     })
+  }
+
+  setConfig(config: any) {
+    if (config !== null) {
+      this.config = config;
+      this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+    }
   }
 
   changeName(event, row){

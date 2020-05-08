@@ -7,6 +7,7 @@ import {SetAppNavigationComponent} from "../components/3_settings_components/set
 import {LanpartySettingsComponent} from "../components/3_settings_components/lanparty-settings/lanparty-settings.component";
 import {GamemodeSettingsComponent} from "../components/3_settings_components/gamemode-settings/gamemode-settings.component";
 import {TournamentTypeSettingsComponent} from "../components/3_settings_components/tournament-type-settings/tournament-type-settings.component";
+import {TournamentSettingsComponent} from "../components/3_settings_components/tournament-settings/tournament-settings.component";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class AdminPageService {
     this.addNavBarItem( new NavBarItemSettings('Lanparty', [], LanpartySettingsComponent));
     this.addNavBarItem( new NavBarItemSettings('Game Mode', [], GamemodeSettingsComponent));
     this.addNavBarItem( new NavBarItemSettings('Tournament Type', [], TournamentTypeSettingsComponent));
-    // this.addNavBarItem( new NavBarItemSettings('Tournamenttype', []));
+    this.addNavBarItem( new NavBarItemSettings('Tournament', [], TournamentSettingsComponent));
   }
 
   getNavBarItems() {
