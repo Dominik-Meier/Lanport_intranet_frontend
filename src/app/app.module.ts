@@ -15,7 +15,6 @@ import { FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from "@angular/material/card";
 import { CookieService } from 'ngx-cookie-service';
-import { TournamentComponent } from './components/tournament/tournament.component';
 import { HomeSettingsComponent } from './views/home-settings/home-settings.component';
 import { RegisterItemComponent } from './components/register-item/register-item.component';
 import { DynamicRegisterOptionsComponent } from './components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options.component';
@@ -36,6 +35,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { GamemodeSettingsComponent } from './components/3_settings_components/gamemode-settings/gamemode-settings.component';
 import { TournamentTypeSettingsComponent } from './components/3_settings_components/tournament-type-settings/tournament-type-settings.component';
 import { TournamentSettingsComponent } from './components/3_settings_components/tournament-settings/tournament-settings.component';
+import { TournamentConfigurationComponent } from './components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
+import {TournamentComponent} from "./components/1_registerOptions-Component/tournament/tournament.component";
 
 
 
@@ -48,7 +49,6 @@ import { TournamentSettingsComponent } from './components/3_settings_components/
     NavBarSettingsComponent,
     NavBarItemComponent,
     NavBarItemSettingsComponent,
-    TournamentComponent,
     HomeSettingsComponent,
     RegisterItemComponent,
     DynamicRegisterOptionsComponent,
@@ -60,6 +60,8 @@ import { TournamentSettingsComponent } from './components/3_settings_components/
     GamemodeSettingsComponent,
     TournamentTypeSettingsComponent,
     TournamentSettingsComponent,
+    TournamentConfigurationComponent,
+    TournamentComponent,
   ],
   imports: [
     BrowserModule,

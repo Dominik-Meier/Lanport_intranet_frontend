@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import {NavBarItem} from "../models/NavBarItem";
 import {Subject} from "rxjs";
-import {RegisterOptionItem} from "../models/registerOptionItem";
-import {DynamicRegisterOptionsComponent} from "../components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options.component";
-import {HtmlDisplayerComponent} from "../components/1_registerOptions-Component/html-displayer/html-displayer.component";
 import {AppConfigService} from "./app-config.service";
 
 @Injectable({

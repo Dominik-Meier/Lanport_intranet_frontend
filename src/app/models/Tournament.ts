@@ -2,6 +2,7 @@ import {Lanparty} from "./Lanparty";
 import {GameMode} from "./GameMode";
 import {TournamentType} from "./TournamentType";
 
+//TODO add registarion StartDate + EndDate
 export class Tournament {
   private id: number;
   private name: string;
@@ -34,6 +35,10 @@ export class Tournament {
 
   getId() {
     return this.id;
+  }
+
+  getName() {
+    return this.name;
   }
 
   setName(name: string) {

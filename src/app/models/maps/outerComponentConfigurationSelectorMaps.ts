@@ -13,6 +13,3 @@ import {DynamicRegisterOptionsConfigurationComponent} from "../../components/0_n
 export const navBarComponentConfigurationSelectorMap: Map<String, ComponentWithNameComponent> = new Map<String, any>();
 navBarComponentConfigurationSelectorMap.set("DynamicRegisterOptionsComponent", DynamicRegisterOptionsConfigurationComponent);
 
-export const navBarItemComponentConfigurationSelectorMap: Map<String, ComponentWithNameComponent> = new Map<String, any>();
-//navBarItemComponentConfigurationSelectorMap.set("HtmlDisplayerComponent", HtmlDisplayerComponent);
-

@@ -7,11 +7,9 @@ import {SelectionModel} from "@angular/cdk/collections";
 import {MatTableDataSource} from "@angular/material/table";
 import {NavBarItemService} from "../../../services/nav-bar-item.service";
 import {HtmlDisplayerComponent} from "../../1_registerOptions-Component/html-displayer/html-displayer.component";
-import {
-  navBarComponentConfigurationSelectorMap,
-  navBarItemComponentConfigurationSelectorMap
-} from "../../../models/maps/componentConfigurationSelectorMaps";
+import {  navBarItemComponentConfigurationSelectorMap} from "../../../models/maps/innerComponentConfigurationSelectorMaps";
 import {DataDisplyerComponent} from "../../interfaces/dataDisplayer.component";
+import {navBarComponentConfigurationSelectorMap} from "../../../models/maps/outerComponentConfigurationSelectorMaps";
 
 @Component({
   selector: 'app-set-app-navigation',

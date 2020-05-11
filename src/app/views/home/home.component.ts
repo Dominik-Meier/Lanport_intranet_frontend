@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
+    // if (environment.production === true && this.authService.isLoggedOut()) {
+    //TODO backend user are working get them from the backend and perform checks
     if (environment.production === true && this.authService.isLoggedOut()) {
       console.log('You need to be logged in');
       window.location.href = 'https://www.lanport.ch/login';

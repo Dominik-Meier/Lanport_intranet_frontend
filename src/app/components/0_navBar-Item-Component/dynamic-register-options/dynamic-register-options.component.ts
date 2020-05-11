@@ -1,7 +1,6 @@
 import {Component, ComponentFactoryResolver, Input, OnInit, Type, ViewChild, ViewContainerRef} from '@angular/core';
 import {RegisterOptionItem} from "../../../models/registerOptionItem";
 import {RegisterItemComponent} from "../../interfaces/registerItem.component";
-import {HtmlDisplayerComponent} from "../../1_registerOptions-Component/html-displayer/html-displayer.component";
 import {ComponentWithNameComponent} from "../../interfaces/componentWithName.component";
 import {DataDisplyerComponent} from "../../interfaces/dataDisplayer.component";
 

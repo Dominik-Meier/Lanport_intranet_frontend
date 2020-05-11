@@ -3,15 +3,13 @@ import {ComponentWithNameComponent} from "../../../interfaces/componentWithName.
 import {DataDisplyerComponent} from "../../../interfaces/dataDisplayer.component";
 import {NavBarItem} from "../../../../models/NavBarItem";
 import {MatTableDataSource} from "@angular/material/table";
-import {
-  navBarComponentSelectorMap,
-  navBarItemComponentSelectorMap
+import {  navBarComponentSelectorMap,  navBarItemComponentSelectorMap
 } from "../../../../models/maps/componentSelectorMaps";
 import {SelectionModel} from "@angular/cdk/collections";
 import {RegisterOptionItem} from "../../../../models/registerOptionItem";
 import {NavBarItemService} from "../../../../services/nav-bar-item.service";
-import { MatDialog, MatDialogRef, MatDialogModule } from "@angular/material/dialog";
-import {HtmlDisplayerConfigurationComponent} from "../../../1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component";
+import { MatDialog} from "@angular/material/dialog";
+import {navBarItemComponentConfigurationSelectorMap} from "../../../../models/maps/innerComponentConfigurationSelectorMaps";
 
 @Component({
   selector: 'app-dynamic-register-options-configuration',
@@ -30,7 +28,7 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   innerComponents: Map<String, ComponentWithNameComponent> = navBarItemComponentSelectorMap;
 
   // outerConfigurationsComponents: Map<String, ComponentWithNameComponent> = navBarComponentConfigurationSelectorMap;
-  // innerConfigurationsComponents: Map<String, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
+  innerConfigurationsComponents: Map<String, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
 
   selection = new SelectionModel<RegisterOptionItem>(false, []);
 
@@ -74,13 +72,16 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   }
 
   openDialog(row): void {
-    const dialogRef = this.dialog.open( HtmlDisplayerConfigurationComponent, {
+    const componentToLoad = this.innerConfigurationsComponents.get(row.component.componentName);
+    const dialogRef = this.dialog.open( componentToLoad, {
       width: '50vw',
       data: {data: row.getData(), name: row.getName()}
     });
 
     dialogRef.afterClosed().subscribe( result => {
+      console.log(result);
       result ? row.setData(result) : null;
-    })
+    });
+    console.log(row);
   }
 }

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
-import {NavBarItem} from "../models/NavBarItem";
-import {TournamentComponent} from "../components/tournament/tournament.component";
 import {NavBarItemSettings} from "../models/NavBarItemSettings";
 import {SetAppNavigationComponent} from "../components/3_settings_components/set-app-navigation/set-app-navigation.component";
 import {LanpartySettingsComponent} from "../components/3_settings_components/lanparty-settings/lanparty-settings.component";

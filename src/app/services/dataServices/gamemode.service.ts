@@ -63,7 +63,7 @@ export class GamemodeService {
 
   mapJSONToGameModeArray(data: any): GameMode[] {
     const result: GameMode[] = [];
-    data.forEach( gamemode => result.push(new GameMode(gamemode.id, gamemode.name, gamemode.game, gamemode.teamSize, gamemode.rules)));
+    data.forEach( gamemode => result.push(new GameMode(gamemode.id, gamemode.name, gamemode.game, gamemode.elimination, gamemode.teamSize, gamemode.rules)));
     return result;
   }
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import * as moment from "moment";
 import { CookieService } from 'ngx-cookie-service';
+import {environment} from "../../environments/environment";
+import {Observable} from "rxjs";
 
 // https://www.malcontentboffin.com/2017/11/Angular-Third-Party-Cookies.html
 // https://blog.angular-university.io/angular-jwt-authentication/
@@ -15,6 +17,8 @@ export class AuthService {
   constructor(private http: HttpClient,
               private cookieService: CookieService) {
   }
+
+  private url = environment.BASE_API_URL;
 
   login(email:string, password:string ) {
     // TODO activate this method!
@@ -33,8 +37,12 @@ export class AuthService {
       this.cookieService.set('sess', 'test-sess', 10000)
     }
 
-    return !!(phpsessid && sess);
+    //For testing user request from lanport.ch
+    this.getUser().subscribe( res => {
+      console.log(res);
+    });
 
+    return !!(phpsessid && sess);
   }
 
   isLoggedOut() {
@@ -45,6 +53,13 @@ export class AuthService {
     const expiration = localStorage.getItem("expires_at");
     const expiresAt = JSON.parse(expiration);
     return moment(expiresAt);
+  }
+
+
+  //For testing user request from lanport.ch
+  getUser(): Observable<any> {
+    const targetURL = this.url + 'users/' + 'iNNwXzWv9L2iDHLKEbVxOBA7ulETHhyc';
+    return  this.http.get(targetURL);
   }
 
 }

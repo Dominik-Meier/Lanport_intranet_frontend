@@ -21,9 +21,7 @@ export class HtmlDisplayerComponent extends ComponentWithNameComponent implement
   }
 
   ngOnInit(): void {
-    // TODO remove hardcoded String
     // TODO maybe check first if data ist from type RegisterOptionItem, but maybe this is not always the case!
-    this.htmlStringHardcoded = this.sanitizer.bypassSecurityTrustHtml("<div style=\"max-width: 50%; margin: auto;\"><h2>" + this.data.getName() + "</h2><br><p>Das ist eine hargecodeder HMTL string!</p></div>");
     if (this.data.getData()){
       this.htmlString = this.sanitizer.bypassSecurityTrustHtml(this.data.getData());
     }

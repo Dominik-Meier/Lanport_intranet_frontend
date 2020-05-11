@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Tournament für {{data.name}} auswählen</h1>
+<mat-form-field>
+  <mat-select [(ngModel)]="selectedTournament" [compareWith]="objectComparisonFunction">
+    <mat-option *ngFor=" let tournament of tournaments" [value]="tournament">
+      {{tournament.getName()}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="selectedTournament" cdkFocusInitial>Ok</button>
+</div>
