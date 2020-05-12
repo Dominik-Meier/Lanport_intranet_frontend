@@ -73,6 +73,8 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
 
   openDialog(row): void {
     const componentToLoad = this.innerConfigurationsComponents.get(row.component.componentName);
+    // TODO check error msg and fix it
+    // @ts-ignore
     const dialogRef = this.dialog.open( componentToLoad, {
       width: '50vw',
       data: {data: row.getData(), name: row.getName()}

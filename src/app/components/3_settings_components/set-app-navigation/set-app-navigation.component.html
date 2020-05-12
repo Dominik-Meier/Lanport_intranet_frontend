@@ -43,13 +43,13 @@
   <ng-container matColumnDef="componentName">
     <th mat-header-cell *matHeaderCellDef>Used Component</th>
     <td mat-cell *matCellDef="let configItem" >
-      <maf-form-field>
+      <mat-form-field>
         <mat-select [(value)]="configItem.component">
           <mat-option *ngFor="let outerCop of outerComponents.keys()" [value]="outerComponents.get(outerCop)">
             {{outerCop}}
           </mat-option>
         </mat-select>
-      </maf-form-field>
+      </mat-form-field>
     </td>
   </ng-container>
 

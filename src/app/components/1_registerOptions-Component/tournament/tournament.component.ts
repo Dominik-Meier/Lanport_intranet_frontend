@@ -16,6 +16,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   tournament: Tournament;
   lanparty: Lanparty;
+  infosDisplayArray = [];
 
   constructor() {
     super();
@@ -23,6 +24,13 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   ngOnInit(): void {
     console.log(this.data);
+    this.infosDisplayArray.push(['Turnier Name', this.data.data.name]);
+    this.infosDisplayArray.push(['Game', this.data.data.gameMode.game]);
+    this.infosDisplayArray.push(['Elimination', this.data.data.gameMode.elimination]);
+    this.infosDisplayArray.push(['Turnier Type', this.data.data.tournamentType.name]);
+    this.infosDisplayArray.push(['Teamteilnahme', this.data.data.teamRegistration]);
+    this.infosDisplayArray.push(['Teamgrösse', this.data.data.numberOfParticipants]);
+    this.infosDisplayArray.push(['Startzeit', this.data.data.startDate]);
   }
 
 }

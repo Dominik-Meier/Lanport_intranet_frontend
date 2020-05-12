@@ -2,55 +2,60 @@
 
   <!--  Tournament infos and prices   -->
   <div class="tournament-top-grid">
+
+    <!--    Infos     -->
     <div class="tournament-column-grid">
-      <div class="column-header">
-        <label> Infos</label>
-      </div>
-      <div class="column-item">
-        <label> Turnier Name:</label>
-        <label> {{data.data.name}}</label>
-      </div>
-      <div class="column-item">
-        <label> Turnier Status:</label>
-        <label> Placeholder </label>
-      </div>
-      <div class="column-item">
-        <label> Game: </label>
-        <label> {{data.data.gameMode.game}}</label>
-      </div>
-      <div class="column-item">
-        <label> Elimination: </label>
-        <label> {{data.data.gameMode.elimination}}</label>
-      </div>
-      <div class="column-item">
-        <label> Turnier Type:</label>
-        <label> {{data.data.tournamentType.name}}</label>
-      </div>
-      <div class="column-item">
-        <label> Teilnahme in Teams: </label>
-        <label> {{data.data.teamRegistration}}</label>
-      </div>
-      <div class="column-item">
-        <label> Teamgrösse: </label>
-        <label> {{data.data.gameMode.teamSize}}</label>
-      </div>
-      <div class="column-item">
-        <label> Team / Teilnehmer Anzahl: </label>
-        <label> {{data.data.numberOfParticipants}}</label>
-      </div>
-      <div class="column-item">
-        <label> Startzeit </label>
-        <label> {{data.data.startDate}}</label>
-      </div>
+      <mat-card class="top-card">
+        <mat-card-title>Infos</mat-card-title>
+
+        <mat-card-content *ngFor="let item of infosDisplayArray">
+          <div class="card-field">
+            <div class="label">
+              <p class="no-margin">{{item[0]}}</p>
+            </div>
+            <div class="content">
+              <p class="no-margin">{{item[1]}}</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
 
+    <!--    Placeholder     -->
     <div class="tournament-column-grid">
-      <label> Placeholder</label>
+      <mat-card class="top-card">
+        <mat-card-title>Placeholder</mat-card-title>
+
+        <mat-card-content >
+          <div class="card-field">
+            <div class="label">
+              <p class="no-margin">Placeholder</p>
+            </div>
+            <div class="content">
+              <p class="no-margin"> Not needed space, wtf!</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
     </div>
 
+    <!--    Preise     -->
     <div class="tournament-column-grid">
-      <label> Preise: </label>
+      <mat-card class="top-card">
+        <mat-card-title>Preise</mat-card-title>
+
+        <mat-card-content >
+          <div class="card-field">
+            <div class="label">
+              <p class="no-margin">Preise</p>
+            </div>
+            <div class="content">
+              <p class="no-margin"> Note implemented yet!</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
 
     </div>
   </div>

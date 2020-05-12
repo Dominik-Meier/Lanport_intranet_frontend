@@ -91,6 +91,7 @@ export class SetAppNavigationComponent implements OnInit {
       const componentToResolve = this.outerConfigurationsComponents.get(navBarItem.getComponent().componentName);
 
       //TODO is working but maybe check the error
+      // @ts-ignore
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToResolve);
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
       (<DataDisplayerComponent>componentRef.instance).data = navBarItem;
