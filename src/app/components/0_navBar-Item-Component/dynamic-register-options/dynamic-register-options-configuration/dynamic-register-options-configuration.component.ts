@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ComponentWithNameComponent} from "../../../interfaces/componentWithName.component";
-import {DataDisplyerComponent} from "../../../interfaces/dataDisplayer.component";
+import {DataDisplayerComponent} from "../../../interfaces/dataDisplayer.component";
 import {NavBarItem} from "../../../../models/NavBarItem";
 import {MatTableDataSource} from "@angular/material/table";
 import {  navBarComponentSelectorMap,  navBarItemComponentSelectorMap
@@ -16,7 +16,7 @@ import {navBarItemComponentConfigurationSelectorMap} from "../../../../models/ma
   templateUrl: './dynamic-register-options-configuration.component.html',
   styleUrls: ['./dynamic-register-options-configuration.component.scss']
 })
-export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithNameComponent implements OnInit, DataDisplyerComponent   {
+export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithNameComponent implements OnInit, DataDisplayerComponent   {
   static componentName = 'DynamicRegisterOptionsConfigurationComponent';
   @Input() data: any;
   oldNavBarItem: NavBarItem = null;

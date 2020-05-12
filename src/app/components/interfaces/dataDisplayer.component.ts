@@ -1,3 +1,3 @@
-export interface DataDisplyerComponent {
+export interface DataDisplayerComponent {
   data: any;
 }

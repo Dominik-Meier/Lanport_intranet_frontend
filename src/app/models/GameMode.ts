@@ -10,7 +10,7 @@ export class GameMode {
     this.id = id;
     this.name = name;
     this.game = game;
-    this.elimination  =elimination;
+    this.elimination  = elimination;
     this.teamSize = teamSize;
     this.rules = rules;
   }

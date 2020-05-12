@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {RegisterOptionItem} from "../../../models/registerOptionItem";
-import {DataDisplyerComponent} from "../../interfaces/dataDisplayer.component";
+import {DataDisplayerComponent} from "../../interfaces/dataDisplayer.component";
 import {ComponentWithNameComponent} from "../../interfaces/componentWithName.component";
 
 @Component({
@@ -10,7 +10,7 @@ import {ComponentWithNameComponent} from "../../interfaces/componentWithName.com
   styleUrls: ['./html-displayer.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HtmlDisplayerComponent extends ComponentWithNameComponent implements OnInit, DataDisplyerComponent  {
+export class HtmlDisplayerComponent extends ComponentWithNameComponent implements OnInit, DataDisplayerComponent  {
   static componentName = "HtmlDisplayerComponent";
   @Input() data: any;
   htmlString: SafeHtml;

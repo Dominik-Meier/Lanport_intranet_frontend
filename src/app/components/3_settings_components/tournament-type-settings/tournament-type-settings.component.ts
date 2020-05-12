@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
+import { Component, OnInit } from '@angular/core';import {MatTableDataSource} from "@angular/material/table";
 import {TournamentType} from "../../../models/TournamentType";
 import {TournamentTypeService} from "../../../services/dataServices/tournament-type.service";
 
@@ -42,7 +41,7 @@ export class TournamentTypeSettingsComponent implements OnInit {
   }
 
   //TODO maybe creat a deleted flag not deleting acutaly?
-  c(event, row) {
+  deleteTournamentType(event, row) {
     console.log('Not supported yet!');
   }
 

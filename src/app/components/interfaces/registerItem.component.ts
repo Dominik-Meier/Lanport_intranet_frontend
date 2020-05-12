@@ -1,5 +1,5 @@
-import {DataDisplyerComponent} from "./dataDisplayer.component";
+import {DataDisplayerComponent} from "./dataDisplayer.component";
 
-export interface RegisterItemComponent extends DataDisplyerComponent{
+export interface RegisterItemComponent extends DataDisplayerComponent{
   registerOptions: any;
 }

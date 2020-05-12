@@ -1,3 +1,64 @@
-<p>tournament works!</p>
+<div class="tournament-main-grid">
 
-{{data.data.name}}
+  <!--  Tournament infos and prices   -->
+  <div class="tournament-top-grid">
+    <div class="tournament-column-grid">
+      <div class="column-header">
+        <label> Infos</label>
+      </div>
+      <div class="column-item">
+        <label> Turnier Name:</label>
+        <label> {{data.data.name}}</label>
+      </div>
+      <div class="column-item">
+        <label> Turnier Status:</label>
+        <label> Placeholder </label>
+      </div>
+      <div class="column-item">
+        <label> Game: </label>
+        <label> {{data.data.gameMode.game}}</label>
+      </div>
+      <div class="column-item">
+        <label> Elimination: </label>
+        <label> {{data.data.gameMode.elimination}}</label>
+      </div>
+      <div class="column-item">
+        <label> Turnier Type:</label>
+        <label> {{data.data.tournamentType.name}}</label>
+      </div>
+      <div class="column-item">
+        <label> Teilnahme in Teams: </label>
+        <label> {{data.data.teamRegistration}}</label>
+      </div>
+      <div class="column-item">
+        <label> Teamgrösse: </label>
+        <label> {{data.data.gameMode.teamSize}}</label>
+      </div>
+      <div class="column-item">
+        <label> Team / Teilnehmer Anzahl: </label>
+        <label> {{data.data.numberOfParticipants}}</label>
+      </div>
+      <div class="column-item">
+        <label> Startzeit </label>
+        <label> {{data.data.startDate}}</label>
+      </div>
+    </div>
+
+    <div class="tournament-column-grid">
+      <label> Placeholder</label>
+
+    </div>
+
+    <div class="tournament-column-grid">
+      <label> Preise: </label>
+
+    </div>
+  </div>
+
+
+
+  <!-- Tournament registration  -->
+  <div class="tournament-bottom-grid">
+    <label> Anmeldung kommt hier</label>
+  </div>
+</div>

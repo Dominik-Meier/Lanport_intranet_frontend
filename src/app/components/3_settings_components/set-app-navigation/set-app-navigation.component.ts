@@ -8,7 +8,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {NavBarItemService} from "../../../services/nav-bar-item.service";
 import {HtmlDisplayerComponent} from "../../1_registerOptions-Component/html-displayer/html-displayer.component";
 import {  navBarItemComponentConfigurationSelectorMap} from "../../../models/maps/innerComponentConfigurationSelectorMaps";
-import {DataDisplyerComponent} from "../../interfaces/dataDisplayer.component";
+import {DataDisplayerComponent} from "../../interfaces/dataDisplayer.component";
 import {navBarComponentConfigurationSelectorMap} from "../../../models/maps/outerComponentConfigurationSelectorMaps";
 
 @Component({
@@ -93,7 +93,7 @@ export class SetAppNavigationComponent implements OnInit {
       //TODO is working but maybe check the error
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToResolve);
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-      (<DataDisplyerComponent>componentRef.instance).data = navBarItem;
+      (<DataDisplayerComponent>componentRef.instance).data = navBarItem;
     }
   }
 

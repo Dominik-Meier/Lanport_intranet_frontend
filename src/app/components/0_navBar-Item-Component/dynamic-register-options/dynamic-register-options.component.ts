@@ -2,7 +2,8 @@ import {Component, ComponentFactoryResolver, Input, OnInit, Type, ViewChild, Vie
 import {RegisterOptionItem} from "../../../models/registerOptionItem";
 import {RegisterItemComponent} from "../../interfaces/registerItem.component";
 import {ComponentWithNameComponent} from "../../interfaces/componentWithName.component";
-import {DataDisplyerComponent} from "../../interfaces/dataDisplayer.component";
+import {DataDisplayerComponent} from "../../interfaces/dataDisplayer.component";
+import {ComponentType} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-dynamic-register-options',
@@ -41,9 +42,9 @@ export class DynamicRegisterOptionsComponent extends ComponentWithNameComponent 
     this.dynamicElementInsertionPoint.clear();
 
     //TODO is working but maybe check the error
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeRegisterOption.getComponent());
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory( this.activeRegisterOption.getComponent());
     const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-    (<DataDisplyerComponent>componentRef.instance).data = this.activeRegisterOption;
+    (<DataDisplayerComponent>componentRef.instance).data = this.activeRegisterOption;
   }
 
 }
