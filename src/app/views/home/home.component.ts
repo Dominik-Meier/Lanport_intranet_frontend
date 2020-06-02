@@ -30,10 +30,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     // if (environment.production === true && this.authService.isLoggedOut()) {
-    //TODO backend user are working get them from the backend and perform checks
     if (environment.production === true && this.authService.isLoggedOut()) {
       console.log('You need to be logged in');
       window.location.href = 'https://www.lanport.ch/login';
+    }
+
+    if ( !environment.production) {
+      //TODO what when user is return, what we do now?
+      const user = this.authService.isLoggedIn();
     }
 
     // Load the Component associated to the NavBarItem

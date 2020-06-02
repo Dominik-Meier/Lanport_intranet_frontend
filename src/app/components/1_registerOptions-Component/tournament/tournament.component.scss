@@ -4,12 +4,12 @@
 }
 
 .tournament-top-grid {
-  height: 40%;
+  height: 37.5vh;
 }
 
 .tournament-bottom-grid {
   width: 100%;
-  height: 60%;
+  height: 50vh;
 }
 
 .tournament-column-grid {
@@ -20,9 +20,15 @@
 }
 
 .top-card {
-  height: 94%;
-  margin: 1%;
-  padding: 2% !important;
+  height: 35vh;
+  margin: 0.5vh;
+  padding: 1vh !important;
+}
+
+.tournament-registration-card {
+  height: 50vh;
+  margin: 0.5vh;
+  padding: 1vh !important;
 }
 
 .card-field {
@@ -44,4 +50,8 @@
 
 .no-margin {
   margin: 0px !important;
+}
+
+.mat-card.scrollable-content {
+  overflow: auto;
 }

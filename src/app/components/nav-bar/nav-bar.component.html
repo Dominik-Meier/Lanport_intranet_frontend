@@ -21,6 +21,6 @@
 <hr class="line-header">
 <hr class="line-footer">
 
-<mat-icon class="settings" (click)="this.onClickSettings($event)">settings</mat-icon>
+<mat-icon class="settings" *ngIf="checkUserRights()" (click)="this.onClickSettings($event)">settings</mat-icon>
 <mat-icon class="user" (click)="onClickUser($event)">account_circle</mat-icon>
 

@@ -20,9 +20,14 @@ export class HomeSettingsComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
-    if (environment.production === true && this.authService.isLoggedOut()) {
+    if (environment.production === true && this.authService.isLoggedOut() && this.authService.settingsRights()) {
       console.log('You need to be logged in');
       window.location.href = 'https://www.lanport.ch/login';
+    }
+
+    if ( !environment.production) {
+      //TODO what when user is return, what we do now?
+      const user = this.authService.isLoggedIn();
     }
 
     // Load the Component associated to the NavBarItem

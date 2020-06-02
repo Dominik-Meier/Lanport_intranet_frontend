@@ -3,7 +3,10 @@ import {HttpClient} from "@angular/common/http";
 import * as moment from "moment";
 import { CookieService } from 'ngx-cookie-service';
 import {environment} from "../../environments/environment";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
+import {User} from "../models/User";
+import {GameMode} from "../models/GameMode";
+import {map} from "rxjs/operators";
 
 // https://www.malcontentboffin.com/2017/11/Angular-Third-Party-Cookies.html
 // https://blog.angular-university.io/angular-jwt-authentication/
@@ -16,33 +19,34 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private cookieService: CookieService) {
+    this.init();
   }
 
-  private url = environment.BASE_API_URL;
-
-  login(email:string, password:string ) {
-    // TODO activate this method!
-    // return this.http.post<User>('/api/login', {email, password})
-    //   .pipe(map( res => this.setSession(res)));
-  }
-
-
-  //TODO this is with request over lanport.ch auth
-  public isLoggedIn() {
-    const phpsessid = this.cookieService.get('PHPSESSID');
-    const sess = this.cookieService.get('sess');
-
-    if (window.location.hostname === 'localhost') {
-      this.cookieService.set('PHPSESSID', 'test-PHPSESSID', 10000)
-      this.cookieService.set('sess', 'test-sess', 10000)
+  init(): void {
+    this.sess = environment.production ? this.cookieService.get('sess') : '86VJXYMjQsumm5zIlu23mraxh7mnGuSv';
+    console.log('sess', this.sess);
+    if (this.sess) {
+      this.getUser(this.sess).subscribe( res => {
+        this.activeUser = res;
+        this.activeUserSubject.next(this.activeUser);
+        console.log(res);
+      });
     }
+  }
 
-    //For testing user request from lanport.ch
-    this.getUser().subscribe( res => {
-      console.log(res);
-    });
+  private sess;
+  private url = environment.BASE_API_URL;
+  private activeUser: User;
 
-    return !!(phpsessid && sess);
+  private activeUserSubject = new Subject<User>();
+  public getActiveUserObservable = this.activeUserSubject.asObservable();
+
+  getActiveUser() {
+    return this.activeUser;
+  }
+
+  public isLoggedIn() {
+    return this.activeUser ? true : false;
   }
 
   isLoggedOut() {
@@ -55,11 +59,26 @@ export class AuthService {
     return moment(expiresAt);
   }
 
-
-  //For testing user request from lanport.ch
-  getUser(): Observable<any> {
-    const targetURL = this.url + 'users/' + 'iNNwXzWv9L2iDHLKEbVxOBA7ulETHhyc';
-    return  this.http.get(targetURL);
+  settingsRights() {
+    let allowed = false;
+    if(this.activeUser){
+      this.activeUser.getRights() === 'admin' ? allowed = true : null;
+      this.activeUser.getRights() === 'Admin' ? allowed = true : null;
+      this.activeUser.getRights() === 'mitglied' ? allowed = true : null;
+      this.activeUser.getRights() === 'Mitglied' ? allowed = true : null;
+    }
+    return allowed;
   }
 
+  getUser(cookie: string): Observable<User> {
+    const targetURL = this.url + 'users/' + cookie;
+    return this.http.get(targetURL).pipe(map(
+      res => {return this.mapJsonToUser(res);}
+    ));
+  }
+
+  mapJsonToUser (data: any): User {
+    console.log(data);
+    return new User(data.nickname, data.registered, data.payed, data.seat, data.level);
+  }
 }

@@ -5,7 +5,7 @@
 
     <!--    Infos     -->
     <div class="tournament-column-grid">
-      <mat-card class="top-card">
+      <mat-card class="top-card scrollable-content">
         <mat-card-title>Infos</mat-card-title>
 
         <mat-card-content *ngFor="let item of infosDisplayArray">
@@ -22,8 +22,8 @@
     </div>
 
     <!--    Placeholder     -->
-    <div class="tournament-column-grid">
-      <mat-card class="top-card">
+    <div class="tournament-column-grid ">
+      <mat-card class="top-card scrollable-content">
         <mat-card-title>Placeholder</mat-card-title>
 
         <mat-card-content >
@@ -42,7 +42,7 @@
 
     <!--    Preise     -->
     <div class="tournament-column-grid">
-      <mat-card class="top-card">
+      <mat-card class="top-card scrollable-content">
         <mat-card-title>Preise</mat-card-title>
 
         <mat-card-content >
@@ -60,10 +60,14 @@
     </div>
   </div>
 
-
-
   <!-- Tournament registration  -->
   <div class="tournament-bottom-grid">
-    <label> Anmeldung kommt hier</label>
+    <mat-card class="tournament-registration-card scrollable-content">
+      <mat-card-title>Anmeldung</mat-card-title>
+
+      <mat-card-content>
+
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

@@ -41,6 +41,54 @@ export class Tournament {
     return this.name;
   }
 
+  getLanparty() {
+    return this.lanparty;
+  }
+
+  getGameMode() {
+    return this.gameMode;
+  }
+
+  getTournamentType() {
+    return this.tournamentType;
+  }
+
+  getTeamRegistration() {
+    return this.teamRegistration;
+  }
+
+  getNumberOfParticipants() {
+    return this.numberOfParticipants;
+  }
+
+  getPublished() {
+    return this.published;
+  }
+
+  getStarted() {
+    return this.started;
+  }
+
+  getStartDate() {
+    return this.startDate;
+  }
+
+  getFinished() {
+    return this.finished;
+  }
+
+  getStatus() {
+    if (this.published) {
+      return 'Veröffentlicht';
+    } else if (this.started) {
+      return 'Gestartet';
+    } else if (this.finished) {
+      return 'Beendet';
+    } else {
+      return 'Hidden';
+    }
+  }
+
   setName(name: string) {
     this.name = name;
   }
