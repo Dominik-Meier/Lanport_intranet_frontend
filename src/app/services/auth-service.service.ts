@@ -79,6 +79,6 @@ export class AuthService {
 
   mapJsonToUser (data: any): User {
     console.log(data);
-    return new User(data.nickname, data.registered, data.payed, data.seat, data.level);
+    return new User(data.id, data.nickname, data.registered, data.payed, data.seat, data.level);
   }
 }
