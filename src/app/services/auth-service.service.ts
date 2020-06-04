@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   init(): void {
-    this.sess = environment.production ? this.cookieService.get('sess') : '86VJXYMjQsumm5zIlu23mraxh7mnGuSv';
+    this.sess = environment.production ? this.cookieService.get('sess') : 'IBBICiPsLVEXMJvqWZYk8t4XJ6e0tI7O';
     console.log('sess', this.sess);
     if (this.sess) {
       this.getUser(this.sess).subscribe( res => {

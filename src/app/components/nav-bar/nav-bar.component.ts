@@ -3,6 +3,8 @@ import {NavBarItemService} from "../../services/nav-bar-item.service";
 import {Router} from "@angular/router";
 import {User} from "../../models/User";
 import {AuthService} from "../../services/auth-service.service";
+import {DisplayUserComponent} from "../display-user/display-user.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-nav-bar',
@@ -16,6 +18,7 @@ export class NavBarComponent implements OnInit {
 
   constructor( private navBarItemService: NavBarItemService,
                private authService: AuthService,
+               public dialog: MatDialog,
                private router: Router) { }
 
   ngOnInit(): void {
@@ -40,8 +43,33 @@ export class NavBarComponent implements OnInit {
   }
 
   onClickUser(event) {
+    console.log('user icon clicked');
+    if(this.user) {
+      const dialogRef = this.dialog.open( DisplayUserComponent, {
+        width: '50vw',
+        data: {user: this.user}
+      });
 
+      dialogRef.afterClosed().subscribe( result => {
+        console.log('user info closed');
+      });
+
+    }
   }
+
+  // openDialog(row): void {
+  //   const componentToLoad = this.innerConfigurationsComponents.get(row.component.componentName);
+  //   const dialogRef = this.dialog.open( componentToLoad, {
+  //     width: '50vw',
+  //     data: {data: row.getData(), name: row.getName()}
+  //   });
+  //
+  //   dialogRef.afterClosed().subscribe( result => {
+  //     console.log(result);
+  //     result ? row.setData(result) : null;
+  //   });
+  //   console.log(row);
+  // }
 
   onClickSettings(event) {
     location.assign('settings');

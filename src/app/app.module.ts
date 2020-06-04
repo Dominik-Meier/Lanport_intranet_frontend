@@ -37,6 +37,7 @@ import { TournamentTypeSettingsComponent } from './components/3_settings_compone
 import { TournamentSettingsComponent } from './components/3_settings_components/tournament-settings/tournament-settings.component';
 import { TournamentConfigurationComponent } from './components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
 import {TournamentComponent} from "./components/1_registerOptions-Component/tournament/tournament.component";
+import { DisplayUserComponent } from './components/display-user/display-user.component';
 
 
 
@@ -62,6 +63,7 @@ import {TournamentComponent} from "./components/1_registerOptions-Component/tour
     TournamentSettingsComponent,
     TournamentConfigurationComponent,
     TournamentComponent,
+    DisplayUserComponent,
   ],
   imports: [
     BrowserModule,
