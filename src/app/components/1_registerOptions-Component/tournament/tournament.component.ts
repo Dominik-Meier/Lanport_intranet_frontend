@@ -44,9 +44,11 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       this.infosDisplayArray.push(['Status', this.tournament.getStatus()]);
       this.infosDisplayArray.push(['Game', this.tournament.getGameMode().getGame()]);
       this.infosDisplayArray.push(['Elimination', this.tournament.getGameMode().getElimination()]);
-      this.infosDisplayArray.push(['Turnier Type', this.tournament.getTournamentType().getName()]);
+      this.infosDisplayArray.push(['Turniertype', this.tournament.getTournamentType().getName()]);
+      this.infosDisplayArray.push(['Gamemode', this.tournament.getGameMode().getName()]);
       this.infosDisplayArray.push(['Teamteilnahme', this.tournament.getTeamRegistration()]);
-      this.infosDisplayArray.push(['Teamgrösse', this.tournament.getNumberOfParticipants()]);
+      this.infosDisplayArray.push(['Teamgrösse', this.tournament.getGameMode().getTeamSize()]);
+      this.infosDisplayArray.push(['Anzahl Teams', this.tournament.getNumberOfParticipants()]);
       this.infosDisplayArray.push(['Startzeit', this.tournament.getStartDate()]);
     }
   }
