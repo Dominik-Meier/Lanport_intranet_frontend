@@ -72,10 +72,14 @@ export class TournamentService {
   //TODO map lanparty to or get it from the service
   mapJSONToTournamentArray(data: any): Tournament[] {
     const result: Tournament[] = [];
-    data.forEach(t => result.push(new Tournament(t.id, t.name, t.lanparty,
+    data.forEach(t => result.push(this.mapJSONToTournament(t)));
+    return result;
+  }
+
+  mapJSONToTournament(t: any): Tournament {
+    return new Tournament(t.id, t.name, t.lanparty,
       new GameMode(t.gamemode.id, t.gamemode.name, t.gamemode.game, t.gamemode.elimination, t.gamemode.teamSize, t.gamemode.rules),
       new TournamentType(t.tournamentType.id, t.tournamentType.name),
-      t.teamRegistration, t.numberOfParticipants, t.published, t.started, t.startDate, t.finished)));
-    return result;
+      t.teamRegistration, t.numberOfParticipants, t.published, t.started, t.startDate, t.finished)
   }
 }

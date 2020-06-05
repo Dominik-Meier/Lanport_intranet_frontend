@@ -5,6 +5,7 @@ import {GameMode} from "../../models/GameMode";
 import {Observable, Subject} from "rxjs";
 import {Team} from "../../models/Team";
 import {map} from "rxjs/operators";
+import {TournamentService} from "./tournament.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class TeamService {
   private TeamSubject = new Subject<Team>();
   public getTeamObservable = this.TeamSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private tournamentService: TournamentService) { }
 
   getAllTeam(): Observable<Team[]> {
     console.log('not supperted yet');
@@ -35,7 +37,11 @@ export class TeamService {
   createTeam(team: Team): Observable<Team> {
     const targetURL = this.url + 'teams';
     return this.http.post<Team>(targetURL, team).pipe( map(
-      response => { return this.mapJSONToTeam(response); }
+      response => {
+        const team = this.mapJSONToTeam(response);
+        this.TeamSubject.next(team);
+        return team;
+      }
     ));
   }
 
@@ -51,6 +57,6 @@ export class TeamService {
 
 
   mapJSONToTeam(data: any): Team {
-    return new Team(data.id, data.name, data.pin);
+    return new Team(data.id, data.name, data.pin, this.tournamentService.mapJSONToTournament(data.tournament));
   }
 }

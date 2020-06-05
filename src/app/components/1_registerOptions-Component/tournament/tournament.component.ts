@@ -7,6 +7,8 @@ import {Lanparty} from "../../../models/Lanparty";
 import {TournamentService} from "../../../services/dataServices/tournament.service";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateTeamComponent} from "../../create-team/create-team.component";
+import {Team} from "../../../models/Team";
+import {TeamService} from "../../../services/dataServices/team.service";
 
 @Component({
   selector: 'app-tournament',
@@ -20,8 +22,10 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   tournament: Tournament;
   lanparty: Lanparty;
   infosDisplayArray = [];
+  teams: Team[] = [];
 
   constructor(private tournamentService: TournamentService,
+              private teamService: TeamService,
               public dialog: MatDialog) {
     super();
   }
@@ -32,11 +36,29 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     this.tournament = this.tournamentService.getTournament(this.data.data);
     this.setInfoArray();
     console.log(this.tournament);
+
     this.tournamentService.getTournamentObservable.subscribe( () => {
       this.tournament = this.tournamentService.getTournament(this.data.data);
       console.log(this.tournament);
       this.setInfoArray();
     });
+
+    this.teamService.getTeamObservable.subscribe( team => {
+      console.log('observable', team);
+      if (team.getTournament().getId() === this.tournament.getId()) {
+        console.log('team for this tournament');
+        if (this.teams.find( x => x.getId() === team.getId())) {
+          console.log('team exists');
+          const id = this.teams.findIndex( x => x.getId() === team.getId())
+          this.teams[id].setName( team.getName());
+          this.teams[id].setPin( team.getPin());
+          console.log('team updated');
+        } else {
+          this.teams.push(team);
+          console.log('team added');
+        }
+      }
+    })
 
   }
 
@@ -61,6 +83,10 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       width: '50vw'
     });
     dialogRef.afterClosed().subscribe( result => {
+      if (result instanceof Team) {
+        result.setTournament(this.tournament);
+        this.teamService.createTeam(result).subscribe();
+      }
       console.log('log mat dialog res', result);
     });
   }

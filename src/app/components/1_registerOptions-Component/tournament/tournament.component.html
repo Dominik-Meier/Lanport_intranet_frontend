@@ -64,11 +64,24 @@
   <div class="tournament-bottom-grid">
     <mat-card class="tournament-registration-card scrollable-content">
       <mat-card-title>
-        <p>Anmeldung</p>
-        <mat-icon (click)="addTeam($event)">add</mat-icon>
+        <div>
+          <p class="inline">Anmeldung</p>
+          <mat-icon (click)="addTeam($event)">add</mat-icon>
+        </div>
       </mat-card-title>
-      <mat-card-content>
 
+      <mat-card-content>
+        <mat-card *ngFor="let team of teams">
+          <mat-card-title>
+            <p class="inline">{{team.name}}</p>
+            <p class="inline"> Pin-Placeholder</p>
+          </mat-card-title>
+          <mat-card-content>
+            <ul>
+              <li *ngFor="let num of [1,2,3,4,5]">{{num}}. Person</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
       </mat-card-content>
     </mat-card>
   </div>

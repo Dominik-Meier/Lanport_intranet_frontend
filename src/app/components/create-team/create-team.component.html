@@ -12,10 +12,7 @@
              required minlength="4" maxlength="20"
              [(ngModel)]="createdTeam.name" name="name"
              #name="ngModel">
-      <div [hidden]="name.valid"  class="alert alert-danger">Name fehlt</div>
-<!--      <div [hidden]="!name.valid">-->
-<!--        <div [hidden]="name.errors.minlength"  class="alert alert-danger">Min. Länge 4</div>-->
-<!--      </div>-->
+      <div [hidden]="name.valid"  class="alert alert-danger">Name fehlt oder die Länge ist nicht zwischen 4 - 20</div>
     </div>
 
     <div class="form-group">
@@ -25,11 +22,8 @@
              required minlength="4" maxlength="4"
              [(ngModel)]="createdTeam.pin" name="pin"
              #pin="ngModel">
-      <div [hidden]="pin.valid">Pin fehlt oder Länge nicht 4</div>
-<!--      <div [hidden]="pin.errors.minlength">Min. Länge 4</div>-->
-<!--      <div [hidden]="pin.errors.maxlength">Max. Länge 4</div>-->
+      <div [hidden]="pin.valid" class="alert alert-danger">Pin fehlt oder Länge ist nicht 4</div>
     </div>
-
 
     <div mat-dialog-actions>
       <button type="button" class="btn btn-success" (click)="onNoClick()">No Thanks</button>
