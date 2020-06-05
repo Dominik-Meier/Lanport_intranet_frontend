@@ -1,2 +1,12 @@
 $nav-bar-item-line-height: 6vh;
 $nav-bar-item-line-width: 15vw;
+
+.mat-card-field {
+  display: flex;
+  justify-content: left;
+}
+
+.mat-card-label {
+  width: 10vw;
+  font-weight: bold;
+}

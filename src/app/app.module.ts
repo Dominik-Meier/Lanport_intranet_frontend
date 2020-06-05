@@ -38,7 +38,8 @@ import { TournamentSettingsComponent } from './components/3_settings_components/
 import { TournamentConfigurationComponent } from './components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
 import {TournamentComponent} from "./components/1_registerOptions-Component/tournament/tournament.component";
 import { DisplayUserComponent } from './components/display-user/display-user.component';
-
+import { CreateTeamComponent } from './components/create-team/create-team.component';
+import { DigitOnlyModule } from '@uiowa/digit-only';
 
 
 //TODO Send link of app to ben :)
@@ -64,6 +65,7 @@ import { DisplayUserComponent } from './components/display-user/display-user.com
     TournamentConfigurationComponent,
     TournamentComponent,
     DisplayUserComponent,
+    CreateTeamComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +86,7 @@ import { DisplayUserComponent } from './components/display-user/display-user.com
     MatDatepickerModule,
     MatNativeDateModule,
     CKEditorModule,
+    DigitOnlyModule,
   ],
   exports: [
     MatIconModule,

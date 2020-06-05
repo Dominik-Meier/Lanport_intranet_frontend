@@ -5,6 +5,8 @@ import {SafeHtml} from "@angular/platform-browser";
 import {Tournament} from "../../../models/Tournament";
 import {Lanparty} from "../../../models/Lanparty";
 import {TournamentService} from "../../../services/dataServices/tournament.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CreateTeamComponent} from "../../create-team/create-team.component";
 
 @Component({
   selector: 'app-tournament',
@@ -19,7 +21,8 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   lanparty: Lanparty;
   infosDisplayArray = [];
 
-  constructor(private tournamentService: TournamentService) {
+  constructor(private tournamentService: TournamentService,
+              public dialog: MatDialog) {
     super();
   }
 
@@ -53,4 +56,12 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     }
   }
 
+  addTeam(event) {
+    const dialogRef = this.dialog.open( CreateTeamComponent, {
+      width: '50vw'
+    });
+    dialogRef.afterClosed().subscribe( result => {
+      console.log('log mat dialog res', result);
+    });
+  }
 }

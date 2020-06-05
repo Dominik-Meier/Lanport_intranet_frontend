@@ -1,7 +1,7 @@
 export class Team {
   private id: number;
-  private name: string;
-  private pin: number;
+  public name: string;
+  public pin: number;
 
 
   constructor(id: number, name: string, pin: number) {
