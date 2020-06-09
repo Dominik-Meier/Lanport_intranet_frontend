@@ -78,7 +78,7 @@
           </mat-card-title>
           <mat-card-content>
             <ul>
-              <li *ngFor="let num of [1,2,3,4,5]">{{num}}. Person</li>
+              <li *ngFor="let num of this.teamSizeArray;">{{num}}. {{ team.teamMembers[num-1] ? team.teamMembers[num-1].getUser().getName() : 'Leer'}}</li>
             </ul>
           </mat-card-content>
         </mat-card>

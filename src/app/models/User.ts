@@ -15,6 +15,10 @@ export class User {
     this.rights = rights;
   }
 
+  getId() {
+    return this.id;
+  }
+
   getName() {
     return this.name;
   }

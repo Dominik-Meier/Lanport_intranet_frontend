@@ -1,16 +1,19 @@
 import {Tournament} from "./Tournament";
+import {TeamMember} from "./TeamMember";
 
 export class Team {
   private id: number;
   public name: string;
   public pin: number;
   public tournament: Tournament;
+  public teamMembers: TeamMember[];
 
-  constructor(id: number, name: string, pin: number, tournament: Tournament) {
+  constructor(id: number, name: string, pin: number, tournament: Tournament, teamMembers: TeamMember[]) {
     this.id = id;
     this.name = name;
     this.pin = pin;
     this.tournament = tournament;
+    this.teamMembers = teamMembers;
   }
 
   getId() {
@@ -39,5 +42,9 @@ export class Team {
 
   setTournament(tournament: Tournament) {
     this.tournament = tournament;
+  }
+
+  addTeamMember(tm: TeamMember) {
+    this.teamMembers.push(tm);
   }
 }

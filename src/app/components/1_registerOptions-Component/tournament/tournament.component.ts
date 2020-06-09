@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {CreateTeamComponent} from "../../create-team/create-team.component";
 import {Team} from "../../../models/Team";
 import {TeamService} from "../../../services/dataServices/team.service";
+import {TeamMemberService} from "../../../services/dataServices/team-member.service";
 
 @Component({
   selector: 'app-tournament',
@@ -23,9 +24,11 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   lanparty: Lanparty;
   infosDisplayArray = [];
   teams: Team[] = [];
+  teamSizeArray = [];
 
   constructor(private tournamentService: TournamentService,
               private teamService: TeamService,
+              private teamMemberService: TeamMemberService,
               public dialog: MatDialog) {
     super();
   }
@@ -34,13 +37,19 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     console.log(this.data);
 
     this.tournament = this.tournamentService.getTournament(this.data.data);
-    this.setInfoArray();
+    this.setTeamSizeArray();
+    this.setInfoArray()
+    this.loadTeams();
     console.log(this.tournament);
 
     this.tournamentService.getTournamentObservable.subscribe( () => {
       this.tournament = this.tournamentService.getTournament(this.data.data);
       console.log(this.tournament);
+      console.log('set Tournament infos to array');
+      this.setTeamSizeArray();
       this.setInfoArray();
+      console.log('reload Tournament teams');
+      this.loadTeams();
     });
 
     this.teamService.getTeamObservable.subscribe( team => {
@@ -59,7 +68,15 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
         }
       }
     })
+  }
 
+  setTeamSizeArray() {
+    if(this.tournament) {
+      this.teamSizeArray = [];
+      for (let i = 0; i < this.tournament.getGameMode().getTeamSize(); i++) {
+        this.teamSizeArray.push(i+1);
+      }
+    }
   }
 
   setInfoArray() {
@@ -75,6 +92,16 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       this.infosDisplayArray.push(['Teamgrösse', this.tournament.getGameMode().getTeamSize()]);
       this.infosDisplayArray.push(['Anzahl Teams', this.tournament.getNumberOfParticipants()]);
       this.infosDisplayArray.push(['Startzeit', this.tournament.getStartDate()]);
+    }
+  }
+
+  loadTeams() {
+    if(this.tournament){
+      this.teamService.getTeamByTournament(this.tournament.getId()).subscribe(res =>{
+        console.log('teams loaded from backend', res);
+        console.log('teams filled with data from backend');
+        this.teams = res;
+      })
     }
   }
 
