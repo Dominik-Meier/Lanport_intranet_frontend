@@ -23,6 +23,10 @@ export class User {
     return this.name;
   }
 
+  getSeat() {
+    return this.seat;
+  }
+
   getRights() {
     return this.rights;
   }
