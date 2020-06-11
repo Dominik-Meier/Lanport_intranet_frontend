@@ -10,6 +10,7 @@ import {CreateTeamComponent} from "../../create-team/create-team.component";
 import {Team} from "../../../models/Team";
 import {TeamService} from "../../../services/dataServices/team.service";
 import {TeamMemberService} from "../../../services/dataServices/team-member.service";
+import {AuthService} from "../../../services/auth-service.service";
 
 @Component({
   selector: 'app-tournament',
@@ -29,6 +30,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   constructor(private tournamentService: TournamentService,
               private teamService: TeamService,
               private teamMemberService: TeamMemberService,
+              private authService: AuthService,
               public dialog: MatDialog) {
     super();
   }
@@ -61,6 +63,8 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
           const id = this.teams.findIndex( x => x.getId() === team.getId())
           this.teams[id].setName( team.getName());
           this.teams[id].setPin( team.getPin());
+          this.teams[id].setTournament( team.getTournament());
+          this.teams[id].setTeamMembers( team.getTeamMembers());
           console.log('team updated');
         } else {
           this.teams.push(team);
@@ -116,5 +120,40 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       }
       console.log('log mat dialog res', result);
     });
+  }
+
+  cantJoinTeam(team: Team) {
+    if (this.isMember(team)) {
+      return true;
+    }
+    if (team.teamMembers.length >= this.tournament.getGameMode().getTeamSize()) {
+      return true;
+    }
+    if (team)
+
+    return false;
+  }
+
+  isMember(team) {
+    if (team.teamMembers.find( x => x.getUser().getId() === this.authService.getActiveUser().getId())) {
+      return true;
+    }
+    return false;
+  }
+
+  joinTeam(team: Team) {
+    //TODO create form to enter PIN to join team
+    this.teamService.joinTeam(team);
+    console.log('join team');
+  }
+
+
+  leaveTeam(team: Team) {
+    const user = this.authService.getActiveUser();
+    const tm = team.getTeamMembers().find(x => x.getUser().getId() === user.getId());
+    if (tm) {
+      console.log('found tm to remove: ', tm);
+      this.teamService.leaveTeam(team, tm);
+    }
   }
 }

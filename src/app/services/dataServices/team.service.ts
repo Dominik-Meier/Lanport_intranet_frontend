@@ -49,19 +49,30 @@ export class TeamService {
     const targetURL = this.url + 'teams';
     return this.http.post<Team>(targetURL, team).pipe( map(
       response => {
-        //TODO after create team add user which created the team
         const team = this.mapJSONToTeam(response);
         this.TeamSubject.next(team);
-        console.log('after team subject');
         const addTeamMember = new TeamMember(null, team.getId(), this.authService.getActiveUser());
         this.teamMemberService.createTeamMember(addTeamMember).subscribe( teamMember => {
           team.addTeamMember(teamMember);
-          console.log('team member added');
         });
-        console.log('before return team');
         return team;
       }
     ));
+  }
+
+  joinTeam(team: Team): void {
+    const tm = new TeamMember(null, team.getId(), this.authService.getActiveUser());
+    this.teamMemberService.createTeamMember(tm).subscribe( res => {
+      team.addTeamMember(res);
+      this.TeamSubject.next(team);
+    })
+  }
+
+  leaveTeam(team: Team, tm: TeamMember): void {
+    this.teamMemberService.deleteTeamMember(tm).subscribe( res => {
+      team.removeTeamMember(tm);
+      this.TeamSubject.next(team);
+    })
   }
 
   updateTeam(team: Team): Observable<Team> {

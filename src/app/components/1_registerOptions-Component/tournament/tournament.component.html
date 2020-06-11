@@ -74,17 +74,17 @@
         <mat-card *ngFor="let team of teams" class="team-card">
           <mat-card-title>
             <p class="inline">{{team.name}}</p>
-            <p class="inline">   Pin</p>
+            <p class="inline" [hidden]="!isMember(team)">   {{team.getPin()}}</p>
           </mat-card-title>
           <mat-card-content>
             <ul>
               <li *ngFor="let num of this.teamSizeArray;">{{num}}. {{ team.teamMembers[num-1] ? team.teamMembers[num-1].getUser().getName() + '  ' + team.teamMembers[num-1].getUser().getSeat() : 'Leer'}}</li>
             </ul>
           </mat-card-content>
-          <mat-card-footer>
-            <button> Beitreten </button>
-            <button> Verlassen </button>
-          </mat-card-footer>
+          <mat-card-actions>
+            <button type="button" class="btn btn-success" [disabled]="cantJoinTeam(team)" (click)="joinTeam(team)"> Beitreten </button>
+            <button type="button" class="btn btn-danger" [disabled]="!isMember(team)" (click)="leaveTeam(team)"> Verlassen </button>
+          </mat-card-actions>
         </mat-card>
       </mat-card-content>
     </mat-card>

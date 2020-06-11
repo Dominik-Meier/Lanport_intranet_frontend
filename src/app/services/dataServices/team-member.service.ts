@@ -58,14 +58,20 @@ export class TeamMemberService {
     ));
   }
 
-  updateTeamMember(teamMemver: TeamMember): Observable<TeamMember> {
+  updateTeamMember(teamMember: TeamMember): Observable<TeamMember> {
     console.log('not supperted yet');
     return null;
   }
 
-  deleteTeamMember(teamMemver: TeamMember): Observable<TeamMember> {
-    console.log('not supperted yet');
-    return null;
+  deleteTeamMember(teamMember: TeamMember): Observable<TeamMember> {
+    console.log('before server request', teamMember);
+    const targetURL = this.url + 'teamMembers/' + teamMember.getId();
+    return this.http.delete<TeamMember>(targetURL).pipe( map(
+      response => {
+        console.log('server response from delete tm');
+        return teamMember;
+      }
+    ));
   }
 
   mapJSONToTeamMember(data: any): TeamMember {

@@ -32,6 +32,10 @@ export class Team {
     return this.tournament;
   }
 
+  getTeamMembers() {
+    return this.teamMembers;
+  }
+
   setName(name: string) {
     this.name = name;
   }
@@ -44,7 +48,21 @@ export class Team {
     this.tournament = tournament;
   }
 
+  setTeamMembers(tm: TeamMember[]) {
+    this.teamMembers = tm;
+  }
+
   addTeamMember(tm: TeamMember) {
     this.teamMembers.push(tm);
+  }
+
+  removeTeamMember(tm: TeamMember) {
+    console.log(this.teamMembers);
+    console.log(tm);
+    const tmIndex = this.teamMembers.findIndex( x => x.getId() === tm.getId());
+    if (tmIndex !== null) {
+      this.teamMembers.splice(tmIndex, 1);
+      console.log('removed', this.teamMembers);
+    }
   }
 }
