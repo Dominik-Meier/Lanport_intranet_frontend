@@ -40,6 +40,7 @@ import {TournamentComponent} from "./components/1_registerOptions-Component/tour
 import { DisplayUserComponent } from './components/display-user/display-user.component';
 import { CreateTeamComponent } from './components/create-team/create-team.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
+import { QuillModule } from 'ngx-quill'
 
 
 //TODO Send link of app to ben :)
@@ -87,6 +88,7 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
     MatNativeDateModule,
     CKEditorModule,
     DigitOnlyModule,
+    QuillModule.forRoot()
   ],
   exports: [
     MatIconModule,
