@@ -32,7 +32,9 @@
               "./node_modules/quill/dist/quill.core.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/quill/dist/quill.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -130,7 +132,9 @@
               "src/styles.scss",
               "../node_modules/font-awesome/css/font-awesome.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/quill/dist/quill.min.js"
+            ]
           }
         },
         "lint": {

@@ -4,6 +4,7 @@
   <!-- <ckeditor #editor [editor]="Editor" [(ngModel)]="displayedString" (ready)="onReady($event)"></ckeditor> -->
   <quill-editor
     [(ngModel)]="startString"
+    (onContentChanged)="changeString($event)"
     placeholder="Enter Text"
     [modules]="quillConfig"></quill-editor>
 </div>

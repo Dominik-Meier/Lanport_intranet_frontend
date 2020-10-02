@@ -1,5 +1,9 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import * as QuillNamespace from 'quill';
+let Quill: any = QuillNamespace;
+import ImageResize from 'quill-image-resize-module';
+Quill.register('modules/imageResize', ImageResize);
 
 @Component({
   selector: 'app-html-displayer-configuration',
@@ -22,6 +26,12 @@ export class HtmlDisplayerConfigurationComponent implements OnInit {
     this.name = this.data.name;
     this.displayedString = this.data.data;
     this.startString = this.data.data;
+  }
+
+  changeString(event) {
+    console.log(event.html);
+    console.log(this.displayedString);
+    this.displayedString = event.html;
   }
 
   onNoClick(): void {
@@ -57,6 +67,7 @@ export class HtmlDisplayerConfigurationComponent implements OnInit {
       ],
       //   handlers: {'emoji': function() {}}
     },
-  }
+    imageResize: true
+  };
 
 }

@@ -41,7 +41,7 @@ import { DisplayUserComponent } from './components/display-user/display-user.com
 import { CreateTeamComponent } from './components/create-team/create-team.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { QuillModule } from 'ngx-quill'
-
+import { ImageResize } from 'quill-image-resize-module';
 
 //TODO Send link of app to ben :)
 @NgModule({
