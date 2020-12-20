@@ -2,7 +2,7 @@
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. Use `-c local` for using local DB and API
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 ## To Do's
 `General Syncs for clients`
