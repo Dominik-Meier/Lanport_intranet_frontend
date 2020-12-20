@@ -2,8 +2,8 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import * as QuillNamespace from 'quill';
 let Quill: any = QuillNamespace;
-import ImageResize from 'quill-image-resize-module';
-Quill.register('modules/imageResize', ImageResize);
+import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
+Quill.register('modules/blotFormatter', BlotFormatter);
 
 @Component({
   selector: 'app-html-displayer-configuration',
@@ -67,7 +67,9 @@ export class HtmlDisplayerConfigurationComponent implements OnInit {
       ],
       //   handlers: {'emoji': function() {}}
     },
-    imageResize: true
+    blotFormatter: {
+
+    }
   };
 
 }
