@@ -1,9 +1,26 @@
 <div class="nav-bar">
-  <div class="header">
-    <div class="label-box">
-      <label class="header-intranet">Intranet</label>
+  <div>
+
+    <div class="header">
+      <div class="mt-3 ml-1">
+        <mat-icon class="settings" *ngIf="checkUserRights()" (click)="this.onClickSettings($event)">settings</mat-icon>
+      </div>
+
+      <div class="mt-3">
+        <h1>Intranet</h1>
+      </div>
+
+      <div class="mt-3 mr-1">
+        <mat-icon class="user" (click)="onClickUser($event)">account_circle</mat-icon>
+      </div>
+    </div>
+
+    <div style="margin-top: -2.5vh">
+      <hr class="split-line line-shadow mr-2 ml-2">
     </div>
   </div>
+
+
 
   <div class="body">
     <div *ngFor="let navItem of navBarItems">
@@ -11,16 +28,17 @@
     </div>
   </div>
 
+  <div>
+
+  </div>
+
   <div class="footer">
+    <hr class="split-line ml-2 mr-2 line-shadow">
     <img src="assets/img/LanPort.png"  width="100%" height="auto" class="img" (click)="onLPLogoClick($event)">
   </div>
 
-
 </div>
 
-<hr class="line-header">
-<hr class="line-footer">
 
-<mat-icon class="settings" *ngIf="checkUserRights()" (click)="this.onClickSettings($event)">settings</mat-icon>
-<mat-icon class="user" (click)="onClickUser($event)">account_circle</mat-icon>
+
 

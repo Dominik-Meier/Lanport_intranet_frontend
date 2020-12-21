@@ -1,13 +1,14 @@
+@import "src/app/app.component";
+
 .nav-bar {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 20vw;
-  height: 100vh;
+  display: flex;
+  width: $nav-bar-width;
+  min-width: $nav-bar-min-width;
+  height: $nav-bar-height;
 }
 
 .information {
-  position: fixed;
+  display: flex;
   left: 20vw;
   top: 0px;
   width: 80vw;
