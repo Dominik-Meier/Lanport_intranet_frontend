@@ -1,9 +1,10 @@
 $nav-bar-width: 12.5vw;
 $nav-bar-height: 100vh;
-$nav-bar-min-width: 150px;
+$nav-bar-min-width: 175px;
 $nav-bar-item-line-height: 3.5vh;
 $nav-bar-item-line-width: 12.5vw;
-$nav-bar-item-line-min-width: 120vw;
+$nav-bar-item-line-min-width: 160px;
+$header-height: 64px;
 
 .mat-card-field {
   display: flex;
@@ -13,6 +14,16 @@ $nav-bar-item-line-min-width: 120vw;
 .mat-card-label {
   width: 10vw;
   font-weight: bold;
+}
+
+.split-line {
+  border: none;
+  height: 1px;
+  background: rgba(155, 155, 155, 0.3);
+}
+
+.line-shadow {
+  box-shadow: 0px 0px 4px rgba(155, 155, 155, 0.16);
 }
 
 

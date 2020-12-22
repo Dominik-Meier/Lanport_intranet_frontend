@@ -1,16 +1,11 @@
-<div style="flex-direction: row">
+<div class="home-view">
 
   <div class="nav-bar">
     <app-nav-bar></app-nav-bar>
   </div>
 
   <div class="information">
-    <div>
-      <div *ngIf="activeNavBarItem">
-        {{activeNavBarItem.name}}
-      </div>
       <ng-template #dynamicElementInsertionPoint></ng-template>
-    </div>
   </div>
 
 </div>

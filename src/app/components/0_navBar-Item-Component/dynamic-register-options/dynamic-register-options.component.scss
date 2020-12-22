@@ -1,25 +1,14 @@
-.registerOptionsBar {
-  position: fixed;
-  left: 20vw;
-  top: 0px;
-  width: 80vw;
-  height: 7.5vh;
-  background: #C4C4C4;
-}
+@import "src/app/app.component";
 
-.registerOptionsTable {
-  height: 100%;
-  width: 100%;
+.registerOptionsBar {
+  display: flex;
+  flex: 1;
+  width: 100vw - $nav-bar-width;
+  height: $header-height;
 }
 
 .registerItem {
-  vertical-align: middle;
-}
-
-.registerOptionContent {
-  position: fixed;
-  left: 20vw;
-  top: 7.5vh;
-  width: 80vw;
-  height: 92.5vh;
+  display: flex;
+  justify-content: space-evenly;
+  flex: 1;
 }

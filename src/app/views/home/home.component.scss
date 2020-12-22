@@ -1,5 +1,11 @@
 @import "src/app/app.component";
 
+.home-view {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
 .nav-bar {
   display: flex;
   width: $nav-bar-width;
@@ -9,9 +15,4 @@
 
 .information {
   display: flex;
-  left: 20vw;
-  top: 0px;
-  width: 80vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.1);
 }

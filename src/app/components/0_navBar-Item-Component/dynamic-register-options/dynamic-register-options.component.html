@@ -1,12 +1,14 @@
 <div class="registerOptionsBar">
-  <table class="registerOptionsTable">
-    <th *ngFor="let register of registerOptions" class="registerItem">
+    <div class="registerItem" *ngFor="let register of registerOptions">
       <app-register-item [registerItem]="register" [active]="register.getActive()" (itemSelected)="activeRegisterOptionChange($event)"></app-register-item>
-    </th>
-  </table>
+    </div>
+</div>
+<div style="margin-top: -2.5vh">
+  <hr class="split-line line-shadow mr-4 ml-4">
 </div>
 
-<div class="registerOptionContent">
+
+<div>
   <ng-template #dynamicElementInsertionPoint></ng-template>
 <!--  <app-html-displayer [htmlString]="activeRegisterOption" *ngIf="activeRegisterOption"></app-html-displayer>-->
 </div>
