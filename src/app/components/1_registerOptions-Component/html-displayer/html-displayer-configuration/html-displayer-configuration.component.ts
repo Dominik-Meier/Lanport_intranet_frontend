@@ -62,7 +62,7 @@ export class HtmlDisplayerConfigurationComponent implements OnInit {
 
         ['clean'],                                         // remove formatting button
 
-        ['link', 'image'],
+        ['link', 'image', 'video'],
         //['link', 'image', 'video']
       ],
       //   handlers: {'emoji': function() {}}

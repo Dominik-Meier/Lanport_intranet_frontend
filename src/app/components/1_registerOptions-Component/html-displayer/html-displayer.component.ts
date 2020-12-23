@@ -1,8 +1,11 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {RegisterOptionItem} from "../../../models/registerOptionItem";
 import {DataDisplayerComponent} from "../../interfaces/dataDisplayer.component";
 import {ComponentWithNameComponent} from "../../interfaces/componentWithName.component";
+import * as QuillNamespace from 'quill';
+let Quill: any = QuillNamespace;
+import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
+Quill.register('modules/blotFormatter', BlotFormatter);
 
 @Component({
   selector: 'app-html-displayer',
@@ -13,17 +16,17 @@ import {ComponentWithNameComponent} from "../../interfaces/componentWithName.com
 export class HtmlDisplayerComponent extends ComponentWithNameComponent implements OnInit, DataDisplayerComponent  {
   static componentName = "HtmlDisplayerComponent";
   @Input() data: any;
-  htmlString: SafeHtml;
-  htmlStringHardcoded: SafeHtml;
+  quillString: string;
 
-  constructor(private sanitizer: DomSanitizer) {
+  constructor() {
     super();
   }
 
   ngOnInit(): void {
-    // TODO maybe check first if data ist from type RegisterOptionItem, but maybe this is not always the case!
-    if (this.data.getData()){
-      this.htmlString = this.sanitizer.bypassSecurityTrustHtml(this.data.getData());
-    }
+    this.quillString = this.data.getData();
   }
+
+  quillConfig={
+    toolbar: false,
+  };
 }

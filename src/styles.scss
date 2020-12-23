@@ -10,3 +10,8 @@ html, body { height: 100%; }
 .flex-1 {
   flex: 1;
 }
+
+iframe.ql-video {
+  min-height: 33vh !important;
+  min-width: 33vw !important;
+}

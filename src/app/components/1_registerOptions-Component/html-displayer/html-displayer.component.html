@@ -1,3 +1,8 @@
 <div class="content">
-  <div style="max-width: 50%; margin: auto;" [innerHTML]="htmlString"></div>
+  <quill-editor
+    [(ngModel)]="quillString"
+    [readOnly]="true"
+    [disabled]="true"
+    placeholder="Enter Text"
+    [modules]="quillConfig"></quill-editor>
 </div>
