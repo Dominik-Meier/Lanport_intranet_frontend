@@ -20,7 +20,9 @@ import {RegisterItemComponent} from "../../components/interfaces/registerItem.co
 })
 export class HomeComponent implements OnInit {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
-  public activeNavBarItem;
+  public activeNavBarItem = null;
+  public navItemIsActive = false;
+
 
   constructor(
     private authService: AuthService,
@@ -42,12 +44,16 @@ export class HomeComponent implements OnInit {
 
     // Load the Component associated to the NavBarItem
     this.navBarItemService.activeNavBarItemsObservable.subscribe( activeNavItem => {
-      this.activeNavBarItem = activeNavItem;
       this.dynamicElementInsertionPoint.clear();
-      if (this.activeNavBarItem.component) {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.component);
-        const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-        (<RegisterItemComponent>componentRef.instance).data = this.activeNavBarItem.getOptions();
+      this.navItemIsActive = false;
+      if (activeNavItem != null) {
+        this.activeNavBarItem = activeNavItem;
+        if (this.activeNavBarItem.component) {
+          const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.component);
+          const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
+          (<RegisterItemComponent>componentRef.instance).data = this.activeNavBarItem.getOptions();
+          this.navItemIsActive = true;
+        }
       }
     });
   }

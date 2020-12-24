@@ -5,7 +5,21 @@
   </div>
 
   <div class="information">
+    <div>
       <ng-template #dynamicElementInsertionPoint></ng-template>
+    </div>
+
+
+    <div *ngIf="!navItemIsActive" class="back-img">
+      <div class="home-content">
+        <div>
+          <h1 class="home-title">Herzlich Willkommen an der Lan2k21</h1>
+        </div>
+        <div>
+          <hr class="home-hr">
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

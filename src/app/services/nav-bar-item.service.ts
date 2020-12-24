@@ -62,13 +62,17 @@ export class NavBarItemService {
   setNewActiveItem(navItem: NavBarItem) {
     for( const item of this.navBarItems) {
 
-      if (item.getActive()) {
+      if (item.getActive() && item.getName() != navItem.getName()) {
         item.setActive(false);
       }
 
       if (item.getName() === navItem.getName()) {
-        item.setActive(true);
-        this.activeNavBarItem = item;
+        item.setActive(navItem.getActive());
+        if (item.getActive()) {
+          this.activeNavBarItem = item;
+        } else {
+          this.activeNavBarItem = null;
+        }
       }
     }
 

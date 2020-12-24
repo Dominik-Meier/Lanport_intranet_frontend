@@ -41,6 +41,7 @@ export class NavBarItemComponent implements OnChanges {
   }
 
   onSelect(event) {
+    this.navItem.setActive(!this.navItem.getActive());
     this.navBarItemService.setNewActiveItem(this.navItem);
   }
 }

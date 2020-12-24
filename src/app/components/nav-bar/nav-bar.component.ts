@@ -57,20 +57,6 @@ export class NavBarComponent implements OnInit {
     }
   }
 
-  // openDialog(row): void {
-  //   const componentToLoad = this.innerConfigurationsComponents.get(row.component.componentName);
-  //   const dialogRef = this.dialog.open( componentToLoad, {
-  //     width: '50vw',
-  //     data: {data: row.getData(), name: row.getName()}
-  //   });
-  //
-  //   dialogRef.afterClosed().subscribe( result => {
-  //     console.log(result);
-  //     result ? row.setData(result) : null;
-  //   });
-  //   console.log(row);
-  // }
-
   onClickSettings(event) {
     location.assign('settings');
   }
