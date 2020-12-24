@@ -28,12 +28,11 @@ export class DynamicRegisterOptionsComponent extends ComponentWithNameComponent 
 
   activeRegisterOptionChange(newRegisterOptionItem: RegisterOptionItem) {
     this.registerOptions.forEach( registerItem => {
-      if (registerItem.getActive()) {
+      if (registerItem.getActive() && registerItem.getName() != newRegisterOptionItem.getName()) {
         registerItem.setActive(false);
       }
 
-      if (registerItem.getName() === newRegisterOptionItem.getName()) {
-        registerItem.setActive(true);
+      if (newRegisterOptionItem.getActive() === true && registerItem.getName() === newRegisterOptionItem.getName()) {
         this.activeRegisterOption = registerItem;
         this.registerOptions = Object.assign([], this.registerOptions);
       }
@@ -43,9 +42,11 @@ export class DynamicRegisterOptionsComponent extends ComponentWithNameComponent 
 
     //TODO is working but maybe check the error
     // @ts-ignore
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory( this.activeRegisterOption.getComponent());
-    const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-    (<DataDisplayerComponent>componentRef.instance).data = this.activeRegisterOption;
+    if (this.activeRegisterOption.getActive()) {
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory( this.activeRegisterOption.getComponent());
+      const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
+      (<DataDisplayerComponent>componentRef.instance).data = this.activeRegisterOption;
+    }
   }
 
 }

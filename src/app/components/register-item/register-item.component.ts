@@ -44,7 +44,9 @@ export class RegisterItemComponent implements OnInit, OnChanges {
   }
 
   onSelect(event) {
-    this.registerItem.setActive(true);
+    console.log(this.registerItem.getActive());
+    this.registerItem.setActive(!this.registerItem.getActive());
+    console.log(this.registerItem);
     this.itemSelected.emit(this.registerItem);
   }
 }
