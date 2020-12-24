@@ -15,3 +15,9 @@ iframe.ql-video {
   min-height: 33vh !important;
   min-width: 33vw !important;
 }
+
+app-html-displayer .ql-editor > * {
+  cursor: default !important;
+}
+
+
