@@ -10,6 +10,7 @@ import {HtmlDisplayerComponent} from "../../1_registerOptions-Component/html-dis
 import {  navBarItemComponentConfigurationSelectorMap} from "../../../models/maps/innerComponentConfigurationSelectorMaps";
 import {DataDisplayerComponent} from "../../interfaces/dataDisplayer.component";
 import {navBarComponentConfigurationSelectorMap} from "../../../models/maps/outerComponentConfigurationSelectorMaps";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-set-app-navigation',
@@ -20,7 +21,7 @@ export class SetAppNavigationComponent implements OnInit {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   config: NavBarItem[];
   dataSource: MatTableDataSource<NavBarItem>;
-  columnsToDisplay = ['select', 'name', 'componentName', 'actions']
+  columnsToDisplay = ['select', 'name', 'componentName', 'enabledAtIntranet', 'actions']
   outerComponents: Map<String, ComponentWithNameComponent> = navBarComponentSelectorMap;
   innerComponents: Map<String, ComponentWithNameComponent> = navBarItemComponentSelectorMap;
 
@@ -53,12 +54,16 @@ export class SetAppNavigationComponent implements OnInit {
     }
   }
 
+  setEnabledAtIntranet(event: MatCheckboxChange, row: NavBarItem) {
+    row.setEnabledAtIntranet(event.checked)
+  }
+
   changeName(event, row){
     row.setName(event);
   }
 
   addNavBarItem(event) {
-    this.config.push(new NavBarItem("Placeholder", [], null));
+    this.config.push(new NavBarItem("Placeholder", false, [], null));
     this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 

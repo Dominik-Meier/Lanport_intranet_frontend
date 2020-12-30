@@ -69,7 +69,7 @@ export class AppConfigService {
         }
         optionsArr.push(new RegisterOptionItem(option.name, option.data, componentInner))
       }
-      resultArr.push( new NavBarItem(element.name, optionsArr, componentOuter))
+      resultArr.push( new NavBarItem(element.name, element.enabledAtIntranet, optionsArr, componentOuter))
     }
     return resultArr;
   }

@@ -43,7 +43,7 @@ export class DynamicRegisterOptionsComponent extends ComponentWithNameComponent 
     //TODO is working but maybe check the error
     // @ts-ignore
     if (this.activeRegisterOption.getActive()) {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory( this.activeRegisterOption.getComponent());
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeRegisterOption.getComponent());
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
       (<DataDisplayerComponent>componentRef.instance).data = this.activeRegisterOption;
     }

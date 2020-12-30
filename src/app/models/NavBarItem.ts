@@ -8,11 +8,13 @@ export class NavBarItem {
   /** Data for further components*/
   private data: any[];
   private active: boolean;
+  private enabledAtIntranet: boolean;
   private component: ComponentWithNameComponent;
 
-  constructor(name: string, data: any, component: ComponentWithNameComponent = null) {
+  constructor(name: string, enabledAtIntranet: boolean, data: any, component: ComponentWithNameComponent = null) {
     this.name = name;
     this.active = false;
+    this.enabledAtIntranet = enabledAtIntranet;
     this.component = component;
     if (data instanceof Array) {
       this.data = data;
@@ -33,6 +35,10 @@ export class NavBarItem {
     return this.active;
   }
 
+  getEnabledAtIntranet(): boolean {
+    return this.enabledAtIntranet;
+  }
+
   getComponent() {
     return this.component;
   }
@@ -43,6 +49,10 @@ export class NavBarItem {
 
   setActive(active: boolean) {
     this.active = active;
+  }
+
+  setEnabledAtIntranet(enabledAtIntranet: boolean) {
+    this.enabledAtIntranet = enabledAtIntranet;
   }
 
   setOptions( options: any) {
@@ -72,6 +82,7 @@ export class NavBarItem {
       'name': this.name,
       'options': opt,
       'active': this.active,
+      'enabledAtIntranet': this.getEnabledAtIntranet(),
       'component': name
     }
   }
