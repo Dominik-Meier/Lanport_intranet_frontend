@@ -1,28 +1,33 @@
+@import "src/app/app.component";
+
 .tournament-main-grid {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-flow: column;
+  width: 100vw - $nav-bar-width;
+  padding: 2.5vh 5vw 2.5vh 5vw;
+  //2.5vh is offset hr
+  //64px height top nav
+  //16px margin hr bottom
+  height: calc(100vh - 2.5vh - 64px - 16px);
 }
 
 .tournament-top-grid {
-  height: 37.5vh;
+  height: 45vh;
+  flex: 1 1;
 }
 
 .tournament-bottom-grid {
-  width: 100%;
-  height: 50vh;
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  flex: 0 1;
 }
 
 .tournament-column-grid {
   width: 33.33%;
-  height: 100%;
   float: left;
   text-align: center;
-}
-
-.top-card {
-  height: 35vh;
-  margin: 0.5vh;
-  padding: 1vh !important;
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  height: 95%;
+  overflow: auto;
 }
 
 .team-card {
@@ -30,12 +35,6 @@
   margin: 0.5vh;
   padding: 1vh !important;
   display: inline-block;
-}
-
-.tournament-registration-card {
-  height: 50vh;
-  margin: 0.5vh;
-  padding: 1vh !important;
 }
 
 .card-field {
@@ -57,12 +56,4 @@
 
 .no-margin {
   margin: 0px !important;
-}
-
-.mat-card.scrollable-content {
-  overflow: auto;
-}
-
-.inline {
-  display: inline;
 }

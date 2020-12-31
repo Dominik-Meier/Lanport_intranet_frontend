@@ -21,18 +21,32 @@
       </mat-card>
     </div>
 
-    <!--    Placeholder     -->
+    <!--    Teams / Player     -->
     <div class="tournament-column-grid ">
       <mat-card class="top-card scrollable-content">
-        <mat-card-title>Placeholder</mat-card-title>
+        <mat-card-title *ngIf="tournament.getTeamRegistration()">Teams</mat-card-title>
+        <mat-card-title *ngIf="!tournament.getTeamRegistration()">Spieler</mat-card-title>
 
         <mat-card-content >
-          <div class="card-field">
-            <div class="label">
-              <p class="no-margin">Placeholder</p>
+          <div  *ngIf="tournament.getTeamRegistration()">
+            <div class="card-field" *ngFor="let team of teams; let i = index" [attr.data-index]="i">
+              <div class="label">
+                <p class="no-margin" >Team {{i+1}}</p>
+              </div>
+              <div class="content">
+                <p class="no-margin">{{team.getName()}}</p>
+              </div>
             </div>
-            <div class="content">
-              <p class="no-margin"> Not needed space, wtf!</p>
+          </div>
+
+          <div  *ngIf="!tournament.getTeamRegistration()">
+            <div class="card-field" *ngFor="let tournamentParticipant of tournamentParticipants; let i = index" [attr.data-index]="i">
+              <div class="label">
+                <p class="no-margin" >Spieler {{i+1}}</p>
+              </div>
+              <div class="content">
+                <p class="no-margin">{{tournamentParticipant.getUser().getName()}}</p>
+              </div>
             </div>
           </div>
         </mat-card-content>
@@ -60,33 +74,34 @@
     </div>
   </div>
 
-  <!-- Tournament registration  -->
+  <!-- Tournament Actions  -->
   <div class="tournament-bottom-grid">
-    <mat-card class="tournament-registration-card scrollable-content">
+    <mat-card>
       <mat-card-title>
         <div>
-          <p class="inline">Anmeldung</p>
-          <mat-icon (click)="addTeam($event)">add</mat-icon>
+          <p class="inline">Actions</p>
+          <mat-icon *ngIf="tournament.getTeamRegistration()" (click)="addTeam($event)">add</mat-icon>
+          <mat-icon *ngIf="!tournament.getTeamRegistration()" (click)="joinTournament($event)">add_task</mat-icon>
         </div>
       </mat-card-title>
 
-      <mat-card-content>
-        <mat-card *ngFor="let team of teams" class="team-card">
-          <mat-card-title>
-            <p class="inline">{{team.name}}</p>
-            <p class="inline" [hidden]="!isMember(team)">   {{team.getPin()}}</p>
-          </mat-card-title>
-          <mat-card-content>
-            <ul>
-              <li *ngFor="let num of this.teamSizeArray;">{{num}}. {{ team.teamMembers[num-1] ? team.teamMembers[num-1].getUser().getName() + '  ' + team.teamMembers[num-1].getUser().getSeat() : 'Leer'}}</li>
-            </ul>
-          </mat-card-content>
-          <mat-card-actions>
-            <button type="button" class="btn btn-success" [disabled]="cantJoinTeam(team)" (click)="joinTeam(team)"> Beitreten </button>
-            <button type="button" class="btn btn-danger" [disabled]="!isMember(team)" (click)="leaveTeam(team)"> Verlassen </button>
-          </mat-card-actions>
-        </mat-card>
-      </mat-card-content>
+<!--      <mat-card-content>-->
+<!--        <mat-card *ngFor="let team of teams" class="team-card">-->
+<!--          <mat-card-title>-->
+<!--            <p class="inline">{{team.name}}</p>-->
+<!--            <p class="inline" [hidden]="!isMember(team)">   {{team.getPin()}}</p>-->
+<!--          </mat-card-title>-->
+<!--          <mat-card-content>-->
+<!--            <ul>-->
+<!--              <li *ngFor="let num of this.teamSizeArray;">{{num}}. {{ team.teamMembers[num-1] ? team.teamMembers[num-1].getUser().getName() + '  ' + team.teamMembers[num-1].getUser().getSeat() : 'Leer'}}</li>-->
+<!--            </ul>-->
+<!--          </mat-card-content>-->
+<!--          <mat-card-actions>-->
+<!--            <button type="button" class="btn btn-success" [disabled]="cantJoinTeam(team)" (click)="joinTeam(team)"> Beitreten </button>-->
+<!--            <button type="button" class="btn btn-danger" [disabled]="!isMember(team)" (click)="leaveTeam(team)"> Verlassen </button>-->
+<!--          </mat-card-actions>-->
+<!--        </mat-card>-->
+<!--      </mat-card-content>-->
     </mat-card>
   </div>
 </div>

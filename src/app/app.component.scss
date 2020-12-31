@@ -26,4 +26,12 @@ $header-height: 64px;
   box-shadow: 0px 0px 4px rgba(155, 155, 155, 0.16);
 }
 
+mat-card {
+  background: #f9f9f9;
+}
+
+.mat-card.scrollable-content {
+  overflow: auto;
+}
+
 
