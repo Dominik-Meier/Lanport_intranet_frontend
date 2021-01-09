@@ -14,6 +14,7 @@ import {AuthService} from "../../../services/auth-service.service";
 import {TournamentParticipant} from "../../../models/TournamentParticipant";
 import {TournamentParticipantService} from "../../../services/dataServices/tournamentParticipant.service";
 import {formatDate} from "@angular/common";
+import {DisplayUserComponent} from "../../display-user/display-user.component";
 
 @Component({
   selector: 'app-tournament',
@@ -182,5 +183,30 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       console.log('found tm to remove: ', tm);
       this.teamService.leaveTeam(team, tm);
     }
+  }
+
+  onUserClick(event: TournamentParticipant) {
+    console.log('user icon clicked');
+    if(event) {
+      const dialogRef = this.dialog.open( DisplayUserComponent, {
+        width: '50vw',
+        data: {user: event.getUser()}
+      });
+
+      dialogRef.afterClosed().subscribe( result => {
+        console.log('user info closed');
+      });
+
+    }
+  }
+
+  checkTeamJoined() {
+    const user = this.authService.getActiveUser();
+    const inTeam = this.teams.find( team => team.getTeamMembers().find( member => member.getUser().getId() === user.getId()));
+    return inTeam;
+  }
+
+  checkTournamentJoined() {
+    return false;
   }
 }

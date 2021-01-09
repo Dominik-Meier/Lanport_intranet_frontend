@@ -45,7 +45,7 @@
                 <p class="no-margin" >Spieler {{i+1}}</p>
               </div>
               <div class="content">
-                <p class="no-margin">{{tournamentParticipant.getUser().getName()}}</p>
+                <p class="no-margin userLink ql-color-blue" (click)="onUserClick(tournamentParticipant)">{{tournamentParticipant.getUser().getName()}}</p>
               </div>
             </div>
           </div>
@@ -78,10 +78,28 @@
   <div class="tournament-bottom-grid">
     <mat-card>
       <mat-card-title>
-        <div>
+        <div *ngIf="tournament.getTeamRegistration()">
           <p class="inline">Actions</p>
-          <mat-icon *ngIf="tournament.getTeamRegistration()" (click)="addTeam($event)">add</mat-icon>
-          <mat-icon *ngIf="!tournament.getTeamRegistration()" (click)="joinTournament($event)">add_task</mat-icon>
+          <button  (click)="addTeam($event)" [disabled]="checkTeamJoined()" mat-raised-button color="primary">
+            <mat-icon>add</mat-icon>
+            Team beitreten
+          </button>
+          <button (click)="addTeam($event)" [disabled]="!checkTeamJoined()" mat-raised-button color="primary">
+            <mat-icon>remove</mat-icon>
+            Team verlassen
+          </button>
+        </div>
+
+        <div *ngIf="!tournament.getTeamRegistration()">
+          <p class="inline">Actions</p>
+          <button  (click)="addTeam($event)" [disabled]="checkTournamentJoined()" mat-raised-button color="primary">
+            <mat-icon>add</mat-icon>
+            Turnier beitreten
+          </button>
+          <button (click)="addTeam($event)" [disabled]="!checkTournamentJoined()" mat-raised-button color="primary">
+            <mat-icon>remove</mat-icon>
+            Turnier verlassen
+          </button>
         </div>
       </mat-card-title>
 
