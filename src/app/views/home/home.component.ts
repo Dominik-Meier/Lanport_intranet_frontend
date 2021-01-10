@@ -33,8 +33,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // if (environment.production === true && this.authService.isLoggedOut()) {
     if (environment.production === true && this.authService.isLoggedOut()) {
+      console.log(environment.production)
       console.log('You need to be logged in');
-      window.location.href = 'https://www.lanport.ch/login';
+      //window.location.href = 'https://www.lanport.ch/login';
     }
 
     if ( !environment.production) {

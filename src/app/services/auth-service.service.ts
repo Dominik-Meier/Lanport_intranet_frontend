@@ -19,19 +19,6 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private cookieService: CookieService) {
-    this.init();
-  }
-
-  init(): void {
-    this.sess = environment.production ? this.cookieService.get('sess') : 'IBBICiPsLVEXMJvqWZYk8t4XJ6e0tI7O';
-    console.log('sess', this.sess);
-    if (this.sess) {
-      this.getUser(this.sess).subscribe( res => {
-        this.activeUser = res;
-        this.activeUserSubject.next(this.activeUser);
-        console.log(res);
-      });
-    }
   }
 
   private sess;
@@ -46,7 +33,8 @@ export class AuthService {
   }
 
   public isLoggedIn() {
-    return this.activeUser ? true : false;
+    console.log('isLoggedIn: ', this.activeUser);
+    return this.activeUser ? true : this.loadUser();
   }
 
   isLoggedOut() {
@@ -68,6 +56,19 @@ export class AuthService {
       this.activeUser.getRights() === 'Mitglied' ? allowed = true : null;
     }
     return allowed;
+  }
+
+  async loadUser() {
+    this.sess = environment.production ? this.cookieService.get('sess') : 'AP1kMN8qUJ6zyAvYkXw3kTDVu5m6Sgql';
+
+    console.log('sess', this.sess);
+    if (this.sess) {
+      await this.getUser(this.sess).subscribe( res => {
+        this.activeUser = res;
+        this.activeUserSubject.next(this.activeUser);
+        console.log(res);
+      });
+    }
   }
 
   getUser(cookie: string): Observable<User> {
