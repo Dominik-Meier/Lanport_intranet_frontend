@@ -1,0 +1,12 @@
+.label {
+  width: 10vw;
+  min-width: 110px;
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  word-wrap: break-word;
+}

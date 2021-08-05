@@ -1,0 +1,7 @@
+<h2>{{team.getName()}}</h2>
+<div>
+  <div *ngFor="let teamMember of team.getTeamMembers()">
+    <div class="label">{{teamMember.getUser().getName()}}</div>
+    <div class="content">{{teamMember.getUser().getSeat()}}</div>
+  </div>
+</div>
