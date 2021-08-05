@@ -44,6 +44,7 @@
 
 .label {
   width: 10vw;
+  min-width: 110px;
   font-weight: bold;
 }
 
@@ -65,5 +66,10 @@
 
 .userLink {
   color: #4f6fff;
+}
+
+.teamRow {
+  display: flex;
+  align-items: center;
 }
 

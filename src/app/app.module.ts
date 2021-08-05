@@ -40,7 +40,8 @@ import {TournamentComponent} from "./components/1_registerOptions-Component/tour
 import { DisplayUserComponent } from './components/display-user/display-user.component';
 import { CreateTeamComponent } from './components/create-team/create-team.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { QuillModule } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill';
+import { ShowTeamComponent } from './components/showTeam/show-team/show-team.component'
 
 //TODO Send link of app to ben :)
 @NgModule({
@@ -66,6 +67,7 @@ import { QuillModule } from 'ngx-quill'
     TournamentComponent,
     DisplayUserComponent,
     CreateTeamComponent,
+    ShowTeamComponent,
   ],
   imports: [
     BrowserModule,

@@ -65,31 +65,20 @@ export class TeamService {
     this.teamMemberService.createTeamMember(tm).subscribe( res => {
       team.addTeamMember(res);
       this.TeamSubject.next(team);
-    })
+    });
   }
 
   leaveTeam(team: Team, tm: TeamMember): void {
     this.teamMemberService.deleteTeamMember(tm).subscribe( res => {
       team.removeTeamMember(tm);
       this.TeamSubject.next(team);
-    })
-  }
-
-  updateTeam(team: Team): Observable<Team> {
-    console.log('not supperted yet');
-    return null;
-  }
-
-  deleteTeam(team: Team): Observable<Team> {
-    console.log('not supperted yet');
-    return null;
+    });
   }
 
   mapJSONToTeamArray(data: any): Team[] {
     const teams: Team[] = [];
-    console.log(data);
     if (data) {
-      for (let team of data) {
+      for (const team of data) {
         teams.push(this.mapJSONToTeam(team));
       }
     }
@@ -97,7 +86,6 @@ export class TeamService {
   }
 
   mapJSONToTeam(data: any): Team {
-    console.log(data);
     return new Team(data.id, data.name, data.pin, this.tournamentService.mapJSONToTournament(data.tournament),
       this.teamMemberService.mapJSONToTeamMemberArray(data.teamMembers));
   }

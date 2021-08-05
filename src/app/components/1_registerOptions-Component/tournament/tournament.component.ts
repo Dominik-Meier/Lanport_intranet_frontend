@@ -1,20 +1,22 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ComponentWithNameComponent} from "../../interfaces/componentWithName.component";
-import {DataDisplayerComponent} from "../../interfaces/dataDisplayer.component";
-import {SafeHtml} from "@angular/platform-browser";
-import {Tournament} from "../../../models/Tournament";
-import {Lanparty} from "../../../models/Lanparty";
-import {TournamentService} from "../../../services/dataServices/tournament.service";
-import {MatDialog} from "@angular/material/dialog";
-import {CreateTeamComponent} from "../../create-team/create-team.component";
-import {Team} from "../../../models/Team";
-import {TeamService} from "../../../services/dataServices/team.service";
-import {TeamMemberService} from "../../../services/dataServices/team-member.service";
-import {AuthService} from "../../../services/auth-service.service";
-import {TournamentParticipant} from "../../../models/TournamentParticipant";
-import {TournamentParticipantService} from "../../../services/dataServices/tournamentParticipant.service";
-import {formatDate} from "@angular/common";
-import {DisplayUserComponent} from "../../display-user/display-user.component";
+import {ComponentWithNameComponent} from '../../interfaces/componentWithName.component';
+import {DataDisplayerComponent} from '../../interfaces/dataDisplayer.component';
+import {SafeHtml} from '@angular/platform-browser';
+import {Tournament} from '../../../models/Tournament';
+import {Lanparty} from '../../../models/Lanparty';
+import {TournamentService} from '../../../services/dataServices/tournament.service';
+import {MatDialog} from '@angular/material/dialog';
+import {CreateTeamComponent} from '../../create-team/create-team.component';
+import {Team} from '../../../models/Team';
+import {TeamService} from '../../../services/dataServices/team.service';
+import {TeamMemberService} from '../../../services/dataServices/team-member.service';
+import {AuthService} from '../../../services/auth-service.service';
+import {TournamentParticipant} from '../../../models/TournamentParticipant';
+import {TournamentParticipantService} from '../../../services/dataServices/tournamentParticipant.service';
+import {formatDate} from '@angular/common';
+import {DisplayUserComponent} from '../../display-user/display-user.component';
+import {ShowTeamComponent} from "../../showTeam/show-team/show-team.component";
+import {EventEmitterService} from "../../../services/event-emitter.service";
 
 @Component({
   selector: 'app-tournament',
@@ -22,7 +24,7 @@ import {DisplayUserComponent} from "../../display-user/display-user.component";
   styleUrls: ['./tournament.component.scss']
 })
 export class TournamentComponent extends ComponentWithNameComponent implements OnInit, DataDisplayerComponent {
-  static componentName = "TournamentComponent";
+  static componentName = 'TournamentComponent';
   @Input() data: any;
 
   tournament: Tournament;
@@ -37,28 +39,22 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
               private teamMemberService: TeamMemberService,
               private authService: AuthService,
               private tournamentParticipantService: TournamentParticipantService,
+              private eventEmitter: EventEmitterService,
               public dialog: MatDialog) {
     super();
   }
 
   ngOnInit(): void {
-    console.log('init componenten');
-    console.log(this.data);
-
     this.tournament = this.tournamentService.getTournament(this.data.data);
     this.setTeamSizeArray();
-    this.setInfoArray()
+    this.setInfoArray();
     this.loadTeams();
     this.loadTournamentParticipant();
-    console.log(this.tournament);
 
     this.tournamentService.getTournamentObservable.subscribe( () => {
       this.tournament = this.tournamentService.getTournament(this.data.data);
-      console.log(this.tournament);
-      console.log('set Tournament infos to array');
       this.setTeamSizeArray();
       this.setInfoArray();
-      console.log('reload Tournament teams');
       if (this.tournament.getTeamRegistration()) {
         this.loadTeams();
       } else {
@@ -67,30 +63,36 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     });
 
     this.teamService.getTeamObservable.subscribe( team => {
-      console.log('observable', team);
       if (team.getTournament().getId() === this.tournament.getId()) {
-        console.log('team for this tournament');
         if (this.teams.find( x => x.getId() === team.getId())) {
-          console.log('team exists');
-          const id = this.teams.findIndex( x => x.getId() === team.getId())
+          const id = this.teams.findIndex( x => x.getId() === team.getId());
           this.teams[id].setName( team.getName());
           this.teams[id].setPin( team.getPin());
           this.teams[id].setTournament( team.getTournament());
           this.teams[id].setTeamMembers( team.getTeamMembers());
-          console.log('team updated');
         } else {
           this.teams.push(team);
-          console.log('team added');
         }
       }
-    })
+    });
+
+    this.eventEmitter.tournamentParticipantJoinedObservable.subscribe( tp => {
+      this.tournamentParticipants.push(tp);
+    });
+
+    this.eventEmitter.tournamentParticipantLeftObservable.subscribe( tp => {
+        const index = this.tournamentParticipants.indexOf(tp);
+        if (index > -1 ) {
+          this.tournamentParticipants.splice(index, 1);
+        }
+    });
   }
 
   setTeamSizeArray() {
-    if(this.tournament) {
+    if (this.tournament) {
       this.teamSizeArray = [];
       for (let i = 0; i < this.tournament.getGameMode().getTeamSize(); i++) {
-        this.teamSizeArray.push(i+1);
+        this.teamSizeArray.push(i + 1);
       }
     }
   }
@@ -107,28 +109,34 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       this.infosDisplayArray.push(['Teamteilnahme', this.tournament.getTeamRegistration()]);
       this.infosDisplayArray.push(['Teamgrösse', this.tournament.getGameMode().getTeamSize()]);
       this.infosDisplayArray.push(['Anzahl Teams', this.tournament.getNumberOfParticipants()]);
-      //TODO change local code
+      // TODO change local code
       this.infosDisplayArray.push(['Startzeit', formatDate(this.tournament.getStartDate(), 'd-M-yy, HH:mm', 'en-US')]);
     }
   }
 
   loadTeams() {
-    if(this.tournament){
-      this.teamService.getTeamByTournament(this.tournament.getId()).subscribe(res =>{
+    if (this.tournament){
+      this.teamService.getTeamByTournament(this.tournament.getId()).subscribe(res => {
         console.log('teams loaded from backend', res);
         console.log('teams filled with data from backend');
         this.teams = res;
-      })
+      });
     }
   }
 
+  openTeam(team: Team) {
+    const dialogRef = this.dialog.open( ShowTeamComponent, {
+      width: '25vw',
+      minWidth: '300px',
+      data: {team}
+    });
+  }
+
   loadTournamentParticipant() {
-    if(this.tournament){
-      this.tournamentParticipantService.getTournamentParticipantByTournament(this.tournament.getId()).subscribe(res =>{
-        console.log('tournamentParticipant loaded from backend', res);
-        console.log('tournamentParticipant filled with data from backend');
+    if (this.tournament){
+      this.tournamentParticipantService.getTournamentParticipantByTournament(this.tournament.getId()).subscribe(res => {
         this.tournamentParticipants = res;
-      })
+      });
     }
   }
 
@@ -141,13 +149,18 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
         result.setTournament(this.tournament);
         this.teamService.createTeam(result).subscribe();
       }
-      console.log('log mat dialog res', result);
     });
   }
 
-  joinTournament(event) {
+  joinTournament() {
     const tp = new TournamentParticipant(null, this.tournament.getId(), this.authService.getActiveUser());
     this.tournamentParticipantService.createTournamentParticipant(tp).subscribe();
+  }
+
+  leaveTournament() {
+    const tournamentParticipant = this.tournamentParticipants.find(
+      x => x.getUser().getId() === this.authService.getActiveUser().getId());
+    this.tournamentParticipantService.deleteTournamentParticipant(tournamentParticipant).subscribe();
   }
 
   cantJoinTeam(team: Team) {
@@ -157,9 +170,10 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     if (team.teamMembers.length >= this.tournament.getGameMode().getTeamSize()) {
       return true;
     }
-    if (team)
+    if (team) {
 
     return false;
+    }
   }
 
   isMember(team) {
@@ -170,7 +184,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   }
 
   joinTeam(team: Team) {
-    //TODO create form to enter PIN to join team
+    // TODO create form to enter PIN to join team
     this.teamService.joinTeam(team);
     console.log('join team');
   }
@@ -187,7 +201,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   onUserClick(event: TournamentParticipant) {
     console.log('user icon clicked');
-    if(event) {
+    if (event) {
       const dialogRef = this.dialog.open( DisplayUserComponent, {
         width: '50vw',
         data: {user: event.getUser()}
@@ -207,6 +221,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   }
 
   checkTournamentJoined() {
-    return false;
+    return this.tournamentParticipants.find(
+      x => x.getUser().getId() === this.authService.getActiveUser().getId());
   }
 }

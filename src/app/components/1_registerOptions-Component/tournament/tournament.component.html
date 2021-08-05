@@ -30,11 +30,13 @@
         <mat-card-content >
           <div  *ngIf="tournament.getTeamRegistration()">
             <div class="card-field" *ngFor="let team of teams; let i = index" [attr.data-index]="i">
-              <div class="label">
-                <p class="no-margin" >Team {{i+1}}</p>
-              </div>
-              <div class="content">
-                <p class="no-margin">{{team.getName()}}</p>
+              <div (click)="openTeam(team)" class="teamRow">
+                <div class="label">
+                  <p class="no-margin" >Team {{i+1}}</p>
+                </div>
+                <div class="content">
+                  <p class="no-margin">{{team.getName()}}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -82,7 +84,7 @@
           <p class="inline">Actions</p>
           <button  (click)="addTeam($event)" [disabled]="checkTeamJoined()" mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
-            Team beitreten
+            Team erstellen
           </button>
           <button (click)="addTeam($event)" [disabled]="!checkTeamJoined()" mat-raised-button color="primary">
             <mat-icon>remove</mat-icon>
@@ -92,11 +94,11 @@
 
         <div *ngIf="!tournament.getTeamRegistration()">
           <p class="inline">Actions</p>
-          <button  (click)="addTeam($event)" [disabled]="checkTournamentJoined()" mat-raised-button color="primary">
+          <button  (click)="joinTournament()" [disabled]="checkTournamentJoined()" mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
             Turnier beitreten
           </button>
-          <button (click)="addTeam($event)" [disabled]="!checkTournamentJoined()" mat-raised-button color="primary">
+          <button (click)="leaveTournament()" [disabled]="!checkTournamentJoined()" mat-raised-button color="primary">
             <mat-icon>remove</mat-icon>
             Turnier verlassen
           </button>
