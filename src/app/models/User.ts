@@ -1,10 +1,10 @@
 export class User {
-  private id: number;
-  private name: string;
-  private registered: boolean;
-  private payed: boolean;
-  private seat: string;
-  private rights: string;
+  id: number;
+  name: string;
+  registered: boolean;
+  payed: boolean;
+  seat: string;
+  rights: string;
 
   constructor(id: number, name: string, registered: boolean, payed: boolean, seat: string, rights: string) {
     this.id = id;

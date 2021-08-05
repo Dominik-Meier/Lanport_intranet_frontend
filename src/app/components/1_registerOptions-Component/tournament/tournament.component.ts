@@ -76,16 +76,8 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       }
     });
 
-    this.eventEmitter.tournamentParticipantJoinedObservable.subscribe( tp => {
-      this.tournamentParticipants.push(tp);
-    });
-
-    this.eventEmitter.tournamentParticipantLeftObservable.subscribe( tp => {
-        const index = this.tournamentParticipants.indexOf(tp);
-        if (index > -1 ) {
-          this.tournamentParticipants.splice(index, 1);
-        }
-    });
+    this.eventEmitter.tournamentParticipantJoinedObservable.subscribe( tp => this.joinTournamentAction(tp));
+    this.eventEmitter.tournamentParticipantLeftObservable.subscribe( tp => this.leaveTournamentAction(tp));
   }
 
   setTeamSizeArray() {
@@ -157,11 +149,22 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     this.tournamentParticipantService.createTournamentParticipant(tp).subscribe();
   }
 
+  joinTournamentAction(tp: TournamentParticipant) {
+    this.tournamentParticipants.push(tp);
+  }
+
   leaveTournament() {
     const tournamentParticipant = this.tournamentParticipants.find(
       x => x.getUser().getId() === this.authService.getActiveUser().getId());
     this.tournamentParticipantService.deleteTournamentParticipant(tournamentParticipant).subscribe();
   }
+
+  leaveTournamentAction(tp: TournamentParticipant) {
+    const index = this.tournamentParticipants.findIndex( p => p.id === tp.id);
+    if (index > -1 ) {
+    this.tournamentParticipants.splice(index, 1);
+  }
+}
 
   cantJoinTeam(team: Team) {
     if (this.isMember(team)) {

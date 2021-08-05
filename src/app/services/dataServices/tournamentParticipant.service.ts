@@ -6,7 +6,9 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {AuthService} from '../auth-service.service';
 import {TournamentParticipant} from '../../models/TournamentParticipant';
-import {EventEmitterService} from "../event-emitter.service";
+import {EventEmitterService} from '../event-emitter.service';
+import {WebSocketService} from '../web-socket.service';
+import {TournamentParticipantJoinedEvent, TournamentParticipantLeftEvent} from "../../models/WebSocketEvents";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,9 @@ export class TournamentParticipantService {
 
   constructor(private http: HttpClient,
               private authServices: AuthService,
-              private eventEmitter: EventEmitterService) { }
+              private eventEmitter: EventEmitterService,
+              private ws: WebSocketService) {
+  }
 
   getTournamentParticipantByTournament(tournamentId: number): Observable<TournamentParticipant[]> {
     const targetURL = this.url + 'tournamentParticipants/tournament/' + tournamentId;
@@ -36,7 +40,8 @@ export class TournamentParticipantService {
     return this.http.post<Team>(targetURL, tp).pipe( map(
       response => {
         const tournamentParticipant = this.mapJSONToTournamentParticipant(response);
-        this.eventEmitter.tournamentParticipantJoinedSubject.next(tournamentParticipant);
+        const event = new TournamentParticipantJoinedEvent(tournamentParticipant);
+        this.ws.send(event);
         return tournamentParticipant;
       }
     ));
@@ -46,7 +51,8 @@ export class TournamentParticipantService {
     const targetURL = this.url + 'tournamentParticipants/' + tournamentParticipant.getId();
     return this.http.delete<TournamentParticipant>(targetURL).pipe( map(
       () => {
-        this.eventEmitter.tournamentParticipantLeftSubject.next(tournamentParticipant);
+        const event = new TournamentParticipantLeftEvent(tournamentParticipant);
+        this.ws.send(event);
         return tournamentParticipant;
       }
     ));

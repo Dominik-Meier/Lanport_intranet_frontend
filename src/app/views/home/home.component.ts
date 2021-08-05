@@ -12,6 +12,7 @@ import {environment} from "../../../environments/environment";
 import {LanpartyService} from "../../services/dataServices/lanparty.service";
 import {NavBarItemService} from "../../services/nav-bar-item.service";
 import {RegisterItemComponent} from "../../components/interfaces/registerItem.component";
+import {WebSocketService} from "../../services/web-socket.service";
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,8 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private lanpartyService: LanpartyService,
     private navBarItemService: NavBarItemService,
-    private componentFactoryResolver: ComponentFactoryResolver) { }
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private ws: WebSocketService) { }
 
   ngOnInit(): void {
     // if (environment.production === true && this.authService.isLoggedOut()) {
@@ -42,6 +44,8 @@ export class HomeComponent implements OnInit {
       //TODO what when user is return, what we do now?
       const user = this.authService.isLoggedIn();
     }
+
+    this.ws.connect();
 
     // Load the Component associated to the NavBarItem
     this.navBarItemService.activeNavBarItemsObservable.subscribe( activeNavItem => {
