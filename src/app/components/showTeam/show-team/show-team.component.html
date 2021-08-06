@@ -1,7 +1,46 @@
-<h2>{{team.getName()}}</h2>
 <div>
-  <div *ngFor="let teamMember of team.getTeamMembers()">
-    <div class="label">{{teamMember.getUser().getName()}}</div>
-    <div class="content">{{teamMember.getUser().getSeat()}}</div>
+  <div class="header">
+    <div class="card-field">
+      <div class="label">
+        <p class="no-margin">Name</p>
+      </div>
+      <div class="content">
+        <p class="no-margin">{{team.getName()}}</p>
+      </div>
+    </div>
+    <div class="card-field">
+      <div class="label">
+        <p class="no-margin">Pin:</p>
+      </div>
+      <div class="content">
+        <p *ngIf="teamMember()">{{team.getPin()}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="body">
+    <div *ngFor="let teamMember of team.getTeamMembers()">
+      <div class="card-field">
+        <div class="label">
+          <p class="no-margin">{{teamMember.getUser().getName()}}</p>
+        </div>
+        <div class="content">
+          <p class="no-margin">{{teamMember.getUser().getSeat()}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="button-padding">
+      <button (click)="joinTeam()" [disabled]="teamMember || registerForTournament" mat-raised-button color="primary">
+        <mat-icon>person_add</mat-icon>
+      </button>
+    </div>
+    <div class="button-padding">
+      <button  (click)="leaveTeam()" [disabled]="!teamMember()" mat-raised-button color="primary">
+        <mat-icon>person_remove</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

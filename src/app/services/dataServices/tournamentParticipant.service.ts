@@ -8,8 +8,7 @@ import {AuthService} from '../auth-service.service';
 import {TournamentParticipant} from '../../models/TournamentParticipant';
 import {EventEmitterService} from '../event-emitter.service';
 import {WebSocketService} from '../web-socket.service';
-import {TournamentParticipantJoinedEvent, TournamentParticipantLeftEvent} from "../../models/WebSocketEvents";
-import {mapJSONToTournamentParticipant, mapJSONToTournamentParticipantArray} from "../../util/mapperFunctions";
+import {mapJSONToTournamentParticipant, mapJSONToTournamentParticipantArray} from '../../util/mapperFunctions';
 
 @Injectable({
   providedIn: 'root'
@@ -25,27 +24,18 @@ export class TournamentParticipantService {
 
   getTournamentParticipantByTournament(tournamentId: number): Observable<TournamentParticipant[]> {
     const targetURL = this.url + 'tournamentParticipants/tournament/' + tournamentId;
-    return this.http.get<Team>(targetURL).pipe(
-      map(
-      response => {
-        console.log(response);
-        return mapJSONToTournamentParticipantArray(response);
+    return this.http.get<Team>(targetURL).pipe( map(
+      response => { return mapJSONToTournamentParticipantArray(response);
       }
     ));
-
-    return null;
   }
 
   createTournamentParticipant(tp: TournamentParticipant): Observable<TournamentParticipant> {
     const targetURL = this.url + 'tournamentParticipants';
     return this.http.post<Team>(targetURL, tp).pipe(
-      catchError(this.handleError),
-      map(
+      catchError(this.handleError), map(
       response => {
-        const tournamentParticipant = mapJSONToTournamentParticipant(response);
-        const event = new TournamentParticipantJoinedEvent(tournamentParticipant);
-        this.ws.send(event);
-        return tournamentParticipant;
+        return mapJSONToTournamentParticipant(response);
       }
     ));
   }
@@ -54,8 +44,6 @@ export class TournamentParticipantService {
     const targetURL = this.url + 'tournamentParticipants/' + tournamentParticipant.getId();
     return this.http.delete<TournamentParticipant>(targetURL).pipe( map(
       () => {
-        const event = new TournamentParticipantLeftEvent(tournamentParticipant);
-        this.ws.send(event);
         return tournamentParticipant;
       }
     ));

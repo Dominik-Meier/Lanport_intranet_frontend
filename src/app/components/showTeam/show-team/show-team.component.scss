@@ -10,3 +10,39 @@
   justify-content: left;
   word-wrap: break-word;
 }
+
+.card-field {
+  display: flex;
+  justify-content: left;
+}
+
+.header {
+  padding: 10px 10px 0px 10px;
+  margin-bottom: 10px;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: thin;
+  background: #a2a1a138;
+  box-shadow: 1px 4px #c1c1c12e;
+  border-color: #a2a1a138;
+}
+
+.body {
+  padding: 10px;
+}
+
+.footer {
+  display: flex;
+  padding: 10px 10px 10px 10px;
+  margin-top: 25px;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: thin;
+  background: #a2a1a138;
+  box-shadow: 1px 4px #c1c1c12e;
+  border-color: #a2a1a138;
+}
+
+.button-padding {
+  padding-left: 10px;
+}

@@ -133,7 +133,9 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     this.dialog.open( ShowTeamComponent, {
       width: '25vw',
       minWidth: '300px',
-      data: {team}
+      data: {team,
+        tournamentTeam: this.teams,
+        tournament: this.tournament}
     });
   }
 

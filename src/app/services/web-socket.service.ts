@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import {Subject} from 'rxjs';
+import {jsDocComment} from "@angular/compiler";
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,23 @@ export class WebSocketService  {
     this.socket$.subscribe({
       next: (data) => {
         console.log('received msg');
-        this.eventSubject$.next(data);
+        this.eventSubject$.next(this.parseJson(data));
       },
-      error: (err) => console.log(err),
+      error: (err) => console.error(err),
       complete: () => {}
     });
   }
 
-  public send(event): void {
+  private send(event): void {
     this.socket$.next(event);
+  }
+
+  private parseJson(data) {
+    try {
+      data.data = JSON.parse(data.data);
+      return data;
+    } catch (e) {
+      return data;
+    }
   }
 }

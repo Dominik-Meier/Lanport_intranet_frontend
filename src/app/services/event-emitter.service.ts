@@ -2,9 +2,8 @@ import {Injectable} from '@angular/core';
 import {TournamentParticipant} from '../models/TournamentParticipant';
 import {Subject} from 'rxjs';
 import {WebSocketService} from './web-socket.service';
-import {WebSocketEvent} from '../models/WebSocketEvents';
-import {TournamentParticipantService} from "./dataServices/tournamentParticipant.service";
-import {mapJSONToTournamentParticipant} from "../util/mapperFunctions";
+import {WebSocketEvent} from '../models/WebSocketEvent';
+import {mapJSONToTournamentParticipant} from '../util/mapperFunctions';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +18,6 @@ export class EventEmitterService {
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
       const event = msg as WebSocketEvent;
-      console.log(event.event);
-      console.log(event.data);
 
       switch (event.event) {
         case 'TournamentParticipantJoinedEvent': {

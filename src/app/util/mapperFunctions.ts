@@ -1,5 +1,5 @@
-import {TournamentParticipant} from "../models/TournamentParticipant";
-import {User} from "../models/User";
+import {TournamentParticipant} from '../models/TournamentParticipant';
+import {User} from '../models/User';
 
 export function mapJSONToTournamentParticipant(data: any): TournamentParticipant {
   return new TournamentParticipant(data.id, data.tournamentId, mapJsonToUser(data.user));
@@ -17,7 +17,6 @@ export function mapJSONToTournamentParticipantArray(data: any): TournamentPartic
 }
 
 export function mapJsonToUser(data: any): User {
-  console.log(data);
   return new User(data.id, data.nickname, data.registered, data.payed, data.seat, data.level);
 }
 
