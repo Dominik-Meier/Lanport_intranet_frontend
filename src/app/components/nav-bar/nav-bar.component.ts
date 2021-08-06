@@ -33,11 +33,11 @@ export class NavBarComponent implements OnInit {
 
   checkUserRights() {
     let allowed = false;
-    if(this.user){
-      this.user.getRights() === 'admin' ? allowed = true : null;
-      this.user.getRights() === 'Admin' ? allowed = true : null;
-      this.user.getRights() === 'mitglied' ? allowed = true : null;
-      this.user.getRights() === 'Mitglied' ? allowed = true : null;
+    if (this.user){
+      this.user.getLevel() === 'admin' ? allowed = true : null;
+      this.user.getLevel() === 'Admin' ? allowed = true : null;
+      this.user.getLevel() === 'mitglied' ? allowed = true : null;
+      this.user.getLevel() === 'Mitglied' ? allowed = true : null;
     }
     return allowed;
   }

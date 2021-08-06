@@ -15,7 +15,7 @@ export class TournamentParticipant {
     return this.id;
   }
 
-  getTeamId() {
+  getTournamentId() {
     return this.tournamentId;
   }
 

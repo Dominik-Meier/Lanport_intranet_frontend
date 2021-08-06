@@ -1,18 +1,18 @@
 export class User {
   id: number;
-  name: string;
+  nickname: string;
   registered: boolean;
   payed: boolean;
   seat: string;
-  rights: string;
+  level: string;
 
-  constructor(id: number, name: string, registered: boolean, payed: boolean, seat: string, rights: string) {
+  constructor(id: number, name: string, registered: boolean, payed: boolean, seat: string, level: string) {
     this.id = id;
-    this.name = name;
+    this.nickname = name;
     this.registered = registered;
     this.payed = payed;
     this.seat = seat;
-    this.rights = rights;
+    this.level = level;
   }
 
   getId() {
@@ -20,14 +20,14 @@ export class User {
   }
 
   getName() {
-    return this.name;
+    return this.nickname;
   }
 
   getSeat() {
     return this.seat;
   }
 
-  getRights() {
-    return this.rights;
+  getLevel() {
+    return this.level;
   }
 }

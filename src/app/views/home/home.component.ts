@@ -29,8 +29,7 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private lanpartyService: LanpartyService,
     private navBarItemService: NavBarItemService,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private ws: WebSocketService) { }
+    private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
     // if (environment.production === true && this.authService.isLoggedOut()) {
@@ -44,8 +43,6 @@ export class HomeComponent implements OnInit {
       //TODO what when user is return, what we do now?
       const user = this.authService.isLoggedIn();
     }
-
-    this.ws.connect();
 
     // Load the Component associated to the NavBarItem
     this.navBarItemService.activeNavBarItemsObservable.subscribe( activeNavItem => {

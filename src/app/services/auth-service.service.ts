@@ -50,10 +50,10 @@ export class AuthService {
   settingsRights() {
     let allowed = false;
     if(this.activeUser){
-      this.activeUser.getRights() === 'admin' ? allowed = true : null;
-      this.activeUser.getRights() === 'Admin' ? allowed = true : null;
-      this.activeUser.getRights() === 'mitglied' ? allowed = true : null;
-      this.activeUser.getRights() === 'Mitglied' ? allowed = true : null;
+      this.activeUser.getLevel() === 'admin' ? allowed = true : null;
+      this.activeUser.getLevel() === 'Admin' ? allowed = true : null;
+      this.activeUser.getLevel() === 'mitglied' ? allowed = true : null;
+      this.activeUser.getLevel() === 'Mitglied' ? allowed = true : null;
     }
     return allowed;
   }
