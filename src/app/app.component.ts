@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {DynamicElementService} from './services/dynamic-element.service';
-import {WebSocketService} from "./services/web-socket.service";
+import {WebSocketService} from './services/web-socket.service';
 
 @Component({
   selector: 'app-root',

@@ -1,18 +1,15 @@
 import {
-  AfterViewChecked,
   Component,
   ComponentFactoryResolver,
   OnInit,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {AuthService} from "../../services/auth-service.service";
-import {OAuthService} from "angular-oauth2-oidc";
-import {environment} from "../../../environments/environment";
-import {LanpartyService} from "../../services/dataServices/lanparty.service";
-import {NavBarItemService} from "../../services/nav-bar-item.service";
-import {RegisterItemComponent} from "../../components/interfaces/registerItem.component";
-import {WebSocketService} from "../../services/web-socket.service";
+import {AuthService} from '../../services/auth-service.service';
+import {environment} from '../../../environments/environment';
+import {LanpartyService} from '../../services/dataServices/lanparty.service';
+import {NavBarItemService} from '../../services/nav-bar-item.service';
+import {RegisterItemComponent} from '../../components/interfaces/registerItem.component';
 
 @Component({
   selector: 'app-home',
@@ -40,7 +37,7 @@ export class HomeComponent implements OnInit {
     }
 
     if ( !environment.production) {
-      //TODO what when user is return, what we do now?
+      // TODO what when user is return, what we do now?
       const user = this.authService.isLoggedIn();
     }
 
@@ -53,7 +50,7 @@ export class HomeComponent implements OnInit {
         if (this.activeNavBarItem.component) {
           const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.component);
           const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-          (<RegisterItemComponent>componentRef.instance).data = this.activeNavBarItem.getOptions();
+          (componentRef.instance as RegisterItemComponent).data = this.activeNavBarItem.getOptions();
           this.navItemIsActive = true;
         }
       }
