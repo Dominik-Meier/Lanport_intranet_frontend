@@ -1,9 +1,10 @@
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Lanparty} from "../../models/Lanparty";
-import {environment} from "../../../environments/environment";
-import {Observable, Subject} from "rxjs";
-import {map, tap} from "rxjs/operators";
+import {HttpClient} from '@angular/common/http';
+import {Lanparty} from '../../models/Lanparty';
+import {environment} from '../../../environments/environment';
+import {Observable, Subject} from 'rxjs';
+import {map, tap} from 'rxjs/operators';
+import {mapJSONToLanartyArray} from '../../util/mapperFunctions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +14,19 @@ export class LanpartyService{
     this.init();
   }
 
+  url = environment.BASE_API_URL;
+  lanparties: Lanparty[];
+  activeLanparty: Lanparty;
+
+  lanparitesSubject = new Subject<Lanparty[]>();
+  getLanpartiesObservable = this.lanparitesSubject.asObservable();
+
   init(): void {
     this.getLanpartiesBackend().subscribe( res => {
       this.lanparties = res;
       this.lanparitesSubject.next(this.lanparties);
-    })
+    });
   }
-
-  private url = environment.BASE_API_URL;
-  private lanparties: Lanparty[];
-  private activeLanparty: Lanparty;
-
-  private lanparitesSubject = new Subject<Lanparty[]>();
-  public getLanpartiesObservable = this.lanparitesSubject.asObservable();
 
   /**
    * Local methodes to the frontend from here on!
@@ -40,8 +41,8 @@ export class LanpartyService{
       this.getLanpartiesBackend().subscribe( res => {
         this.lanparties = res;
         this.lanparitesSubject.next(this.lanparties);
-      })
-    })
+      });
+    });
   }
 
 
@@ -53,7 +54,7 @@ export class LanpartyService{
   getLanpartiesBackend(): Observable<Lanparty[]> {
     const targetURL = this.url + 'lanparties';
     return this.http.get<Lanparty[]>(targetURL).pipe( map(
-      response => { return this.mapJSONToLanartyArray(response); }
+      response => mapJSONToLanartyArray(response)
     ));
   }
 
@@ -69,15 +70,5 @@ export class LanpartyService{
   //     return this.mapJSONToLanparty(res);
   //   }))
   // }
-
-  mapJSONToLanartyArray(data: any): Lanparty[] {
-    const result: Lanparty[] = [];
-    data.forEach( lanparty => result.push(new Lanparty(lanparty.id, lanparty.name, lanparty.active, lanparty.startDate, lanparty.endDate)));
-    return result;
-  }
-
-  mapJSONToLanparty(data: any): Lanparty {
-    return new Lanparty(data.id, data.name, data.active, data.startDate, data.endDate);
-  }
 
 }

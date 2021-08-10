@@ -32,15 +32,26 @@
   </div>
 
   <div class="footer">
-    <div class="button-padding">
-      <button (click)="joinTeam()" [disabled]="teamMember || registerForTournament" mat-raised-button color="primary">
-        <mat-icon>person_add</mat-icon>
-      </button>
-    </div>
-    <div class="button-padding">
-      <button  (click)="leaveTeam()" [disabled]="!teamMember()" mat-raised-button color="primary">
-        <mat-icon>person_remove</mat-icon>
-      </button>
+    <div class="card-field">
+      <div class="content">
+        <form (ngSubmit)="joinTeam()" #teamJoinForm="ngForm" *ngIf="true" class="card-field">
+          <div class="form-group">
+            <label>Pin: </label>
+            <input type="text" digitOnly class="form-control max-length-50" id="inputPin" required minlength="4" maxlength="4"
+                   [(ngModel)]="enteredPin" name="team-pin">
+          </div>
+          <div class="button-padding content">
+            <button mat-raised-button color="primary" (click)="joinTeam()" [disabled]="!teamJoinForm.form.valid">
+              <mat-icon>person_add</mat-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="button-padding content">
+        <button  (click)="leaveTeam()" [disabled]="!teamMember()" mat-raised-button color="primary">
+          <mat-icon>person_remove</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -81,9 +81,7 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
     });
 
     dialogRef.afterClosed().subscribe( result => {
-      console.log(result);
       result ? row.setData(result) : null;
     });
-    console.log(row);
   }
 }

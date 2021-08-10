@@ -12,7 +12,7 @@
              required minlength="4" maxlength="20"
              [(ngModel)]="createdTeam.name" name="name"
              #name="ngModel">
-      <div [hidden]="name.valid"  class="alert alert-danger">Name fehlt oder die Länge ist nicht zwischen 4 - 20</div>
+      <div [hidden]="name.valid" class="alert alert-danger">Name fehlt oder die Länge ist nicht zwischen 4 - 20</div>
     </div>
 
     <div class="form-group">
@@ -26,8 +26,8 @@
     </div>
 
     <div mat-dialog-actions>
-      <button type="button" class="btn btn-success" (click)="onNoClick()">No Thanks</button>
-      <button type="submit" class="btn btn-default" [mat-dialog-close]="createdTeam" [disabled]="!teamForm.form.valid">Ok</button>
+      <button type="button" class="btn btn-default" (click)="onNoClick()">No Thanks</button>
+      <button type="submit" class="btn btn-success" [mat-dialog-close]="createdTeam" [disabled]="!teamForm.form.valid">Ok</button>
     </div>
 
   </form>

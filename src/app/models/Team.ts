@@ -2,7 +2,7 @@ import {Tournament} from "./Tournament";
 import {TeamMember} from "./TeamMember";
 
 export class Team {
-  private id: number;
+  public id: number;
   public name: string;
   public pin: number;
   public tournament: Tournament;
@@ -57,12 +57,9 @@ export class Team {
   }
 
   removeTeamMember(tm: TeamMember) {
-    console.log(this.teamMembers);
-    console.log(tm);
     const tmIndex = this.teamMembers.findIndex( x => x.getId() === tm.getId());
     if (tmIndex !== null) {
       this.teamMembers.splice(tmIndex, 1);
-      console.log('removed', this.teamMembers);
     }
   }
 }

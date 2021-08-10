@@ -16,10 +16,7 @@ import {mapJSONToTournamentParticipant, mapJSONToTournamentParticipantArray} fro
 export class TournamentParticipantService {
   private url = environment.BASE_API_URL;
 
-  constructor(private http: HttpClient,
-              private authServices: AuthService,
-              private eventEmitter: EventEmitterService,
-              private ws: WebSocketService) {
+  constructor(private http: HttpClient) {
   }
 
   getTournamentParticipantByTournament(tournamentId: number): Observable<TournamentParticipant[]> {

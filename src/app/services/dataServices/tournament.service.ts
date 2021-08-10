@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
-import {Observable, Subject} from "rxjs";
-import {map} from "rxjs/operators";
-import {Tournament} from "../../models/Tournament";
-import {GameMode} from "../../models/GameMode";
-import {TournamentType} from "../../models/TournamentType";
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {Observable, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Tournament} from '../../models/Tournament';
+import {mapJSONToTournamentArray} from '../../util/mapperFunctions';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +14,19 @@ export class TournamentService {
     this.init();
   }
 
-  init(): void {
-    this.getTournamentsBackend().subscribe(res => {
-      this.tournaments = res;
-      this.tournamentsSubject.next(this.tournaments);
-    })
-  }
-
   private url = environment.BASE_API_URL;
   private tournaments: Tournament[];
 
 
   private tournamentsSubject = new Subject<Tournament[]>();
   public getTournamentObservable = this.tournamentsSubject.asObservable();
+
+  init(): void {
+    this.getTournamentsBackend().subscribe(res => {
+      this.tournaments = res;
+      this.tournamentsSubject.next(this.tournaments);
+    });
+  }
 
   /**
    * Local methodes to the frontend from here on!
@@ -48,7 +47,7 @@ export class TournamentService {
         this.tournaments = newSavedTournaments;
         this.tournamentsSubject.next(newSavedTournaments);
       });
-    })
+    });
   }
 
 
@@ -59,7 +58,7 @@ export class TournamentService {
     const targetURL = this.url + 'tournaments';
     return this.http.get<Tournament[]>(targetURL).pipe(map(
       response => {
-        return this.mapJSONToTournamentArray(response);
+        return mapJSONToTournamentArray(response);
       }
     ));
   }
@@ -67,19 +66,5 @@ export class TournamentService {
   saveTournamentsBackend(tournaments: Tournament[]): Observable<Tournament[]> {
     const targetURL = this.url + 'tournaments';
     return this.http.put<Tournament[]>(targetURL, tournaments);
-  }
-
-  //TODO map lanparty to or get it from the service
-  mapJSONToTournamentArray(data: any): Tournament[] {
-    const result: Tournament[] = [];
-    data.forEach(t => result.push(this.mapJSONToTournament(t)));
-    return result;
-  }
-
-  mapJSONToTournament(t: any): Tournament {
-    return new Tournament(t.id, t.name, t.lanparty,
-      new GameMode(t.gamemode.id, t.gamemode.name, t.gamemode.game, t.gamemode.elimination, t.gamemode.teamSize, t.gamemode.rules),
-      new TournamentType(t.tournamentType.id, t.tournamentType.name),
-      t.teamRegistration, t.numberOfParticipants, t.published, t.started, t.startDate, t.finished)
   }
 }

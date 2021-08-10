@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ComponentWithNameComponent} from '../../interfaces/componentWithName.component';
 import {DataDisplayerComponent} from '../../interfaces/dataDisplayer.component';
 import {Tournament} from '../../../models/Tournament';
@@ -14,15 +14,17 @@ import {TournamentParticipant} from '../../../models/TournamentParticipant';
 import {TournamentParticipantService} from '../../../services/dataServices/tournamentParticipant.service';
 import {formatDate} from '@angular/common';
 import {DisplayUserComponent} from '../../display-user/display-user.component';
-import {ShowTeamComponent} from "../../showTeam/show-team/show-team.component";
-import {EventEmitterService} from "../../../services/event-emitter.service";
+import {ShowTeamComponent} from '../../showTeam/show-team/show-team.component';
+import {EventEmitterService} from '../../../services/event-emitter.service';
+import {TeamMember} from '../../../models/TeamMember';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-tournament',
   templateUrl: './tournament.component.html',
   styleUrls: ['./tournament.component.scss']
 })
-export class TournamentComponent extends ComponentWithNameComponent implements OnInit, DataDisplayerComponent {
+export class TournamentComponent extends ComponentWithNameComponent implements OnInit, DataDisplayerComponent, OnDestroy {
   static componentName = 'TournamentComponent';
   @Input() data: any;
 
@@ -31,7 +33,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   infosDisplayArray = [];
   teams: Team[] = [];
   tournamentParticipants: TournamentParticipant[] = [];
-  teamSizeArray = [];
+  subscriptions: Subscription[] = [];
 
   constructor(private tournamentService: TournamentService,
               private teamService: TeamService,
@@ -45,47 +47,27 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   ngOnInit(): void {
     this.tournament = this.tournamentService.getTournament(this.data.data);
-    this.setTeamSizeArray();
     this.setInfoArray();
     this.loadTeams();
     this.loadTournamentParticipant();
 
-    this.tournamentService.getTournamentObservable.subscribe( () => {
-      this.tournament = this.tournamentService.getTournament(this.data.data);
-      this.setTeamSizeArray();
-      this.setInfoArray();
-      if (this.tournament.getTeamRegistration()) {
-        this.loadTeams();
-      } else {
-        this.loadTournamentParticipant();
-      }
-    });
-
-    this.teamService.getTeamObservable.subscribe( team => {
-      if (team.getTournament().getId() === this.tournament.getId()) {
-        if (this.teams.find( x => x.getId() === team.getId())) {
-          const id = this.teams.findIndex( x => x.getId() === team.getId());
-          this.teams[id].setName( team.getName());
-          this.teams[id].setPin( team.getPin());
-          this.teams[id].setTournament( team.getTournament());
-          this.teams[id].setTeamMembers( team.getTeamMembers());
-        } else {
-          this.teams.push(team);
-        }
-      }
-    });
-
-    this.eventEmitter.tournamentParticipantJoinedObservable.subscribe( tp => this.joinTournamentAction(tp));
-    this.eventEmitter.tournamentParticipantLeftObservable.subscribe( tp => this.leaveTournamentAction(tp));
+    this.subscriptions.push(this.tournamentService.getTournamentObservable.subscribe( () => this.loadTournament()));
+    this.subscriptions.push(this.eventEmitter.tournamentParticipantJoinedObservable.subscribe( tp => this.joinTournamentAction(tp)));
+    this.subscriptions.push(this.eventEmitter.tournamentParticipantLeftObservable.subscribe( tp => this.leaveTournamentAction(tp)));
+    this.subscriptions.push(this.eventEmitter.createTeamSubjectObservable.subscribe(team => this.createTeamAction(team)));
+    this.subscriptions.push(this.eventEmitter.teamMemberJoinedObservable.subscribe(tm => this.teamMemberJoinedAction(tm)));
+    this.subscriptions.push(this.eventEmitter.teamMemberLeftObservable.subscribe(tm => this.teamMemberLeftAction(tm)));
+    this.subscriptions.push(this.eventEmitter.teamDeletedObservable.subscribe(t => this.teamDeletedAction(t)));
   }
 
-  setTeamSizeArray() {
-    if (this.tournament) {
-      this.teamSizeArray = [];
-      for (let i = 0; i < this.tournament.getGameMode().getTeamSize(); i++) {
-        this.teamSizeArray.push(i + 1);
-      }
-    }
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  loadTournament() {
+    this.tournament = this.tournamentService.getTournament(this.data.data);
+    this.setInfoArray();
+    this.tournament.getTeamRegistration() ? this.loadTeams() : this.loadTournamentParticipant();
   }
 
   setInfoArray() {
@@ -130,12 +112,21 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   }
 
   openTeam(team: Team) {
-    this.dialog.open( ShowTeamComponent, {
+    const dialogRef = this.dialog.open( ShowTeamComponent, {
       width: '25vw',
       minWidth: '300px',
       data: {team,
         tournamentTeam: this.teams,
         tournament: this.tournament}
+    });
+    dialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        if (data.action === 'joinTeam') {
+          this.teamService.joinTeam(data.team, data.pin);
+        } else if (data.action === 'leaveTeam') {
+          this.teamService.leaveTeam(data.team, data.teamMember);
+        }
+      }
     });
   }
 
@@ -147,7 +138,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     }
   }
 
-  addTeam(event) {
+  createTeam(event) {
     const dialogRef = this.dialog.open( CreateTeamComponent, {
       width: '50vw'
     });
@@ -157,6 +148,25 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
         this.teamService.createTeam(result).subscribe();
       }
     });
+  }
+
+  createTeamAction(team: Team) {
+    if (team.getTournament().getId() === this.tournament.getId()) {
+      this.teams.push(team);
+    } else {
+      console.error('Team does not match tournament');
+    }
+  }
+
+  teamMemberJoinedAction(teamMember: TeamMember) {
+    if (this.teams) {
+      const teamToJoin: Team = this.teams.find( team => team.id as number === teamMember.teamId as number);
+      teamToJoin.addTeamMember(teamMember);
+    }
+  }
+
+  teamMemberLeftAction(teamMember: TeamMember) {
+    this.teams.find( team => team.getId() === teamMember.teamId).removeTeamMember(teamMember);
   }
 
   joinTournament() {
@@ -185,18 +195,19 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     }
   }
 
+  teamDeletedAction(team: Team) {
+    const index = this.teams.findIndex( x => x.getId() === team.getId());
+    if (index > -1) {
+      this.teams.splice(index, 1);
+    }
+  }
+
   onUserClick(event: TournamentParticipant) {
-    console.log('user icon clicked');
     if (event) {
       const dialogRef = this.dialog.open( DisplayUserComponent, {
         width: '50vw',
         data: {user: event.getUser()}
       });
-
-      dialogRef.afterClosed().subscribe( result => {
-        console.log('user info closed');
-      });
-
     }
   }
 

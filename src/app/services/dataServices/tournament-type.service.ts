@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
-import {Observable, Subject} from "rxjs";
-import {map} from "rxjs/operators";
-import {TournamentType} from "../../models/TournamentType";
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {Observable, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {TournamentType} from '../../models/TournamentType';
+import {mapJSONToTournamentTypeArray} from '../../util/mapperFunctions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +14,18 @@ export class TournamentTypeService {
     this.init();
   }
 
+  url = environment.BASE_API_URL;
+  tournamentTypes: TournamentType[];
+
+  tournamentTypesSubject = new Subject<TournamentType[]>();
+  getTournamentTypeObservable = this.tournamentTypesSubject.asObservable();
+
   init(): void {
     this.getTournamentTypesBackend().subscribe( res => {
       this.tournamentTypes = res;
       this.tournamentTypesSubject.next(this.tournamentTypes);
-    })
+    });
   }
-
-  private url = environment.BASE_API_URL;
-  private tournamentTypes: TournamentType[];
-
-  private tournamentTypesSubject = new Subject<TournamentType[]>();
-  public getTournamentTypeObservable = this.tournamentTypesSubject.asObservable();
 
   /**
    * Local methodes to the frontend from here on!
@@ -41,7 +42,7 @@ export class TournamentTypeService {
         this.tournamentTypes = newSavedTournamentTypes;
         this.tournamentTypesSubject.next(newSavedTournamentTypes);
       });
-    })
+    });
   }
 
 
@@ -52,18 +53,12 @@ export class TournamentTypeService {
   getTournamentTypesBackend(): Observable<TournamentType[]> {
     const targetURL = this.url + 'tournamentTypes';
     return this.http.get<TournamentType[]>(targetURL).pipe( map(
-      response => { return this.mapJSONToTournamentTypeArray(response); }
+      response => mapJSONToTournamentTypeArray(response)
     ));
   }
 
   saveTournamentTypesBackend(tournamentTypes: TournamentType[]): Observable<TournamentType[]> {
     const targetURL = this.url + 'tournamentTypes';
     return this.http.put<TournamentType[]>(targetURL, tournamentTypes);
-  }
-
-  mapJSONToTournamentTypeArray(data: any): TournamentType[] {
-    const result: TournamentType[] = [];
-    data.forEach( tournamentType => result.push(new TournamentType(tournamentType.id, tournamentType.name)));
-    return result;
   }
 }

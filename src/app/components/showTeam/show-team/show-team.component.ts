@@ -3,8 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CreateTeamComponent} from '../../create-team/create-team.component';
 import {Team} from '../../../models/Team';
 import {Tournament} from '../../../models/Tournament';
-import {AuthService} from "../../../services/auth-service.service";
-import {TeamMemberService} from "../../../services/dataServices/team-member.service";
+import {AuthService} from '../../../services/auth-service.service';
 
 @Component({
   selector: 'app-show-team',
@@ -13,22 +12,24 @@ import {TeamMemberService} from "../../../services/dataServices/team-member.serv
 })
 export class ShowTeamComponent {
 
+  enteredPin: string;
   team: Team;
   tournamentTeams: Team[];
   tournament: Tournament;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<CreateTeamComponent>,
-              private authService: AuthService,
-              private teamService: TeamMemberService) {
+              private authService: AuthService) {
     this.team = data.team;
     this.tournamentTeams = data.tournamentTeams;
     this.tournament = data.tournament;
   }
 
+  getTeamMember() {
+    return this.team.getTeamMembers().find(member => member.user.id === this.authService.getActiveUser().id);
+  }
+
   teamMember() {
-    const user = this.authService.getActiveUser();
-    const teamFound = this.team.getTeamMembers().find(member => member.getId() === user.getId());
-    return !!teamFound;
+    return !!this.getTeamMember();
   }
 
   registerForTournament(): boolean {
@@ -38,10 +39,10 @@ export class ShowTeamComponent {
   }
 
   joinTeam() {
-    console.log('not impl');
+    this.dialogRef.close({action: 'joinTeam', pin: this.enteredPin, team: this.team});
   }
 
   leaveTeam() {
-    console.log('not impl');
+    this.dialogRef.close({action: 'leaveTeam', team: this.team, teamMember: this.getTeamMember()});
   }
 }

@@ -82,7 +82,7 @@
       <mat-card-title>
         <div *ngIf="tournament.getTeamRegistration()">
           <p class="inline">Actions</p>
-          <button  (click)="addTeam($event)" [disabled]="checkTeamJoined()" mat-raised-button color="primary">
+          <button (click)="createTeam($event)" [disabled]="checkTeamJoined()" mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
             Team erstellen
           </button>

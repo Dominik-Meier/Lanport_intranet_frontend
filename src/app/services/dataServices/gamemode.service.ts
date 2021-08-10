@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
-import {Observable, Subject} from "rxjs";
-import {map} from "rxjs/operators";
-import {GameMode} from "../../models/GameMode";
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {Observable, Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {GameMode} from '../../models/GameMode';
+import {mapJSONToGameModeArray} from '../../util/mapperFunctions';
 
 @Injectable({
   providedIn: 'root'
@@ -14,18 +15,18 @@ export class GamemodeService {
     this.init();
   }
 
+  url = environment.BASE_API_URL;
+  gameModes: GameMode[];
+
+  gameModesSubject = new Subject<GameMode[]>();
+  getGameModeObservable = this.gameModesSubject.asObservable();
+
   init(): void {
     this.getGameModesBackend().subscribe( res => {
       this.gameModes = res;
       this.gameModesSubject.next(this.gameModes);
-    })
+    });
   }
-
-  private url = environment.BASE_API_URL;
-  private gameModes: GameMode[];
-
-  private gameModesSubject = new Subject<GameMode[]>();
-  public getGameModeObservable = this.gameModesSubject.asObservable();
 
   /**
    * Local methodes to the frontend from here on!
@@ -40,8 +41,8 @@ export class GamemodeService {
       this.getGameModesBackend().subscribe( res => {
         this.gameModes = res;
         this.gameModesSubject.next(this.gameModes);
-      })
-    })
+      });
+    });
   }
 
 
@@ -52,18 +53,12 @@ export class GamemodeService {
   getGameModesBackend(): Observable<GameMode[]> {
     const targetURL = this.url + 'gamemodes';
     return this.http.get<GameMode[]>(targetURL).pipe( map(
-      response => { return this.mapJSONToGameModeArray(response); }
+      response => mapJSONToGameModeArray(response)
     ));
   }
 
   saveGameModesBackend(gamemodes: GameMode[]): Observable<GameMode[]> {
     const targetURL = this.url + 'gamemodes';
     return this.http.put<GameMode[]>(targetURL, gamemodes);
-  }
-
-  mapJSONToGameModeArray(data: any): GameMode[] {
-    const result: GameMode[] = [];
-    data.forEach( gamemode => result.push(new GameMode(gamemode.id, gamemode.name, gamemode.game, gamemode.elimination, gamemode.teamSize, gamemode.rules)));
-    return result;
   }
 }
