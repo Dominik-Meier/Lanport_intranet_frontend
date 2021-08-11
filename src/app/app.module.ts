@@ -42,6 +42,8 @@ import { CreateTeamComponent } from './components/create-team/create-team.compon
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { QuillModule } from 'ngx-quill';
 import { ShowTeamComponent } from './components/showTeam/show-team/show-team.component';
+import { BeamerViewComponent } from './views/beamer-view/beamer-view.component';
+import {EmptyComponent} from './util/components/empty.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { ShowTeamComponent } from './components/showTeam/show-team/show-team.com
     DisplayUserComponent,
     CreateTeamComponent,
     ShowTeamComponent,
+    BeamerViewComponent,
+    EmptyComponent
   ],
   imports: [
     BrowserModule,

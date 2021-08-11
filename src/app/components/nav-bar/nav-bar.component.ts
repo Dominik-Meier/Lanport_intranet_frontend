@@ -1,10 +1,10 @@
 import {Component, OnInit, SimpleChanges} from '@angular/core';
-import {NavBarItemService} from "../../services/nav-bar-item.service";
-import {Router} from "@angular/router";
-import {User} from "../../models/User";
-import {AuthService} from "../../services/auth-service.service";
-import {DisplayUserComponent} from "../display-user/display-user.component";
-import {MatDialog} from "@angular/material/dialog";
+import {NavBarItemService} from '../../services/nav-bar-item.service';
+import {Router} from '@angular/router';
+import {User} from '../../models/User';
+import {AuthService} from '../../services/auth-service.service';
+import {DisplayUserComponent} from '../display-user/display-user.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-nav-bar',
@@ -28,7 +28,7 @@ export class NavBarComponent implements OnInit {
     this.authService.getActiveUserObservable.subscribe( user => {
       this.user = user;
       console.log(user);
-    })
+    });
   }
 
   checkUserRights() {
@@ -44,7 +44,7 @@ export class NavBarComponent implements OnInit {
 
   onClickUser(event) {
     console.log('user icon clicked');
-    if(this.user) {
+    if (this.user) {
       const dialogRef = this.dialog.open( DisplayUserComponent, {
         width: '50vw',
         data: {user: this.user}
@@ -58,11 +58,10 @@ export class NavBarComponent implements OnInit {
   }
 
   onClickSettings(event) {
-    location.assign('settings');
+    this.router.navigate(['/settings']);
   }
 
   onLPLogoClick(event) {
     window.location.href = 'https://www.lanport.ch';
   }
-
 }

@@ -10,7 +10,7 @@ import {AdminPageService} from "../../../services/admin-page.service";
 export class NavBarSettingsComponent implements OnInit {
   navBarItems = this.adminPageService.getNavBarItems();
 
-  constructor( private adminPageService: AdminPageService) { }
+  constructor( private adminPageService: AdminPageService, private router: Router) { }
 
   ngOnInit(): void {
     this.adminPageService.navBarItemsObservable.subscribe( navBarItems => {
@@ -22,7 +22,7 @@ export class NavBarSettingsComponent implements OnInit {
   }
 
   onClickSettings(event) {
-    location.assign('home');
+    this.router.navigate(['/home']);
   }
 
   onLPLogoClick(event) {

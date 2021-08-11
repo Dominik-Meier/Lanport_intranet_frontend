@@ -5,8 +5,6 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import {AuthService} from '../../services/auth-service.service';
-import {environment} from '../../../environments/environment';
 import {LanpartyService} from '../../services/dataServices/lanparty.service';
 import {NavBarItemService} from '../../services/nav-bar-item.service';
 import {RegisterItemComponent} from '../../components/interfaces/registerItem.component';
@@ -23,26 +21,14 @@ export class HomeComponent implements OnInit {
 
 
   constructor(
-    private authService: AuthService,
     private lanpartyService: LanpartyService,
     private navBarItemService: NavBarItemService,
     private componentFactoryResolver: ComponentFactoryResolver) { }
 
-  ngOnInit(): void {
-    // if (environment.production === true && this.authService.isLoggedOut()) {
-    if (environment.production === true && this.authService.isLoggedOut()) {
-      console.log(environment.production);
-      console.log('You need to be logged in');
-      // window.location.href = 'https://www.lanport.ch/login';
-    }
-
-    if ( !environment.production) {
-      // TODO what when user is return, what we do now?
-      const user = this.authService.isLoggedIn();
-    }
+   ngOnInit(): void {
 
     // Load the Component associated to the NavBarItem
-    this.navBarItemService.activeNavBarItemsObservable.subscribe( activeNavItem => {
+    this.navBarItemService.activeNavBarItemsObservable.subscribe(activeNavItem => {
       this.dynamicElementInsertionPoint.clear();
       this.navItemIsActive = false;
       if (activeNavItem != null) {

@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import * as moment from "moment";
-import { CookieService } from 'ngx-cookie-service';
-import {environment} from "../../environments/environment";
-import {Observable, Subject} from "rxjs";
-import {User} from "../models/User";
-import {GameMode} from "../models/GameMode";
-import {map} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import * as moment from 'moment';
+import {CookieService} from 'ngx-cookie-service';
+import {environment} from '../../environments/environment';
+import {Observable, of, Subject} from 'rxjs';
+import {User} from '../models/User';
+import {catchError, map} from 'rxjs/operators';
+import {handleError} from "../util/handleError";
+import {mapJsonToUser} from "../util/mapperFunctions";
 
 // https://www.malcontentboffin.com/2017/11/Angular-Third-Party-Cookies.html
 // https://blog.angular-university.io/angular-jwt-authentication/
@@ -21,7 +22,6 @@ export class AuthService {
               private cookieService: CookieService) {
   }
 
-  private sess;
   private url = environment.BASE_API_URL;
   private activeUser: User;
 
@@ -32,24 +32,15 @@ export class AuthService {
     return this.activeUser;
   }
 
-  public isLoggedIn() {
-    console.log('isLoggedIn: ', this.activeUser);
-    return this.activeUser ? true : this.loadUser();
-  }
-
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
-
   getExpiration() {
-    const expiration = localStorage.getItem("expires_at");
+    const expiration = localStorage.getItem('expires_at');
     const expiresAt = JSON.parse(expiration);
     return moment(expiresAt);
   }
 
   settingsRights() {
     let allowed = false;
-    if(this.activeUser){
+    if (this.activeUser){
       this.activeUser.getLevel() === 'admin' ? allowed = true : null;
       this.activeUser.getLevel() === 'Admin' ? allowed = true : null;
       this.activeUser.getLevel() === 'mitglied' ? allowed = true : null;
@@ -58,28 +49,21 @@ export class AuthService {
     return allowed;
   }
 
-  async loadUser() {
-    this.sess = environment.production ? this.cookieService.get('sess') : 'AP1kMN8qUJ6zyAvYkXw3kTDVu5m6Sgql';
-
-    console.log('sess', this.sess);
-    if (this.sess) {
-      await this.getUser(this.sess).subscribe( res => {
-        this.activeUser = res;
+  /**
+   * dev mode set cookie at browser console
+   * document.cookie="keyofcookie=valueofcookie"
+   */
+  loadUser() {
+    if (this.cookieService.get('sess')) {
+      this.getUser(this.cookieService.get('sess')).subscribe( user => {
+        this.activeUser = user;
         this.activeUserSubject.next(this.activeUser);
-        console.log(res);
       });
     }
   }
 
   getUser(cookie: string): Observable<User> {
     const targetURL = this.url + 'users/' + cookie;
-    return this.http.get(targetURL).pipe(map(
-      res => {return this.mapJsonToUser(res);}
-    ));
-  }
-
-  mapJsonToUser (data: any): User {
-    console.log(data);
-    return new User(data.id, data.nickname, data.registered, data.payed, data.seat, data.level);
+    return this.http.get(targetURL).pipe(map( u => mapJsonToUser(u)), catchError(handleError));
   }
 }
