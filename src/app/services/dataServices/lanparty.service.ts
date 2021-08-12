@@ -45,8 +45,6 @@ export class LanpartyService{
     });
   }
 
-
-
   /**
    * Remote methodes to the backend from here on!
    */

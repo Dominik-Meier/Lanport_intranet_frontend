@@ -40,7 +40,7 @@ export class AppConfigService {
     const jsonData = [];
     data.forEach( item => jsonData.push(item.toJSON()));
 
-    return this.http.post(targetURL, {'data': jsonData});
+    return this.http.post(targetURL, {data: jsonData});
   }
 
   getAppConfig(): Observable<NavBarItem[]> {
@@ -57,14 +57,14 @@ export class AppConfigService {
     const resultArr: NavBarItem[] = [];
     for ( const element of data.data) {
       let componentOuter = null;
-      if(navBarComponentSelectorMap.has(element.component)) {
+      if (navBarComponentSelectorMap.has(element.component)) {
         componentOuter = navBarComponentSelectorMap.get(element.component);
       }
 
       const optionsArr = []
       for (const option of element.options) {
         let componentInner = null;
-        if(navBarItemComponentSelectorMap.has(option.component)) {
+        if (navBarItemComponentSelectorMap.has(option.component)) {
           componentInner = navBarItemComponentSelectorMap.get(option.component);
         }
         optionsArr.push(new RegisterOptionItem(option.name, option.data, componentInner))
