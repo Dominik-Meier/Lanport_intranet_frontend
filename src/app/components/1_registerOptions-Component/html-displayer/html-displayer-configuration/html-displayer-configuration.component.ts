@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import * as QuillNamespace from 'quill';
-let Quill: any = QuillNamespace;
+const Quill: any = QuillNamespace;
 import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
 Quill.register('modules/blotFormatter', BlotFormatter);
 
@@ -12,15 +12,46 @@ Quill.register('modules/blotFormatter', BlotFormatter);
 })
 export class HtmlDisplayerConfigurationComponent implements OnInit {
 
+  // TODO check this shit https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/angular.html
+  constructor( public dialogRef: MatDialogRef<HtmlDisplayerConfigurationComponent>,
+               @Inject(MAT_DIALOG_DATA) public data: any) { }
+
   // TODO not everything working in the toolbar, fix it or remov it
-  // public config = "{ toolbar: [ 'heading', '|', 'bold', 'italic', underline, strikethrough, '|', fontFamily, fontColor, fontSize, '|',  ] }"
+  // public config = "{ toolbar: [ 'heading', '|', 'bold', 'italic',
+  // underline, strikethrough, '|', fontFamily, fontColor, fontSize, '|',  ] }"
   name: string;
   displayedString: string;
   startString: string;
 
-  // TODO check this shit https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/angular.html
-  constructor( public dialogRef: MatDialogRef<HtmlDisplayerConfigurationComponent>,
-               @Inject(MAT_DIALOG_DATA) public data: any) { }
+  quillConfig = {
+    // toolbar: '.toolbar',
+    toolbar: {
+      container: [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['code-block'],
+        [{ header: 1 }, { header: 2 }],               // custom button values
+        [{ list: 'ordered'}, { list: 'bullet' }],
+        [{ script: 'sub'}, { script: 'super' }],      // superscript/subscript
+        [{ indent: '-1'}, { indent: '+1' }],          // outdent/indent
+        [{ direction: 'rtl' }],                         // text direction
+
+        [{ size: ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ font: [] }],
+        [{ align: [] }],
+
+        ['clean'],                                         // remove formatting button
+
+        ['link', 'image', 'video'],
+        // ['link', 'image', 'video']
+      ],
+      //   handlers: {'emoji': function() {}}
+    },
+    blotFormatter: {
+
+    }
+  };
 
   ngOnInit(): void {
     this.name = this.data.name;
@@ -35,41 +66,11 @@ export class HtmlDisplayerConfigurationComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close()
+    this.dialogRef.close();
   }
 
   logContentChanged(event$) {
-    console.log(event$)
+    console.log(event$);
   }
-
-  quillConfig={
-    //toolbar: '.toolbar',
-    toolbar: {
-      container: [
-        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        ['code-block'],
-        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-        [{ 'direction': 'rtl' }],                         // text direction
-
-        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-        [{ 'font': [] }],
-        [{ 'align': [] }],
-
-        ['clean'],                                         // remove formatting button
-
-        ['link', 'image', 'video'],
-        //['link', 'image', 'video']
-      ],
-      //   handlers: {'emoji': function() {}}
-    },
-    blotFormatter: {
-
-    }
-  };
 
 }
