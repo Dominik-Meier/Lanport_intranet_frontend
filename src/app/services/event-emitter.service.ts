@@ -3,14 +3,23 @@ import {TournamentParticipant} from '../models/TournamentParticipant';
 import {Subject} from 'rxjs';
 import {WebSocketService} from './web-socket.service';
 import {WebSocketEvent} from '../models/WebSocketEvent';
-import {mapJSONToTeam, mapJSONToTeamMember, mapJSONToTournamentParticipant} from '../util/mapperFunctions';
+import {
+  mapJSONToAppSettingsArray,
+  mapJSONToTeam,
+  mapJSONToTeamMember,
+  mapJSONToTournamentParticipant
+} from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
+import {NavBarItem} from "../models/NavBarItem";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventEmitterService {
+
+  public appConfigSubject = new Subject<NavBarItem[]>();
+  public appConfigObservable = this.appConfigSubject.asObservable();
 
   private tournamentParticipantJoinedSubject = new Subject<TournamentParticipant>();
   public tournamentParticipantJoinedObservable = this.tournamentParticipantJoinedSubject.asObservable();
@@ -36,6 +45,11 @@ export class EventEmitterService {
       console.log(msg);
 
       switch (event.event) {
+        case 'AppConfigUpdated': {
+          this.appConfigSubject.next(mapJSONToAppSettingsArray(event.data));
+          break;
+        }
+
         case 'TournamentParticipantJoinedEvent': {
           this.tournamentParticipantJoinedSubject.next(mapJSONToTournamentParticipant(event.data));
           break;

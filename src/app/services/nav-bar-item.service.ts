@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {NavBarItem} from "../models/NavBarItem";
-import {Subject} from "rxjs";
-import {AppConfigService} from "./app-config.service";
+import {NavBarItem} from '../models/NavBarItem';
+import {Subject} from 'rxjs';
+import {AppConfigService} from './app-config.service';
+import {EventEmitterService} from './event-emitter.service';
+import {AdminPageService} from './admin-page.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,17 +20,17 @@ export class NavBarItemService {
   private activeNavBarItem: NavBarItem;
 
 
-  constructor(private appConfigService: AppConfigService) {
+  constructor(private appConfigService: AppConfigService, private adminPagerService: AdminPageService) {
     this.appConfigService.configObservable.subscribe( newConfig => {
       this.navBarItems = newConfig;
       this.navBarItemsSubject.next(this.getNavBarItems());
-    })
+    });
   }
 
   applyNewNavBar(newConfig: NavBarItem[]) {
     this.appConfigService.createAppConfig(this.navBarItems).subscribe( newNavBarItems => {
       console.log(newNavBarItems);
-      this.navBarItems = newConfig;
+      this.navBarItems = newNavBarItems;
       this.navBarItemsSubject.next(this.getNavBarItems());
       console.log('NavBarItem Service set new config');
     });
@@ -43,7 +45,7 @@ export class NavBarItemService {
       this.navBarItems = copyOfNavBarItems;
       this.navBarItemsSubject.next(this.getNavBarItems());
       console.log('NavBarItem Service set new config for Item: ', newItem.getName());
-    })
+    });
   }
 
   getNavBarItems() {
@@ -60,7 +62,7 @@ export class NavBarItemService {
   }
 
   setNewActiveItem(navItem: NavBarItem) {
-    for( const item of this.navBarItems) {
+    for ( const item of this.navBarItems) {
 
       if (item.getActive() && item.getName() != navItem.getName()) {
         item.setActive(false);

@@ -15,7 +15,7 @@ export class NavBarSettingsComponent implements OnInit {
   ngOnInit(): void {
     this.adminPageService.navBarItemsObservable.subscribe( navBarItems => {
       this.navBarItems = navBarItems;
-    })
+    });
   }
 
   onClickUser(event) {
