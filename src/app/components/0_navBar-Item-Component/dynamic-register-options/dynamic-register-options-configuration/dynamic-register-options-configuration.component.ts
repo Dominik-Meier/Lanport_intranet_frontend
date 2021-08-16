@@ -1,15 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ComponentWithNameComponent} from "../../../interfaces/componentWithName.component";
-import {DataDisplayerComponent} from "../../../interfaces/dataDisplayer.component";
-import {NavBarItem} from "../../../../models/NavBarItem";
-import {MatTableDataSource} from "@angular/material/table";
-import {  navBarComponentSelectorMap,  navBarItemComponentSelectorMap
-} from "../../../../models/maps/componentSelectorMaps";
-import {SelectionModel} from "@angular/cdk/collections";
-import {RegisterOptionItem} from "../../../../models/registerOptionItem";
-import {NavBarItemService} from "../../../../services/nav-bar-item.service";
-import { MatDialog} from "@angular/material/dialog";
-import {navBarItemComponentConfigurationSelectorMap} from "../../../../models/maps/innerComponentConfigurationSelectorMaps";
+import {ComponentWithNameComponent} from '../../../interfaces/componentWithName.component';
+import {DataDisplayerComponent} from '../../../interfaces/dataDisplayer.component';
+import {NavBarItem} from '../../../../models/NavBarItem';
+import {MatTableDataSource} from '@angular/material/table';
+import {SelectionModel} from '@angular/cdk/collections';
+import {RegisterOptionItem} from '../../../../models/registerOptionItem';
+import {NavBarItemService} from '../../../../services/nav-bar-item.service';
+import { MatDialog} from '@angular/material/dialog';
+import {navBarItemComponentConfigurationSelectorMap} from '../../../../models/maps/innerComponentConfigurationSelectorMaps';
+import {navBarComponentSelectorMap, navBarItemComponentSelectorMap} from '../../../../util/mapperFunctions';
 
 @Component({
   selector: 'app-dynamic-register-options-configuration',
@@ -23,7 +22,7 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   navBarItem: NavBarItem = null;
 
   dataSource: MatTableDataSource<RegisterOptionItem>;
-  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'actions']
+  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'actions'];
   outerComponents: Map<String, ComponentWithNameComponent> = navBarComponentSelectorMap;
   innerComponents: Map<String, ComponentWithNameComponent> = navBarItemComponentSelectorMap;
 
@@ -38,7 +37,9 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   }
 
   ngOnInit(): void {
-    (this.data instanceof NavBarItem) ? this.navBarItem = this.data : null;
+    if (this.data instanceof NavBarItem) {
+      this.navBarItem = this.data;
+    }
     if (this.navBarItem) {
       this.oldNavBarItem = this.navBarItem;
       this.dataSource = new MatTableDataSource<RegisterOptionItem>(this.navBarItem.getOptions());
@@ -46,12 +47,11 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   }
 
   addRegisterOption(event) {
-    this.navBarItem.addOption(new RegisterOptionItem('Placeholder', null, null));
+    this.navBarItem.addOption(new RegisterOptionItem(null, 'Placeholder', null, null, null, false, false));
     this.dataSource = new MatTableDataSource<RegisterOptionItem>(this.navBarItem.getOptions());
   }
 
   applyConfig(event) {
-    console.log(event);
     this.navBarItemService.applyNewNavBarItem(this.navBarItem, this.oldNavBarItem);
     console.log('applied new config!');
   }
@@ -72,7 +72,7 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   }
 
   openDialog(row): void {
-    const componentToLoad = this.innerConfigurationsComponents.get(row.component.componentName);
+    const componentToLoad = this.innerConfigurationsComponents.get(row.usedComponent.componentName);
     // TODO check error msg and fix it
     // @ts-ignore
     const dialogRef = this.dialog.open( componentToLoad, {

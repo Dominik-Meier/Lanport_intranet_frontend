@@ -1,16 +1,16 @@
 import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {AppConfigService} from "../../../services/app-config.service";
-import {NavBarItem} from "../../../models/NavBarItem";
-import {navBarComponentSelectorMap, navBarItemComponentSelectorMap} from "../../../models/maps/componentSelectorMaps";
-import {ComponentWithNameComponent} from "../../interfaces/componentWithName.component";
-import {SelectionModel} from "@angular/cdk/collections";
-import {MatTableDataSource} from "@angular/material/table";
-import {NavBarItemService} from "../../../services/nav-bar-item.service";
-import {HtmlDisplayerComponent} from "../../1_registerOptions-Component/html-displayer/html-displayer.component";
-import {  navBarItemComponentConfigurationSelectorMap} from "../../../models/maps/innerComponentConfigurationSelectorMaps";
-import {DataDisplayerComponent} from "../../interfaces/dataDisplayer.component";
-import {navBarComponentConfigurationSelectorMap} from "../../../models/maps/outerComponentConfigurationSelectorMaps";
-import {MatCheckboxChange} from "@angular/material/checkbox";
+import {AppConfigService} from '../../../services/app-config.service';
+import {NavBarItem} from '../../../models/NavBarItem';
+import {ComponentWithNameComponent} from '../../interfaces/componentWithName.component';
+import {SelectionModel} from '@angular/cdk/collections';
+import {MatTableDataSource} from '@angular/material/table';
+import {NavBarItemService} from '../../../services/nav-bar-item.service';
+import {  navBarItemComponentConfigurationSelectorMap} from '../../../models/maps/innerComponentConfigurationSelectorMaps';
+import {DataDisplayerComponent} from '../../interfaces/dataDisplayer.component';
+import {navBarComponentConfigurationSelectorMap} from '../../../models/maps/outerComponentConfigurationSelectorMaps';
+import {MatCheckboxChange} from '@angular/material/checkbox';
+import {EventEmitterService} from '../../../services/event-emitter.service';
+import {navBarComponentSelectorMap, navBarItemComponentSelectorMap} from '../../../util/mapperFunctions';
 
 @Component({
   selector: 'app-set-app-navigation',
@@ -21,7 +21,7 @@ export class SetAppNavigationComponent implements OnInit {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   config: NavBarItem[];
   dataSource: MatTableDataSource<NavBarItem>;
-  columnsToDisplay = ['select', 'name', 'componentName', 'enabledAtIntranet', 'actions']
+  columnsToDisplay = ['select', 'name', 'componentName', 'enabledAtIntranet', 'actions'];
   outerComponents: Map<String, ComponentWithNameComponent> = navBarComponentSelectorMap;
   innerComponents: Map<String, ComponentWithNameComponent> = navBarItemComponentSelectorMap;
 
@@ -35,16 +35,15 @@ export class SetAppNavigationComponent implements OnInit {
               private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
-    console.log('init nav app');
-    this.appConfigService.configObservable.subscribe(res => {
-      this.setConfig(res);
-    });
     this.setConfig(this.appConfigService.getConfig());
+    this.navBarItemService.navBarItemsObservable.subscribe( newConfig => {
+      this.setConfig(newConfig);
+    });
     this.selection.changed.asObservable().subscribe( event => {
-      if(event.added) {
-        this.loadSubComponent(event.added[0])
+      if (event.added) {
+        this.loadSubComponent(event.added[0]);
       }
-    })
+    });
   }
 
   setConfig(config: any) {
@@ -55,7 +54,7 @@ export class SetAppNavigationComponent implements OnInit {
   }
 
   setEnabledAtIntranet(event: MatCheckboxChange, row: NavBarItem) {
-    row.setEnabledAtIntranet(event.checked)
+    row.setActiveForIntranet(event.checked);
   }
 
   changeName(event, row){
@@ -63,7 +62,7 @@ export class SetAppNavigationComponent implements OnInit {
   }
 
   addNavBarItem(event) {
-    this.config.push(new NavBarItem("Placeholder", false, [], null));
+    this.config.push(new NavBarItem(null, 'Placeholder', false, [], null));
     this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 
@@ -75,31 +74,25 @@ export class SetAppNavigationComponent implements OnInit {
     this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 
-  /** This saves the the local data from the diffrent vars into the config in this file, not saving global*/
-  saveConfig(event) {
-    this.config = this.dataSource.data;
-  }
-
   /**
    * This applies the config to the navBarItem Service and sends the config to the backend
    * The configs gets applied to the app and changes cant be turned back!
-   * */
+   */
   applyConfig(event) {
     this.navBarItemService.applyNewNavBar(this.config);
-    console.log('Not supported yet!');
   }
 
-  //TODO there is some times an error about the loaded component
+  // TODO there is some times an error about the loaded component
   loadSubComponent(navBarItem: NavBarItem) {
     this.dynamicElementInsertionPoint.clear();
-    if(navBarItem.getComponent()) {
+    if (navBarItem.getComponent()) {
       const componentToResolve = this.outerConfigurationsComponents.get(navBarItem.getComponent().componentName);
 
-      //TODO is working but maybe check the error
+      // TODO is working but maybe check the error
       // @ts-ignore
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToResolve);
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-      (<DataDisplayerComponent>componentRef.instance).data = navBarItem;
+      (componentRef.instance as DataDisplayerComponent).data = navBarItem;
     }
   }
 

@@ -23,7 +23,7 @@ export class NavBarItemSettingsComponent implements OnChanges {
   constructor(private adminPageService: AdminPageService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.navItem.getActive()) {
+    if (this.navItem.getActive()) {
       this.element.nativeElement.classList.remove('nav-bar-item-box');
       this.element.nativeElement.classList.add('nav-bar-item-box-hover');
     }

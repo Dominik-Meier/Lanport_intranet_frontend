@@ -3,15 +3,15 @@ import {RegisterOptionItem} from "./registerOptionItem";
 
 export class NavBarItemSettings {
   private name: string;
-  private options: RegisterOptionItem[];
+  private appComponents: RegisterOptionItem[];
   private active: boolean;
-  private component: Type<any>;
+  private usedComponent: Type<any>;
 
-  constructor(name: string, options: RegisterOptionItem[], component: Type<any> = null) {
+  constructor(name: string, appComponents: RegisterOptionItem[], usedComponent: Type<any> = null) {
     this.name = name;
-    this.options = options;
+    this.appComponents = appComponents;
     this.active = false;
-    this.component = component;
+    this.usedComponent = usedComponent;
   }
 
   getName() {

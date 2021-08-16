@@ -12,7 +12,7 @@ import {TournamentSettingsComponent} from "../components/3_settings_components/t
 })
 export class AdminPageService {
   // Any updates on NavbarItemsList are notified over this subject
-  private navBarItemsSubject = new Subject<NavBarItemSettings[]>();
+  public navBarItemsSubject = new Subject<NavBarItemSettings[]>();
   public navBarItemsObservable = this.navBarItemsSubject.asObservable();
   private navBarItems: NavBarItemSettings[] = [];
 
@@ -44,7 +44,7 @@ export class AdminPageService {
   }
 
   setNewActiveItem(navItem: NavBarItemSettings) {
-    for( const item of this.navBarItems) {
+    for (const item of this.navBarItems) {
 
       if (item.getActive()) {
         item.setActive(false);

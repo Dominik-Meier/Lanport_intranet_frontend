@@ -24,7 +24,7 @@
 
   <div class="body">
     <div *ngFor="let navItem of navBarItems">
-      <app-nav-bar-item [navItem]="navItem" [active]="navItem.getActive()" *ngIf="navItem.getEnabledAtIntranet()"></app-nav-bar-item>
+      <app-nav-bar-item [navItem]="navItem" [active]="navItem.getActive()" *ngIf="navItem.getActiveForIntranet()"></app-nav-bar-item>
     </div>
   </div>
 
@@ -34,7 +34,7 @@
 
   <div class="footer">
     <hr class="split-line ml-2 mr-2 line-shadow">
-    <img src="assets/img/LanPort.png"  width="100%" height="auto" class="img" (click)="onLPLogoClick($event)">
+    <!--<img src="assets/img/LanPort.png"  width="100%" height="auto" class="img" (click)="onLPLogoClick($event)">-->
   </div>
 
 </div>

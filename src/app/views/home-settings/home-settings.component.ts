@@ -22,8 +22,8 @@ export class HomeSettingsComponent implements OnInit {
     this.adminPageService.activeNavBarItemsObservable.subscribe( activeNavItem => {
       this.activeNavBarItem = activeNavItem;
       this.dynamicElementInsertionPoint.clear();
-      if (this.activeNavBarItem.component) {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.component);
+      if (this.activeNavBarItem.usedComponent) {
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.usedComponent);
         const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
       }
     });

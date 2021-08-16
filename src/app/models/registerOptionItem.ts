@@ -1,26 +1,41 @@
-import {Component, Type} from "@angular/core";
 import {DynamicComponentDataProvider} from "./interfaces/dynamicComponentDataProvider";
 import {ComponentWithNameComponent} from "../components/interfaces/componentWithName.component";
 
-export class RegisterOptionItem implements DynamicComponentDataProvider{
+/**
+ * Is appComponent at backend
+ */
+export class RegisterOptionItem implements DynamicComponentDataProvider {
+  private id: number;
   private name: string;
-  private active: boolean;
+  public usedComponent: ComponentWithNameComponent;
+  private appRegisterComponentId: number;
   data: any;
-  private component: ComponentWithNameComponent;
+  private activeForIntranet: boolean;
+  private activeForBeamerPresentation: boolean;
+  private active;
 
-  constructor(name: string, data: any, component: ComponentWithNameComponent = null) {
+  constructor(id: number, name: string, data: any, usedComponent: ComponentWithNameComponent = null,
+              appRegisterComponentId: number, activeForIntranet: boolean, activeForBeamerPresentation: boolean) {
+    this.id = id;
     this.name = name;
-    this.active = false;
+    this.usedComponent = usedComponent;
+    this.appRegisterComponentId = appRegisterComponentId;
     this.data = data;
-    this.component = component;
+    this.activeForIntranet = activeForIntranet;
+    this.activeForBeamerPresentation = activeForBeamerPresentation;
+    this.active = false;
   }
 
-  getName() {
-    return this.name;
+  setActive(active: boolean) {
+    this.active = active;
   }
 
   getActive() {
     return this.active;
+  }
+
+  getName() {
+    return this.name;
   }
 
   getData() {
@@ -28,15 +43,11 @@ export class RegisterOptionItem implements DynamicComponentDataProvider{
   }
 
   getComponent(): ComponentWithNameComponent {
-    return this.component;
+    return this.usedComponent;
   }
 
   setName(name: string) {
     this.name = name;
-  }
-
-  setActive(active: boolean) {
-    this.active = active;
   }
 
   setData(data: any) {
@@ -45,12 +56,15 @@ export class RegisterOptionItem implements DynamicComponentDataProvider{
 
 
   toJSON() {
-    const name = this.component ? this.component.componentName : '';
+    const name = this.usedComponent ? this.usedComponent.componentName : '';
     return {
-      'name': this.name,
-      'active': this.active,
-      'data': this.data,
-      'component': name
-    }
+      id: this.id,
+      name: this.name,
+      usedComponent: name,
+      appRegisterComponentId: this.appRegisterComponentId,
+      data: this.data,
+      activeForIntranet: this.activeForIntranet,
+      activeForBeamerPresentation: this.activeForBeamerPresentation
+    };
   }
 }
