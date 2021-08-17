@@ -18,7 +18,7 @@ export class RegisterItemComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(this.registerItem.getActive()) {
+    if (this.registerItem.getActive() && this.element) {
       this.element.nativeElement.classList.remove('register-item-box');
       this.element.nativeElement.classList.add('register-item-box-hover');
     }

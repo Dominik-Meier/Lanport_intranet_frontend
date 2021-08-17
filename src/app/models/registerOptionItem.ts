@@ -5,14 +5,14 @@ import {ComponentWithNameComponent} from "../components/interfaces/componentWith
  * Is appComponent at backend
  */
 export class RegisterOptionItem implements DynamicComponentDataProvider {
-  private id: number;
-  private name: string;
+  public id: number;
+  public name: string;
   public usedComponent: ComponentWithNameComponent;
-  private appRegisterComponentId: number;
+  public appRegisterComponentId: number;
   data: any;
-  private activeForIntranet: boolean;
-  private activeForBeamerPresentation: boolean;
-  private active;
+  public activeForIntranet: boolean;
+  public activeForBeamerPresentation: boolean;
+  public active;
 
   constructor(id: number, name: string, data: any, usedComponent: ComponentWithNameComponent = null,
               appRegisterComponentId: number, activeForIntranet: boolean, activeForBeamerPresentation: boolean) {

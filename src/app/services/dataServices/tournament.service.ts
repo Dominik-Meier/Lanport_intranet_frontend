@@ -37,7 +37,7 @@ export class TournamentService {
 
   getTournament(id: number) {
     if (this.tournaments){
-      return this.tournaments.find( x => x.getId() === id);
+      return this.tournaments.find( x => x.getId().toString() === id.toString());
     }
   }
 

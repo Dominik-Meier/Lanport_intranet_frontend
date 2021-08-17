@@ -11,15 +11,15 @@ import {
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
-import {NavBarItem} from "../models/NavBarItem";
+import {NavBarItem} from '../models/NavBarItem';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventEmitterService {
 
-  public appConfigSubject = new Subject<NavBarItem[]>();
-  public appConfigObservable = this.appConfigSubject.asObservable();
+  public appConfigChangedSubject = new Subject<NavBarItem[]>();
+  public appConfigChangedObservable = this.appConfigChangedSubject.asObservable();
 
   private tournamentParticipantJoinedSubject = new Subject<TournamentParticipant>();
   public tournamentParticipantJoinedObservable = this.tournamentParticipantJoinedSubject.asObservable();
@@ -45,8 +45,8 @@ export class EventEmitterService {
       console.log(msg);
 
       switch (event.event) {
-        case 'AppConfigUpdated': {
-          this.appConfigSubject.next(mapJSONToAppSettingsArray(event.data));
+        case 'AppConfigChangedEvent': {
+          this.appConfigChangedSubject.next(mapJSONToAppSettingsArray(event.data));
           break;
         }
 
