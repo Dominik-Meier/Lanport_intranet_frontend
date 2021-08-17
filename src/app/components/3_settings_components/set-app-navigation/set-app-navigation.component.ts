@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {AppConfigService} from '../../../services/app-config.service';
 import {NavBarItem} from '../../../models/NavBarItem';
 import {ComponentWithNameComponent} from '../../interfaces/componentWithName.component';
@@ -11,14 +11,16 @@ import {navBarComponentConfigurationSelectorMap} from '../../../models/maps/oute
 import {MatCheckboxChange} from '@angular/material/checkbox';
 import {EventEmitterService} from '../../../services/event-emitter.service';
 import {navBarComponentSelectorMap, navBarItemComponentSelectorMap} from '../../../util/mapperFunctions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-set-app-navigation',
   templateUrl: './set-app-navigation.component.html',
   styleUrls: ['./set-app-navigation.component.scss']
 })
-export class SetAppNavigationComponent implements OnInit {
+export class SetAppNavigationComponent implements OnInit, OnDestroy {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
+  private subscriptions: Subscription[] = [];
   config: NavBarItem[];
   dataSource: MatTableDataSource<NavBarItem>;
   columnsToDisplay = ['select', 'name', 'componentName', 'enabledAtIntranet', 'actions'];
@@ -32,13 +34,15 @@ export class SetAppNavigationComponent implements OnInit {
 
   constructor(private appConfigService: AppConfigService,
               private navBarItemService: NavBarItemService,
-              private componentFactoryResolver: ComponentFactoryResolver) { }
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private eventEmitter: EventEmitterService) { }
 
   ngOnInit(): void {
     this.setConfig(this.appConfigService.getConfig());
-    this.navBarItemService.navBarItemsObservable.subscribe( newConfig => {
-      this.setConfig(newConfig);
-    });
+    this.subscriptions.push(this.eventEmitter.appConfigChangedObservable.subscribe( config => {
+      this.setConfig(config);
+      this.dynamicElementInsertionPoint.clear();
+    }));
     this.selection.changed.asObservable().subscribe( event => {
       if (event.added) {
         this.loadSubComponent(event.added[0]);
@@ -46,9 +50,13 @@ export class SetAppNavigationComponent implements OnInit {
     });
   }
 
-  setConfig(config: any) {
-    if (config !== null) {
-      this.config = config;
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  setConfig(newConfig: any) {
+    if (newConfig !== null) {
+      this.config = newConfig;
       this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
     }
   }
@@ -71,7 +79,9 @@ export class SetAppNavigationComponent implements OnInit {
     if (index !== -1) {
       this.config.splice(index, 1);
     }
-    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+    if (row.id) {
+      this.appConfigService.deleteAppRegisterComponent(row).subscribe();
+    }
   }
 
   /**
@@ -79,7 +89,7 @@ export class SetAppNavigationComponent implements OnInit {
    * The configs gets applied to the app and changes cant be turned back!
    */
   applyConfig(event) {
-    this.navBarItemService.applyNewNavBar(this.config);
+    this.appConfigService.createAppConfig(this.config).subscribe();
   }
 
   // TODO there is some times an error about the loaded component

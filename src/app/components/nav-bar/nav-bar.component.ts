@@ -1,34 +1,48 @@
-import {Component, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {NavBarItemService} from '../../services/nav-bar-item.service';
 import {Router} from '@angular/router';
 import {User} from '../../models/User';
 import {AuthService} from '../../services/auth-service.service';
 import {DisplayUserComponent} from '../display-user/display-user.component';
 import {MatDialog} from '@angular/material/dialog';
+import {AppConfigService} from '../../services/app-config.service';
+import {EventEmitterService} from '../../services/event-emitter.service';
+import {Subscription} from 'rxjs';
+import { configDiffer } from '../../util/configHandlerFunctions';
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss']
 })
-export class NavBarComponent implements OnInit {
-  navBarItems = this.navBarItemService.getNavBarItems();
+export class NavBarComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
+  navBarItems = this.appConfigService.getConfig();
   url = this.router.url;
   user: User = this.authService.getActiveUser();
 
   constructor( private navBarItemService: NavBarItemService,
+               private appConfigService: AppConfigService,
                private authService: AuthService,
+               private eventEmitter: EventEmitterService,
                public dialog: MatDialog,
                private router: Router) { }
 
   ngOnInit(): void {
-    this.navBarItemService.navBarItemsObservable.subscribe( navBarItems => {
-      this.navBarItems = navBarItems;
-    });
-    this.authService.getActiveUserObservable.subscribe( user => {
+    // initial load data
+    this.subscriptions.push(this.appConfigService.configObservable.subscribe( newConfig => {
+      this.navBarItems = newConfig;
+    }));
+    this.subscriptions.push(this.eventEmitter.appConfigChangedObservable.subscribe( newConfig => {
+      configDiffer(this.navBarItems, newConfig);
+    }));
+    this.subscriptions.push(this.authService.getActiveUserObservable.subscribe( user => {
       this.user = user;
-      console.log(user);
-    });
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   checkUserRights() {

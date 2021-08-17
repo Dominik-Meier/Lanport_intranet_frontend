@@ -4,7 +4,7 @@ import {TournamentType} from "./TournamentType";
 
 //TODO add registarion StartDate + EndDate
 export class Tournament {
-  private id: number;
+  public id: number;
   private name: string;
   private lanparty: Lanparty;
   private gameMode: GameMode;

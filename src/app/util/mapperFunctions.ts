@@ -122,7 +122,6 @@ export function mapJSONToTournamentTypeArray(data: any): TournamentType[] {
 
 export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
   const resultArr: NavBarItem[] = [];
-  console.log(data);
   for ( const element of data) {
     let componentOuter = null;
     if (navBarComponentSelectorMap.has(element.usedComponent)) {
@@ -138,28 +137,7 @@ export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
       optionsArr.push(new RegisterOptionItem(option.id, option.name, option.data, componentInner, option.appRegisterComponentId,
         option.activeForIntranet, option.activeForBeamerPresentation));
     }
-    resultArr.push( new NavBarItem(element.id, element.name, element.enabledAtIntranet, optionsArr, componentOuter));
+    resultArr.push( new NavBarItem(element.id, element.name, element.activeForIntranet, optionsArr, componentOuter));
   }
   return resultArr;
 }
-
-/*export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
-  const resultArr: NavBarItem[] = [];
-  for ( const element of data.data) {
-    let componentOuter = null;
-    if (navBarComponentSelectorMap.has(element.component)) {
-      componentOuter = navBarComponentSelectorMap.get(element.component);
-    }
-
-    const optionsArr = [];
-    for (const option of element.options) {
-      let componentInner = null;
-      if (navBarItemComponentSelectorMap.has(option.component)) {
-        componentInner = navBarItemComponentSelectorMap.get(option.component);
-      }
-      optionsArr.push(new RegisterOptionItem(option.name, option.data, componentInner))
-    }
-    resultArr.push( new NavBarItem(element.name, element.enabledAtIntranet, optionsArr, componentOuter))
-  }
-  return resultArr;
-}*/

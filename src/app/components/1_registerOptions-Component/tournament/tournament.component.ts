@@ -28,6 +28,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   static componentName = 'TournamentComponent';
   @Input() data: any;
 
+  tournamentId: number;
   tournament: Tournament;
   lanparty: Lanparty;
   infosDisplayArray = [];
@@ -46,12 +47,15 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   }
 
   ngOnInit(): void {
-    this.tournament = this.tournamentService.getTournament(this.data.data);
-    this.setInfoArray();
-    this.loadTeams();
-    this.loadTournamentParticipant();
+    this.tournamentId = this.data.data;
+    this.tournament = this.tournamentService.getTournament(this.tournamentId);
+    if (this.tournament) {
+      this.setInfoArray();
+      this.loadTeams();
+      this.loadTournamentParticipant();
+    }
 
-    this.subscriptions.push(this.tournamentService.getTournamentObservable.subscribe( () => this.loadTournament()));
+    this.subscriptions.push(this.tournamentService.getTournamentObservable.subscribe( tournament => this.loadTournament(tournament)));
     this.subscriptions.push(this.eventEmitter.tournamentParticipantJoinedObservable.subscribe( tp => this.joinTournamentAction(tp)));
     this.subscriptions.push(this.eventEmitter.tournamentParticipantLeftObservable.subscribe( tp => this.leaveTournamentAction(tp)));
     this.subscriptions.push(this.eventEmitter.createTeamSubjectObservable.subscribe(team => this.createTeamAction(team)));
@@ -64,10 +68,12 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  loadTournament() {
-    this.tournament = this.tournamentService.getTournament(this.data.data);
-    this.setInfoArray();
-    this.tournament.getTeamRegistration() ? this.loadTeams() : this.loadTournamentParticipant();
+  loadTournament(tournament: Tournament[]) {
+    this.tournament = this.tournamentService.getTournament(this.tournamentId);
+    if (this.tournament) {
+      this.setInfoArray();
+      this.tournament.getTeamRegistration() ? this.loadTeams() : this.loadTournamentParticipant();
+    }
   }
 
   setInfoArray() {

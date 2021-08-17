@@ -9,6 +9,7 @@ import {NavBarItemService} from '../../../../services/nav-bar-item.service';
 import { MatDialog} from '@angular/material/dialog';
 import {navBarItemComponentConfigurationSelectorMap} from '../../../../models/maps/innerComponentConfigurationSelectorMaps';
 import {navBarComponentSelectorMap, navBarItemComponentSelectorMap} from '../../../../util/mapperFunctions';
+import {AppConfigService} from '../../../../services/app-config.service';
 
 @Component({
   selector: 'app-dynamic-register-options-configuration',
@@ -32,7 +33,8 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   selection = new SelectionModel<RegisterOptionItem>(false, []);
 
   constructor(private navBarItemService: NavBarItemService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private appConfig: AppConfigService) {
     super();
   }
 
@@ -51,11 +53,6 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
     this.dataSource = new MatTableDataSource<RegisterOptionItem>(this.navBarItem.getOptions());
   }
 
-  applyConfig(event) {
-    this.navBarItemService.applyNewNavBarItem(this.navBarItem, this.oldNavBarItem);
-    console.log('applied new config!');
-  }
-
   changeName(event, row) {
     row.setName(event);
   }
@@ -66,9 +63,12 @@ export class DynamicRegisterOptionsConfigurationComponent extends ComponentWithN
   }
 
   deleteItem(event, row) {
+    row = row as NavBarItem;
     this.navBarItem.removeOption(row);
-    console.log('changedOptions: ', this.navBarItem);
     this.dataSource = new MatTableDataSource<RegisterOptionItem>(this.navBarItem.getOptions());
+    if (row.id){
+      this.appConfig.deleteAppComponent(row).subscribe();
+    }
   }
 
   openDialog(row): void {

@@ -10,24 +10,16 @@ import {mapJSONToAppSettingsArray} from '../util/mapperFunctions';
   providedIn: 'root'
 })
 export class AppConfigService {
-  constructor(private http: HttpClient) {
-    this.init();
-  }
-
   private configSubject = new Subject<NavBarItem[]>();
   public configObservable = this.configSubject.asObservable();
   private config: NavBarItem[];
   private url = environment.BASE_API_URL;
 
-  init(): void {
+  constructor(private http: HttpClient) {
     this.getAppConfig().subscribe( res => {
       this.config = res;
-      this.updateConfigOnApp();
+      this.configSubject.next(this.config);
     });
-  }
-
-  updateConfigOnApp() {
-    this.configSubject.next(this.config);
   }
 
   getConfig() {
@@ -38,8 +30,6 @@ export class AppConfigService {
     const targetURL = this.url + 'settings/angularAppConfig';
     const jsonData = [];
     data.forEach( item => jsonData.push(item.toJSON()));
-    console.log(data);
-    console.log(jsonData);
 
     return this.http.post(targetURL, {data: jsonData}).pipe(map(result => mapJSONToAppSettingsArray(result)));
   }
@@ -47,5 +37,15 @@ export class AppConfigService {
   getAppConfig(): Observable<NavBarItem[]> {
     const targetURL = this.url + 'settings/angularAppConfig';
     return this.http.get(targetURL).pipe(map(data => mapJSONToAppSettingsArray(data)));
+  }
+
+  deleteAppComponent(item: NavBarItem) {
+    const targetURL = this.url + 'settings/angularAppConfig/appComponent/' + item.id;
+    return this.http.delete(targetURL);
+  }
+
+  deleteAppRegisterComponent(item: NavBarItem) {
+    const targetURL = this.url + 'settings/angularAppConfig/appRegisterComponent/' + item.id;
+    return this.http.delete(targetURL);
   }
 }

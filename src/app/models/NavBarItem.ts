@@ -6,12 +6,12 @@ import {ComponentWithNameComponent} from '../components/interfaces/componentWith
  * Is appRegisterComponent at backend
  */
 export class NavBarItem {
-  private id: number;
-  private name: string;
-  private appComponents: any[];
-  private activeForIntranet: boolean;
-  private usedComponent: ComponentWithNameComponent;
-  private active: boolean;
+  public id: number;
+  public name: string;
+  public appComponents: any[];
+  public activeForIntranet: boolean;
+  public usedComponent: ComponentWithNameComponent;
+  public active: boolean;
 
   constructor(id: number, name: string, activeForIntranet: boolean, data: any, usedComponent: ComponentWithNameComponent = null) {
     this.id = id;
@@ -24,6 +24,10 @@ export class NavBarItem {
       this.appComponents.push(data);
     }
     this.active = false;
+  }
+
+  getId() {
+    return this.id;
   }
 
   getName() {
