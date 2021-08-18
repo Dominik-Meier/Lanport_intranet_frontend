@@ -1,10 +1,10 @@
 export class GameMode {
-  private id: number;
-  private name: string;
-  private game: string;
-  private elimination: string;
-  private teamSize: number;
-  private rules: any;
+  public id: number;
+  public name: string;
+  public game: string;
+  public elimination: string;
+  public teamSize: number;
+  public rules: any;
 
   constructor(id: number, name: string, game: string, elimination: string, teamSize: number, rules: any) {
     this.id = id;

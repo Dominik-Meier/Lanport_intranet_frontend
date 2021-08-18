@@ -6,12 +6,13 @@ import {WebSocketEvent} from '../models/WebSocketEvent';
 import {
   mapJSONToAppSettingsArray,
   mapJSONToTeam,
-  mapJSONToTeamMember,
+  mapJSONToTeamMember, mapJSONToTournamentArray,
   mapJSONToTournamentParticipant
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
 import {NavBarItem} from '../models/NavBarItem';
+import {Tournament} from '../models/Tournament';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,9 @@ export class EventEmitterService {
 
   private teamDeletedSubject = new Subject<Team>();
   public teamDeletedObservable = this.teamDeletedSubject.asObservable();
+
+  private tournamentsUpdatedSubject = new Subject<Tournament[]>();
+  public tournamentsUpdatedObservable = this.tournamentsUpdatedSubject.asObservable();
 
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
@@ -66,7 +70,6 @@ export class EventEmitterService {
         }
 
         case 'TeamMemberJoinedEvent': {
-          console.log('switch case');
           this.teamMemberJoinedSubject.next(mapJSONToTeamMember(event.data));
           break;
         }
@@ -78,6 +81,11 @@ export class EventEmitterService {
 
         case 'TeamDeletedEvent': {
           this.teamDeletedSubject.next(mapJSONToTeam(event.data));
+          break;
+        }
+
+        case 'TournamentsUpdatedEvent': {
+          this.tournamentsUpdatedSubject.next(mapJSONToTournamentArray(event.data));
           break;
         }
       }

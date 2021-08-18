@@ -6,7 +6,7 @@ import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
 import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
 import {EventEmitterService} from '../../../services/event-emitter.service';
-import {resolveNewHtmlDisplayerValue} from '../../../util/configHandlerFunctions';
+import {resolveNewHtmlDisplayerValue} from '../../../util/configUpdaterHandlerFunctions';
 import {Subscription} from 'rxjs';
 Quill.register('modules/blotFormatter', BlotFormatter);
 

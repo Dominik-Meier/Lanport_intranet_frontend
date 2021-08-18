@@ -1,20 +1,20 @@
-import {Lanparty} from "./Lanparty";
-import {GameMode} from "./GameMode";
-import {TournamentType} from "./TournamentType";
+import {Lanparty} from './Lanparty';
+import {GameMode} from './GameMode';
+import {TournamentType} from './TournamentType';
 
-//TODO add registarion StartDate + EndDate
+// TODO add registarion StartDate + EndDate
 export class Tournament {
   public id: number;
-  private name: string;
-  private lanparty: Lanparty;
-  private gameMode: GameMode;
-  private tournamentType: TournamentType;
-  private teamRegistration: boolean;
-  private numberOfParticipants: number;
-  private published: boolean;
-  private started: boolean;
-  private startDate: Date;
-  private finished: boolean;
+  public name: string;
+  public lanparty: Lanparty;
+  public gameMode: GameMode;
+  public tournamentType: TournamentType;
+  public teamRegistration: boolean;
+  public numberOfParticipants: number;
+  public published: boolean;
+  public started: boolean;
+  public startDate: Date;
+  public finished: boolean;
 
   constructor(id: number, name: string, lanparty: Lanparty, gameMode: GameMode, tournamentType: TournamentType,
               teamRegistration: boolean, numberOfParticipants: number, published: boolean, started: boolean,
@@ -30,7 +30,7 @@ export class Tournament {
     this.started = started;
     this.startDate = startDate;
     this.finished = finished;
-    //TODO prices, time,
+    // TODO prices, time,
   }
 
   getId() {

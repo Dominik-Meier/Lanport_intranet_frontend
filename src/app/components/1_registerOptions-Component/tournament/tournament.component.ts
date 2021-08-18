@@ -2,7 +2,6 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ComponentWithNameComponent} from '../../interfaces/componentWithName.component';
 import {DataDisplayerComponent} from '../../interfaces/dataDisplayer.component';
 import {Tournament} from '../../../models/Tournament';
-import {Lanparty} from '../../../models/Lanparty';
 import {TournamentService} from '../../../services/dataServices/tournament.service';
 import {MatDialog} from '@angular/material/dialog';
 import {CreateTeamComponent} from '../../create-team/create-team.component';
@@ -17,7 +16,8 @@ import {DisplayUserComponent} from '../../display-user/display-user.component';
 import {ShowTeamComponent} from '../../showTeam/show-team/show-team.component';
 import {EventEmitterService} from '../../../services/event-emitter.service';
 import {TeamMember} from '../../../models/TeamMember';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
+import {tournamentDiffer} from '../../../util/tournamentUpdaterFunctions';
 
 @Component({
   selector: 'app-tournament',
@@ -30,7 +30,6 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   tournamentId: number;
   tournament: Tournament;
-  lanparty: Lanparty;
   infosDisplayArray = [];
   teams: Team[] = [];
   tournamentParticipants: TournamentParticipant[] = [];
@@ -62,6 +61,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     this.subscriptions.push(this.eventEmitter.teamMemberJoinedObservable.subscribe(tm => this.teamMemberJoinedAction(tm)));
     this.subscriptions.push(this.eventEmitter.teamMemberLeftObservable.subscribe(tm => this.teamMemberLeftAction(tm)));
     this.subscriptions.push(this.eventEmitter.teamDeletedObservable.subscribe(t => this.teamDeletedAction(t)));
+    this.subscriptions.push(this.eventEmitter.tournamentsUpdatedObservable.subscribe(t => this.updateTournamentAction(t)));
   }
 
   ngOnDestroy() {
@@ -72,7 +72,8 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     this.tournament = this.tournamentService.getTournament(this.tournamentId);
     if (this.tournament) {
       this.setInfoArray();
-      this.tournament.getTeamRegistration() ? this.loadTeams() : this.loadTournamentParticipant();
+      this.loadTeams();
+      this.loadTournamentParticipant();
     }
   }
 
@@ -98,7 +99,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   }
 
   getTeamSizeForInfo(): string {
-    if (this.tournament.getGameMode().getTeamSize() > 1) {
+    if (this.tournament.getTeamRegistration() && this.tournament.getGameMode().getTeamSize() > 1) {
       return this.tournament.getGameMode().getTeamSize().toString();
     } else {
       return '-';
@@ -225,5 +226,13 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   checkTournamentJoined() {
     return this.tournamentParticipants.find(
       x => x.getUser().getId() === this.authService.getActiveUser().getId());
+  }
+
+  updateTournamentAction(tournaments: Tournament[]) {
+      const thisTournament = tournaments.find( x => x.id.toString() === this.tournamentId.toString());
+      if (thisTournament) {
+        tournamentDiffer(this.tournament, thisTournament);
+        this.setInfoArray();
+      }
   }
 }
