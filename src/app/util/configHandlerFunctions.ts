@@ -67,11 +67,15 @@ function updateRegisterOptionItem(registerOptionItem, newRegisterOptionItem) {
 }
 
 export function resolveNewHtmlDisplayerValue(oldData: RegisterOptionItem, newConfig: NavBarItem[]) {
-/*  console.log(oldData.getComponent());
-  console.log(oldData.id);
-  console.log(oldData);
   for (const navItem of newConfig) {
-
+    const registerOptionItem = navItem.getOptions().find( x => x.id.toString() === oldData.id.toString());
+    if (registerOptionItem) {
+      if (oldData.name !== registerOptionItem.name) { oldData.name = registerOptionItem.name; }
+      if (oldData.data !== registerOptionItem.data) { oldData.data = registerOptionItem.data; }
+      if (oldData.activeForIntranet !== registerOptionItem.activeForIntranet)
+      { oldData.activeForIntranet = registerOptionItem.activeForIntranet; }
+      if (oldData.activeForBeamerPresentation !== registerOptionItem.activeForBeamerPresentation)
+      { oldData.activeForBeamerPresentation = registerOptionItem.activeForBeamerPresentation; }
+    }
   }
-  console.log(newConfig);*/
 }
