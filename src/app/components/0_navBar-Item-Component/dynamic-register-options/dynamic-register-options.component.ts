@@ -46,9 +46,12 @@ export class DynamicRegisterOptionsComponent extends ComponentWithNameComponent 
       if (newNavBarItem) {
         updateRegisterOptionItemWithNewConfig(this.navBarItem, newNavBarItem);
         this.registerOptions = this.navBarItem.getOptions();
+        this.reloadActiveComponent();
       }
     }));
   }
+
+  ngOnChanges(changes: SimpleChanges): void { }
 
   activeRegisterOptionChange(newRegisterOptionItem: RegisterOptionItem) {
     this.registerOptions.forEach( registerItem => {
@@ -72,7 +75,13 @@ export class DynamicRegisterOptionsComponent extends ComponentWithNameComponent 
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  reloadActiveComponent() {
+    if (this.activeRegisterOption.getActive()) {
+      this.dynamicElementInsertionPoint.clear();
+      const componentToResolve: any = this.activeRegisterOption.getComponent();
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToResolve);
+      const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
+      (componentRef.instance as DataDisplayerComponent).data = this.activeRegisterOption;
+    }
   }
-
 }

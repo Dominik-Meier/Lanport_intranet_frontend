@@ -24,14 +24,12 @@ export class HtmlDisplayerComponent extends ComponentWithNameComponent implement
   static componentName = 'HtmlDisplayerComponent';
   private subscriptions: Subscription[] = [];
   @Input() data: any;
-  quillString: string;
 
   quillConfig = {
     toolbar: false,
   };
 
   ngOnInit(): void {
-    this.quillString = this.data.getData();
     this.subscriptions.push(this.eventEmitter.appConfigChangedObservable.subscribe(newConfig => {
       resolveNewHtmlDisplayerValue(this.data, newConfig);
     }));
