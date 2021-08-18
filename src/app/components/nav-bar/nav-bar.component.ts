@@ -8,7 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {AppConfigService} from '../../services/app-config.service';
 import {EventEmitterService} from '../../services/event-emitter.service';
 import {Subscription} from 'rxjs';
-import { configDiffer } from '../../util/configHandlerFunctions';
+import { configDiffer } from '../../util/configUpdaterHandlerFunctions';
 
 @Component({
   selector: 'app-nav-bar',

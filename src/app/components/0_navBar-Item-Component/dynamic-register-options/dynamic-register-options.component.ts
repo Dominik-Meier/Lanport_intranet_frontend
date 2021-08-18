@@ -12,7 +12,7 @@ import {RegisterItemComponent} from '../../interfaces/registerItem.component';
 import {ComponentWithNameComponent} from '../../interfaces/componentWithName.component';
 import {DataDisplayerComponent} from '../../interfaces/dataDisplayer.component';
 import {Subscription} from 'rxjs';
-import {updateRegisterOptionItemWithNewConfig} from '../../../util/configHandlerFunctions';
+import {updateRegisterOptionItemWithNewConfig} from '../../../util/configUpdaterHandlerFunctions';
 import {AppConfigService} from '../../../services/app-config.service';
 import {EventEmitterService} from '../../../services/event-emitter.service';
 import {NavBarItem} from '../../../models/NavBarItem';
