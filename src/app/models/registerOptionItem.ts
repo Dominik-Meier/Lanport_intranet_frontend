@@ -1,5 +1,5 @@
-import {DynamicComponentDataProvider} from "./interfaces/dynamicComponentDataProvider";
-import {ComponentWithNameComponent} from "../components/interfaces/componentWithName.component";
+import {DynamicComponentDataProvider} from './interfaces/dynamicComponentDataProvider';
+import {ComponentWithNameComponent} from '../components/interfaces/componentWithName.component';
 
 /**
  * Is appComponent at backend

@@ -39,10 +39,10 @@
   <!--Table Component -->
   <ng-container matColumnDef="componentName">
     <th mat-header-cell *matHeaderCellDef>Used Component</th>
-    <td mat-cell *matCellDef="let configItem" >
+    <td mat-cell *matCellDef="let row" >
       <mat-form-field>
-        <mat-select [(value)]="configItem.usedComponent">
-          <mat-option *ngFor="let outerCop of outerComponents.keys()" [value]="outerComponents.get(outerCop)">
+        <mat-select [(value)]="row.usedComponent">
+          <mat-option *ngFor="let outerCop of selectableComponents.keys()" [value]="selectableComponents.get(outerCop)">
             {{outerCop}}
           </mat-option>
         </mat-select>
@@ -61,6 +61,14 @@
     </td>
   </ng-container>
 
+  <!--Table Data -->
+  <ng-container matColumnDef="data">
+    <th mat-header-cell *matHeaderCellDef>Data</th>
+    <td mat-cell *matCellDef="let row" >
+      <button mat-raised-button (click)="openDialog(row)"> Set Data </button>
+    </td>
+  </ng-container>
+
   <!--Table Actions -->
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
@@ -75,6 +83,7 @@
 </table>
 
 <!-- Bottom component-->
+<app-set-app-navigation *ngIf="activeNavItem" [config]="activeNavItem.appComponents" (saveConfig)="applyConfig($event)"></app-set-app-navigation>
 <div class="inserted-Configuration-Component">
   <ng-template #dynamicElementInsertionPoint></ng-template>
 </div>

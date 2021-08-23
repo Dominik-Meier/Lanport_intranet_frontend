@@ -1,32 +1,27 @@
 import {TournamentParticipant} from '../models/TournamentParticipant';
 import {User} from '../models/User';
-import {TeamMember} from "../models/TeamMember";
-import {Team} from "../models/Team";
-import {GameMode} from "../models/GameMode";
-import {Lanparty} from "../models/Lanparty";
-import {Tournament} from "../models/Tournament";
-import {TournamentType} from "../models/TournamentType";
-import {NavBarItem} from "../models/NavBarItem";
-import {RegisterOptionItem} from "../models/registerOptionItem";
-import {ComponentWithNameComponent} from "../components/interfaces/componentWithName.component";
-import {DynamicRegisterOptionsComponent} from "../components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options.component";
-import {HtmlDisplayerComponent} from "../components/1_registerOptions-Component/html-displayer/html-displayer.component";
-import {TournamentComponent} from "../components/1_registerOptions-Component/tournament/tournament.component";
+import {TeamMember} from '../models/TeamMember';
+import {Team} from '../models/Team';
+import {GameMode} from '../models/GameMode';
+import {Lanparty} from '../models/Lanparty';
+import {Tournament} from '../models/Tournament';
+import {TournamentType} from '../models/TournamentType';
+import {NavBarItem} from '../models/NavBarItem';
+import {ComponentWithNameComponent} from '../components/interfaces/componentWithName.component';
+import {HtmlDisplayerComponent} from '../components/1_registerOptions-Component/html-displayer/html-displayer.component';
+import {TournamentComponent} from '../components/1_registerOptions-Component/tournament/tournament.component';
+import {HtmlDisplayerConfigurationComponent} from '../components/1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component';
+import {TournamentConfigurationComponent} from '../components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
 
-/**
- * This are all Data Provider components each component in the map must implement:
- *    interface: componentWithName
- *    interfgace: dataDisplayer
- * The provided interfaces secure that each component has a name and a data variable.
- * The name is used to select the component and data to pass in any needed data
- */
 
-export const navBarComponentSelectorMap: Map<String, ComponentWithNameComponent> = new Map<String, any>();
-navBarComponentSelectorMap.set("DynamicRegisterOptionsComponent", DynamicRegisterOptionsComponent);
+export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
+navBarComponentSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerComponent);
+navBarComponentSelectorMap.set('TournamentComponent', TournamentComponent);
 
-export const navBarItemComponentSelectorMap: Map<String, ComponentWithNameComponent> = new Map<String, any>();
-navBarItemComponentSelectorMap.set("HtmlDisplayerComponent", HtmlDisplayerComponent);
-navBarItemComponentSelectorMap.set("TournamentComponent", TournamentComponent);
+export const navBarItemComponentConfigurationSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
+navBarItemComponentConfigurationSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerConfigurationComponent);
+navBarItemComponentConfigurationSelectorMap.set('TournamentComponent', TournamentConfigurationComponent);
+
 
 export function mapJSONToTournamentParticipant(data: any): TournamentParticipant {
   return new TournamentParticipant(data.id, data.tournamentId, mapJsonToUser(data.user));
@@ -122,22 +117,20 @@ export function mapJSONToTournamentTypeArray(data: any): TournamentType[] {
 
 export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
   const resultArr: NavBarItem[] = [];
+  let appComponents = [];
   for ( const element of data) {
     let componentOuter = null;
     if (navBarComponentSelectorMap.has(element.usedComponent)) {
       componentOuter = navBarComponentSelectorMap.get(element.usedComponent);
     }
 
-    const optionsArr = [];
-    for (const option of element.appComponents) {
-      let componentInner = null;
-      if (navBarItemComponentSelectorMap.has(option.usedComponent)) {
-        componentInner = navBarItemComponentSelectorMap.get(option.usedComponent);
-      }
-      optionsArr.push(new RegisterOptionItem(option.id, option.name, option.data, componentInner, option.appRegisterComponentId,
-        option.activeForIntranet, option.activeForBeamerPresentation));
+    if (element.appComponents && element.appComponents.length > 0) {
+      appComponents = mapJSONToAppSettingsArray(element.appComponents);
     }
-    resultArr.push( new NavBarItem(element.id, element.name, element.activeForIntranet, optionsArr, componentOuter));
+
+    resultArr.push( new NavBarItem(element.id, element.name, componentOuter, element.appComponentId, appComponents,
+      element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false));
+    appComponents = [];
   }
   return resultArr;
 }

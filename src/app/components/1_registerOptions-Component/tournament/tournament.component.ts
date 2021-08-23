@@ -95,7 +95,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
   }
 
   getTeamSizeText(): string {
-    return this.tournament.getTeamRegistration() ? 'Anzahl Teams' : 'Anzahl Spieler';
+    return this.tournament.getTeamRegistration() ? 'Max. Teams' : 'Max. Spieler';
   }
 
   getTeamSizeForInfo(): string {

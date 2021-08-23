@@ -36,16 +36,13 @@ export class AppConfigService {
 
   getAppConfig(): Observable<NavBarItem[]> {
     const targetURL = this.url + 'settings/angularAppConfig';
-    return this.http.get(targetURL).pipe(map(data => mapJSONToAppSettingsArray(data)));
+    return this.http.get(targetURL).pipe(map(data => {
+      return mapJSONToAppSettingsArray(data);
+    }));
   }
 
   deleteAppComponent(item: NavBarItem) {
     const targetURL = this.url + 'settings/angularAppConfig/appComponent/' + item.id;
-    return this.http.delete(targetURL);
-  }
-
-  deleteAppRegisterComponent(item: NavBarItem) {
-    const targetURL = this.url + 'settings/angularAppConfig/appRegisterComponent/' + item.id;
     return this.http.delete(targetURL);
   }
 }

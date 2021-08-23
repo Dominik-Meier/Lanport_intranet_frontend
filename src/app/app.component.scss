@@ -1,5 +1,5 @@
-$nav-bar-width: 12.5vw;
-$nav-bar-height: 100vh;
+$nav-bar-width: 100vw;
+$nav-bar-height: 72px;
 $nav-bar-min-width: 175px;
 $nav-bar-item-line-height: 3.5vh;
 $nav-bar-item-line-width: 12.5vw;
@@ -32,6 +32,30 @@ mat-card {
 
 .mat-card.scrollable-content {
   overflow: auto;
+}
+
+.mat-menu-content {
+  background-color: #a9a9a9 !important;
+}
+
+.componentDisplayer-SizeFitter {
+  padding: 2.5vh 5vw 2.5vh 5vw;
+  height: calc(100vh - 2.5vh - 64px - 16px);
+}
+
+.componentDisplayer-matCard {
+  padding: 2.5vh 1vw 2.5vh 1vw;
+  height: 100%;
+}
+
+.display-flex-column {
+  display: flex;
+  flex-flow: column;
+}
+
+.display-flex-justify-center {
+  display: flex !important;
+  justify-content: center;
 }
 
 

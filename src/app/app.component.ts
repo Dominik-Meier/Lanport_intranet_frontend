@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {DynamicElementService} from './services/dynamic-element.service';
 import {WebSocketService} from './services/web-socket.service';
 import {AuthService} from './services/auth-service.service';
@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']

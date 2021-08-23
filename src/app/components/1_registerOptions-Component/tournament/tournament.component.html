@@ -1,116 +1,119 @@
-<div class="tournament-main-grid" *ngIf="tournament">
+<div class="componentDisplayer-SizeFitter display-flex-column" *ngIf="tournament">
+  <mat-card class="componentDisplayer-matCard display-flex-column">
+    <mat-card-title class="pb-3 display-flex-justify-center">{{tournament.name}}</mat-card-title>
 
-  <!--  Tournament infos and prices   -->
-  <div class="tournament-top-grid" *ngIf="tournament.getPublished()">
+    <!--  Tournament infos and prices   -->
+    <div class="tournament-top-grid" *ngIf="tournament.getPublished()">
 
-    <!--    Infos     -->
-    <div class="tournament-column-grid">
-      <mat-card class="top-card scrollable-content">
-        <mat-card-title>Infos</mat-card-title>
+      <!--    Infos     -->
+      <div class="tournament-column-grid">
+        <mat-card class="top-card scrollable-content">
+          <mat-card-title>Infos</mat-card-title>
 
-        <mat-card-content *ngFor="let item of infosDisplayArray">
-          <div class="card-field">
-            <div class="label content">
-              <p class="no-margin">{{item[0]}}</p>
-            </div>
-            <div class="content">
-              <p class="no-margin">{{item[1]}}</p>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-
-    <!--    Teams / Player     -->
-    <div class="tournament-column-grid ">
-      <mat-card class="top-card scrollable-content">
-        <mat-card-title *ngIf="tournament.getTeamRegistration()">Teams</mat-card-title>
-        <mat-card-title *ngIf="!tournament.getTeamRegistration()">Spieler</mat-card-title>
-
-        <mat-card-content >
-          <div  *ngIf="tournament.getTeamRegistration()">
-            <div class="card-field" *ngFor="let team of teams; let i = index" [attr.data-index]="i">
-              <div (click)="openTeam(team)" class="teamRow">
-                <div class="label">
-                  <p class="no-margin" >Team {{i+1}}</p>
-                </div>
-                <div class="content">
-                  <p class="no-margin userLink ql-color-blue">{{team.getName()}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div  *ngIf="!tournament.getTeamRegistration()">
-            <div class="card-field" *ngFor="let tournamentParticipant of tournamentParticipants; let i = index" [attr.data-index]="i">
+          <mat-card-content *ngFor="let item of infosDisplayArray">
+            <div class="card-field">
               <div class="label content">
-                <p class="no-margin" >Spieler {{i+1}}</p>
+                <p class="no-margin">{{item[0]}}</p>
               </div>
               <div class="content">
-                <p class="no-margin userLink ql-color-blue" (click)="onUserClick(tournamentParticipant)">{{tournamentParticipant.user.nickname}}</p>
+                <p class="no-margin">{{item[1]}}</p>
               </div>
             </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-    </div>
+      <!--    Teams / Player     -->
+      <div class="tournament-column-grid ">
+        <mat-card class="top-card scrollable-content">
+          <mat-card-title *ngIf="tournament.getTeamRegistration()">Teams</mat-card-title>
+          <mat-card-title *ngIf="!tournament.getTeamRegistration()">Spieler</mat-card-title>
 
-    <!--    Preise     -->
-    <div class="tournament-column-grid">
-      <mat-card class="top-card scrollable-content">
-        <mat-card-title>Preise</mat-card-title>
-
-        <mat-card-content >
-          <div class="card-field">
-            <div class="label">
-              <p class="no-margin">Preise</p>
+          <mat-card-content >
+            <div  *ngIf="tournament.getTeamRegistration()">
+              <div class="card-field" *ngFor="let team of teams; let i = index" [attr.data-index]="i">
+                <div (click)="openTeam(team)" class="teamRow">
+                  <div class="label">
+                    <p class="no-margin" >Team {{i+1}}</p>
+                  </div>
+                  <div class="content">
+                    <p class="no-margin userLink ql-color-blue">{{team.getName()}}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="content">
-              <p class="no-margin"> Note implemented yet!</p>
+
+            <div  *ngIf="!tournament.getTeamRegistration()">
+              <div class="card-field" *ngFor="let tournamentParticipant of tournamentParticipants; let i = index" [attr.data-index]="i">
+                <div class="label content">
+                  <p class="no-margin" >Spieler {{i+1}}</p>
+                </div>
+                <div class="content">
+                  <p class="no-margin userLink ql-color-blue" (click)="onUserClick(tournamentParticipant)">{{tournamentParticipant.user.nickname}}</p>
+                </div>
+              </div>
             </div>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+
+      <!--    Preise     -->
+      <div class="tournament-column-grid">
+        <mat-card class="top-card scrollable-content">
+          <mat-card-title>Preise</mat-card-title>
+
+          <mat-card-content >
+            <div class="card-field">
+              <div class="label">
+                <p class="no-margin">Preise</p>
+              </div>
+              <div class="content">
+                <p class="no-margin"> Note implemented yet!</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+    </div>
+
+    <div class="tournament-top-grid" *ngIf="!tournament.getPublished()">
+      <!--    Infos when not published   -->
+      <div class="tournament-column-grid-90">
+        <mat-card class="top-card scrollable-content">
+          <mat-card-title>Turnier wurde noch nicht veröffentlicht. Coming soon...</mat-card-title>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Tournament Actions  -->
+    <div class="tournament-bottom-grid" *ngIf="tournament.getPublished()">
+      <mat-card>
+        <mat-card-title>
+          <div *ngIf="tournament.getTeamRegistration()">
+            <p class="inline">Actions</p>
+            <button (click)="createTeam($event)" [disabled]="checkTeamJoined()" mat-raised-button color="primary">
+              <mat-icon>add</mat-icon>
+              Team erstellen
+            </button>
           </div>
-        </mat-card-content>
+
+          <div *ngIf="!tournament.getTeamRegistration()">
+            <p class="inline">Actions</p>
+            <button  (click)="joinTournament()" [disabled]="checkTournamentJoined()" mat-raised-button color="primary" class="mr-2">
+              <mat-icon>add</mat-icon>
+              Turnier beitreten
+            </button>
+            <button (click)="leaveTournament()" [disabled]="!checkTournamentJoined()" mat-raised-button color="primary">
+              <mat-icon>remove</mat-icon>
+              Turnier verlassen
+            </button>
+          </div>
+        </mat-card-title>
+
       </mat-card>
-
     </div>
-  </div>
 
-  <div class="tournament-top-grid" *ngIf="!tournament.getPublished()">
-    <!--    Infos when not published   -->
-    <div class="tournament-column-grid-90">
-      <mat-card class="top-card scrollable-content">
-        <mat-card-title>Turnier wurde noch nicht veröffentlicht. Coming soon...</mat-card-title>
-      </mat-card>
-    </div>
-  </div>
-
-  <!-- Tournament Actions  -->
-  <div class="tournament-bottom-grid" *ngIf="tournament.getPublished()">
-    <mat-card>
-      <mat-card-title>
-        <div *ngIf="tournament.getTeamRegistration()">
-          <p class="inline">Actions</p>
-          <button (click)="createTeam($event)" [disabled]="checkTeamJoined()" mat-raised-button color="primary">
-            <mat-icon>add</mat-icon>
-            Team erstellen
-          </button>
-        </div>
-
-        <div *ngIf="!tournament.getTeamRegistration()">
-          <p class="inline">Actions</p>
-          <button  (click)="joinTournament()" [disabled]="checkTournamentJoined()" mat-raised-button color="primary">
-            <mat-icon>add</mat-icon>
-            Turnier beitreten
-          </button>
-          <button (click)="leaveTournament()" [disabled]="!checkTournamentJoined()" mat-raised-button color="primary">
-            <mat-icon>remove</mat-icon>
-            Turnier verlassen
-          </button>
-        </div>
-      </mat-card-title>
-
-    </mat-card>
-  </div>
-
+  </mat-card>
 </div>
