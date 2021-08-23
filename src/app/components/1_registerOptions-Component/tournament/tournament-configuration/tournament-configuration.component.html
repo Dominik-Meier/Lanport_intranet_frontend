@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Tournament für {{data.name}} auswählen</h1>
 <mat-form-field *ngIf="tournaments">
-  <mat-select [(ngModel)]="selectedTournament" [compareWith]="objectComparisonFunction">
+  <mat-select [(ngModel)]="selectedTournament" [compareWith]="tournamentComparator">
     <mat-option *ngFor=" let tournament of tournaments" [value]="tournament">
       {{tournament.getName()}}
     </mat-option>

@@ -4,6 +4,7 @@
 
 <div class="information">
   <div>
+    <app-set-app-navigation [config]="this.config" (saveConfig)="this.saveConfig($event)" *ngIf="ifSetConfigActive()"></app-set-app-navigation>
     <ng-template #dynamicElementInsertionPoint></ng-template>
   </div>
 </div>

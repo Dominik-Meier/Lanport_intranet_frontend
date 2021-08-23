@@ -6,8 +6,8 @@ export function configDiffer(oldConfig: NavBarItem[], newConfig: NavBarItem[]) {
     for (const oldConfigItem of oldConfig ) {
       if ( newConfig.find( x => x.id.toString() === oldConfigItem.id.toString()) ) {
         const newConfigNavBarItem = newConfig.find( x => x.id.toString() === oldConfigItem.id.toString());
-        updateRegisterOptionItemWithNewConfig(oldConfigItem, newConfigNavBarItem);
-        updateNabBarItem(oldConfigItem, newConfigNavBarItem);
+        configDiffer(oldConfigItem.appComponents, newConfigNavBarItem.appComponents);
+        updateNavBarItem(oldConfigItem, newConfigNavBarItem);
         addMissingNavBarItems(oldConfig, newConfig);
       } else {
         const index = oldConfig.findIndex( x => x.id.toString() === oldConfigItem.id.toString());
@@ -27,35 +27,8 @@ function addMissingNavBarItems(oldConfig, newConfig) {
   }
 }
 
-export function updateRegisterOptionItemWithNewConfig(oldConfigItem, newConfigNavBarItem) {
-  for (const registerOptionItem of oldConfigItem.getOptions()) {
-    if (newConfigNavBarItem.getOptions().find( x => x.id.toString() === registerOptionItem.id.toString())) {
-      const newRegisterOptionItem = newConfigNavBarItem.getOptions().find( x => x.id.toString() === registerOptionItem.id.toString());
-      updateRegisterOptionItem(registerOptionItem, newRegisterOptionItem);
-    } else {
-      const index = oldConfigItem.getOptions().findIndex( x => x.id.toString() === registerOptionItem.id.toString());
-      if (index !== null) {
-        oldConfigItem.getOptions().splice(index, 1);
-      }
-    }
-    for (const newRegisterOptionItem of newConfigNavBarItem.getOptions()) {
-      if (!(oldConfigItem.getOptions().find(x => x.id.toString() === newRegisterOptionItem.id.toString()))) {
-        oldConfigItem.addOption(newRegisterOptionItem);
-      }
-    }
-  }
-}
-
-function updateNabBarItem(oldConfigItem, newConfigNavBarItem) {
-  if (oldConfigItem.name !== newConfigNavBarItem.name)
-  { oldConfigItem.name = newConfigNavBarItem.name; }
-  if (oldConfigItem.activeForIntranet !== newConfigNavBarItem.activeForIntranet)
-  { oldConfigItem.activeForIntranet = newConfigNavBarItem.activeForIntranet; }
-  if (oldConfigItem.usedComponent !== newConfigNavBarItem.usedComponent)
-  { oldConfigItem.usedComponent = newConfigNavBarItem.usedComponent; }
-}
-
-function updateRegisterOptionItem(registerOptionItem, newRegisterOptionItem) {
+function updateNavBarItem(registerOptionItem, newRegisterOptionItem) {
+  if (registerOptionItem.id !== newRegisterOptionItem.id) { registerOptionItem.id = newRegisterOptionItem.id; }
   if (registerOptionItem.name !== newRegisterOptionItem.name) { registerOptionItem.name = newRegisterOptionItem.name; }
   if (registerOptionItem.usedComponent !== newRegisterOptionItem.usedComponent)
   { registerOptionItem.usedComponent = newRegisterOptionItem.usedComponent; }
@@ -64,6 +37,7 @@ function updateRegisterOptionItem(registerOptionItem, newRegisterOptionItem) {
   { registerOptionItem.activeForIntranet = newRegisterOptionItem.activeForIntranet; }
   if (registerOptionItem.activeForBeamerPresentation !== newRegisterOptionItem.activeForBeamerPresentation)
   { registerOptionItem.activeForBeamerPresentation = newRegisterOptionItem.activeForBeamerPresentation; }
+  if (registerOptionItem.icon !== newRegisterOptionItem.icon) { registerOptionItem.icon = newRegisterOptionItem.icon; }
 }
 
 export function resolveNewHtmlDisplayerValue(oldData: RegisterOptionItem, newConfig: NavBarItem[]) {

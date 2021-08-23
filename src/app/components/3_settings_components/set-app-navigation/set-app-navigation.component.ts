@@ -1,64 +1,58 @@
-import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  Component,
+  DoCheck, EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit, Output,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {AppConfigService} from '../../../services/app-config.service';
-import {NavBarItem} from '../../../models/NavBarItem';
 import {ComponentWithNameComponent} from '../../interfaces/componentWithName.component';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MatTableDataSource} from '@angular/material/table';
-import {NavBarItemService} from '../../../services/nav-bar-item.service';
-import {  navBarItemComponentConfigurationSelectorMap} from '../../../models/maps/innerComponentConfigurationSelectorMaps';
-import {DataDisplayerComponent} from '../../interfaces/dataDisplayer.component';
-import {navBarComponentConfigurationSelectorMap} from '../../../models/maps/outerComponentConfigurationSelectorMaps';
 import {MatCheckboxChange} from '@angular/material/checkbox';
-import {EventEmitterService} from '../../../services/event-emitter.service';
-import {navBarComponentSelectorMap, navBarItemComponentSelectorMap} from '../../../util/mapperFunctions';
+import {navBarComponentSelectorMap, navBarItemComponentConfigurationSelectorMap} from '../../../util/mapperFunctions';
 import {Subscription} from 'rxjs';
+import {NavBarItem} from '../../../models/NavBarItem';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-set-app-navigation',
   templateUrl: './set-app-navigation.component.html',
   styleUrls: ['./set-app-navigation.component.scss']
 })
-export class SetAppNavigationComponent implements OnInit, OnDestroy {
+export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
+  @Input() config: NavBarItem[];
+  @Output() saveConfig = new EventEmitter<NavBarItem[]>();
+  public activeNavItem: NavBarItem;
   private subscriptions: Subscription[] = [];
-  config: NavBarItem[];
   dataSource: MatTableDataSource<NavBarItem>;
-  columnsToDisplay = ['select', 'name', 'componentName', 'enabledAtIntranet', 'actions'];
-  outerComponents: Map<String, ComponentWithNameComponent> = navBarComponentSelectorMap;
-  innerComponents: Map<String, ComponentWithNameComponent> = navBarItemComponentSelectorMap;
+  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'enabledAtIntranet', 'actions'];
+  selectableComponents: Map<string, ComponentWithNameComponent> = navBarComponentSelectorMap;
+  selectableConfigurationComponents: Map<string, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
 
-  outerConfigurationsComponents: Map<String, ComponentWithNameComponent> = navBarComponentConfigurationSelectorMap;
-  innerConfigurationsComponents: Map<String, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
 
   selection = new SelectionModel<NavBarItem>(false, []);
 
-  constructor(private appConfigService: AppConfigService,
-              private navBarItemService: NavBarItemService,
-              private componentFactoryResolver: ComponentFactoryResolver,
-              private eventEmitter: EventEmitterService) { }
+  constructor(private appConfigService: AppConfigService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.setConfig(this.appConfigService.getConfig());
-    this.subscriptions.push(this.eventEmitter.appConfigChangedObservable.subscribe( config => {
-      this.setConfig(config);
-      this.dynamicElementInsertionPoint.clear();
-    }));
-    this.selection.changed.asObservable().subscribe( event => {
+    this.subscriptions.push(this.selection.changed.asObservable().subscribe( event => {
       if (event.added) {
-        this.loadSubComponent(event.added[0]);
+        this.activeNavItem = event.added[0];
       }
-    });
+    }));
+    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+  }
+
+  ngDoCheck() {
+    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
-
-  setConfig(newConfig: any) {
-    if (newConfig !== null) {
-      this.config = newConfig;
-      this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
-    }
   }
 
   setEnabledAtIntranet(event: MatCheckboxChange, row: NavBarItem) {
@@ -70,17 +64,20 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
   }
 
   addNavBarItem(event) {
-    this.config.push(new NavBarItem(null, 'Placeholder', false, [], null));
+    this.config.push(new NavBarItem(null, 'Placeholder', null, null, null,
+      null, false, false, null, false));
     this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 
   deleteNavBarItem(event, row){
     const index: number = this.config.indexOf(row);
-    if (index !== -1) {
-      this.config.splice(index, 1);
-    }
     if (row.id) {
-      this.appConfigService.deleteAppRegisterComponent(row).subscribe();
+      this.appConfigService.deleteAppComponent(row).subscribe();
+    } else {
+      if (index !== -1) {
+        this.config.splice(index, 1);
+        this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+      }
     }
   }
 
@@ -89,21 +86,20 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
    * The configs gets applied to the app and changes cant be turned back!
    */
   applyConfig(event) {
-    this.appConfigService.createAppConfig(this.config).subscribe();
+    this.saveConfig.emit(this.config);
   }
 
-  // TODO there is some times an error about the loaded component
-  loadSubComponent(navBarItem: NavBarItem) {
-    this.dynamicElementInsertionPoint.clear();
-    if (navBarItem.getComponent()) {
-      const componentToResolve = this.outerConfigurationsComponents.get(navBarItem.getComponent().componentName);
+  openDialog(row: NavBarItem): void {
+    console.log(row.usedComponent.componentName);
+    const componentToLoad = this.selectableConfigurationComponents.get(row.usedComponent.componentName);
+    // @ts-ignore
+    const dialogRef = this.dialog.open( componentToLoad, {
+      width: '50vw',
+      data: {data: row.data, name: row.name}
+    });
 
-      // TODO is working but maybe check the error
-      // @ts-ignore
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToResolve);
-      const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
-      (componentRef.instance as DataDisplayerComponent).data = navBarItem;
-    }
+    dialogRef.afterClosed().subscribe( result => {
+      if (result) { row.data = result; }
+    });
   }
-
 }

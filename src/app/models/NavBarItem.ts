@@ -1,5 +1,3 @@
-import {Component, Type} from '@angular/core';
-import {RegisterOptionItem} from './registerOptionItem';
 import {ComponentWithNameComponent} from '../components/interfaces/componentWithName.component';
 
 /**
@@ -8,22 +6,28 @@ import {ComponentWithNameComponent} from '../components/interfaces/componentWith
 export class NavBarItem {
   public id: number;
   public name: string;
-  public appComponents: any[];
-  public activeForIntranet: boolean;
   public usedComponent: ComponentWithNameComponent;
+  public appComponentId: number;
+  public appComponents: NavBarItem[];
+  public data: any;
+  public activeForIntranet: boolean;
+  public activeForBeamerPresentation: boolean;
+  public icon: string;
   public active: boolean;
 
-  constructor(id: number, name: string, activeForIntranet: boolean, data: any, usedComponent: ComponentWithNameComponent = null) {
+  constructor(id: number, name: string, usedComponent: ComponentWithNameComponent, parentNavBarItem: number,
+              appComponents: NavBarItem[] = [], data: any, activeForIntranet: boolean,
+              activeForBeamerPresentation: boolean, icon: string, active: boolean) {
     this.id = id;
     this.name = name;
-    this.activeForIntranet = activeForIntranet;
     this.usedComponent = usedComponent;
-    if (data instanceof Array) {
-      this.appComponents = data;
-    } else {
-      this.appComponents.push(data);
-    }
-    this.active = false;
+    this.appComponentId = parentNavBarItem;
+    this.appComponents = appComponents ?? [];
+    this.data = data;
+    this.activeForIntranet = activeForIntranet;
+    this.activeForBeamerPresentation = activeForBeamerPresentation;
+    this.icon = icon;
+    this.active = active;
   }
 
   getId() {
@@ -54,10 +58,6 @@ export class NavBarItem {
     this.active = active;
   }
 
-  getActive() {
-    return this.active;
-  }
-
   setActiveForIntranet(activeForIntranet: boolean) {
     this.activeForIntranet = activeForIntranet;
   }
@@ -66,30 +66,25 @@ export class NavBarItem {
     this.appComponents = options;
   }
 
-  addOption(newOption: any) {
-    this.appComponents.push(newOption);
-  }
-
-  removeOption(option) {
-    const index = this.appComponents.indexOf(option);
-    if ( index !== -1) {
-      this.appComponents.splice(index, 1);
-    }
-  }
-
   toJSON() {
-    const opt = [];
-    const name = this.usedComponent ? this.usedComponent.componentName : '';
-    this.appComponents.forEach( option => {
-      opt.push(option.toJSON());
-    });
+    const appComponentsAsJson = [];
+    if (this.appComponents) {
+      this.appComponents.forEach( app => {
+        appComponentsAsJson.push(app.toJSON());
+      });
+    }
 
     return {
       id: this.id,
       name: this.name,
-      appComponents: opt,
+      usedComponent: this.usedComponent ? this.usedComponent.componentName : '',
+      appComponentId: this.appComponentId,
+      appComponents: appComponentsAsJson,
+      data: this.data,
       activeForIntranet: this.activeForIntranet,
-      usedComponent: name
+      activeForBeamerPresentation: this.activeForBeamerPresentation,
+      icon: this.icon,
+      active: false
     };
   }
 }

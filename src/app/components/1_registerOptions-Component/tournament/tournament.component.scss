@@ -1,16 +1,5 @@
 @import "src/app/app.component";
 
-.tournament-main-grid {
-  display: flex;
-  flex-flow: column;
-  width: 100vw - $nav-bar-width;
-  padding: 2.5vh 5vw 2.5vh 5vw;
-  //2.5vh is offset hr
-  //64px height top nav
-  //16px margin hr bottom
-  height: calc(100vh - 2.5vh - 64px - 16px);
-}
-
 .tournament-top-grid {
   height: 45vh;
   flex: 1 1;
@@ -37,13 +26,6 @@
   padding: 0.5vh 0.5vw 0.5vh 0.5vw;
   height: 95%;
   overflow: auto;
-}
-
-.team-card {
-  width: 15vw;
-  margin: 0.5vh;
-  padding: 1vh !important;
-  display: inline-block;
 }
 
 .card-field {
@@ -81,4 +63,5 @@
   display: flex;
   align-items: center;
 }
+
 

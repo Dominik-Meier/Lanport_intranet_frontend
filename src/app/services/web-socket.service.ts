@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import {Subject} from 'rxjs';
-import {jsDocComment} from "@angular/compiler";
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,12 @@ export class WebSocketService  {
   private socket$: WebSocketSubject<any>;
   private eventSubject$ = new Subject();
   public eventObservable = this.eventSubject$.asObservable();
+  private wsUrl = environment.BASE_WS_URL;
 
   constructor() { }
 
   public connect(): void {
+    console.log(environment.BASE_WS_URL);
     this.socket$ = webSocket('ws://localhost:3001');
     this.socket$.subscribe({
       next: (data) => {

@@ -1,40 +1,36 @@
-<div class="nav-bar">
-  <div class="header-height">
+<div class="navbar navbar-dark height-80px navbar-bg">
 
-    <div class="header">
-      <div class="mt-3 ml-1">
-        <mat-icon class="settings" *ngIf="checkUserRights()" (click)="this.onClickSettings($event)">settings</mat-icon>
-      </div>
+  <div class="add-pointer" *ngIf="checkUserRights()">
+    <button mat-mini-fab color="primary" (click)="this.onClickSettings($event)">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </div>
 
-      <div class="mt-3">
-        <h1>Intranet</h1>
-      </div>
-
-      <div class="mt-3 mr-1">
-        <mat-icon class="user" (click)="onClickUser($event)">account_circle</mat-icon>
-      </div>
-    </div>
-
-    <div style="margin-top: -2.5vh">
-      <hr class="split-line line-shadow mr-2 ml-2">
+  <div class="flex-navbar-items width-75">
+    <!--https://stackblitz.com/edit/dynamic-nested-menus?file=app%2Fapp.component.html-->
+    <div class="pl-1 pr-1 asda" *ngFor="let navBarItem of navBarItems">
+      <span>
+        <span class="add-pointer" *ngIf="navBarItem.activeForIntranet &&navBarItem.appComponents && navBarItem.appComponents.length > 0">
+          <button mat-raised-button class="navBar-btn" [matMenuTriggerFor]="menu.childMenu">
+            <span class="font-size-large">{{navBarItem.name}}</span>
+            <mat-icon>expand_more</mat-icon>
+          </button>
+          <app-menu-item #menu [items]="navBarItem" (itemSelected)="callItemSelected($event)"></app-menu-item>
+        </span>
+        <!-- Leaf node buttons here see link above for this-->
+        <span *ngIf="navBarItem.activeForIntranet && ( !navBarItem.appComponents || navBarItem.appComponents.length === 0)">
+          <button mat-raised-button class="navBar-btn">
+            <span class="font-size-large">{{navBarItem.name}}</span>
+          </button>
+        </span>
+      </span>
     </div>
   </div>
 
-
-
-  <div class="body">
-    <div *ngFor="let navItem of navBarItems">
-      <app-nav-bar-item [navItem]="navItem" [active]="navItem.getActive()" *ngIf="navItem.getActiveForIntranet()"></app-nav-bar-item>
-    </div>
-  </div>
-
-  <div>
-
-  </div>
-
-  <div class="footer">
-    <hr class="split-line ml-2 mr-2 line-shadow">
-    <!--<img src="assets/img/LanPort.png"  width="100%" height="auto" class="img" (click)="onLPLogoClick($event)">-->
+  <div class="add-pointer">
+    <button mat-mini-fab color="primary" (click)="onClickUser($event)">
+      <mat-icon>group</mat-icon>
+    </button>
   </div>
 
 </div>

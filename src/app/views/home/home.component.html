@@ -1,28 +1,11 @@
 <div class="home-view">
 
-  <div class="nav-bar">
-    <app-nav-bar></app-nav-bar>
+  <div>
+    <app-nav-bar [navBarItems]="config" (itemSelected)="itemSelected($event)"></app-nav-bar>
   </div>
 
   <div class="information">
-    <div>
-      <ng-template #dynamicElementInsertionPoint></ng-template>
-    </div>
-
-
-    <div *ngIf="!navItemIsActive"> <!--class="back-img">-->
-      <div class="home-content">
-        <div>
-          <h1 class="home-title">Herzlich Willkommen an der Lan2k21</h1>
-        </div>
-        <div>
-          <hr class="home-hr">
-        </div>
-      </div>
-    </div>
+    <ng-template #dynamicElementInsertionPoint></ng-template>
   </div>
 
 </div>
-
-
-

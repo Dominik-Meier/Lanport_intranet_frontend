@@ -8,7 +8,6 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NavBarSettingsComponent } from './views/home-settings/nav-bar-settings/nav-bar-settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavBarItemComponent } from './components/nav-bar-item/nav-bar-item.component';
 import { NavBarItemSettingsComponent} from './views/home-settings/nav-bar-item/nav-bar-item-settings.component';
 import { MatIconModule} from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -17,7 +16,6 @@ import { MatCardModule } from '@angular/material/card';
 import { CookieService } from 'ngx-cookie-service';
 import { HomeSettingsComponent } from './views/home-settings/home-settings.component';
 import { RegisterItemComponent } from './components/register-item/register-item.component';
-import { DynamicRegisterOptionsComponent } from './components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options.component';
 import { HtmlDisplayerComponent } from './components/1_registerOptions-Component/html-displayer/html-displayer.component';
 import { SetAppNavigationComponent } from './components/3_settings_components/set-app-navigation/set-app-navigation.component';
 import { MatTableModule} from '@angular/material/table';
@@ -25,8 +23,7 @@ import { MatSelectModule} from '@angular/material/select';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule} from '@angular/material/input';
-import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { DynamicRegisterOptionsConfigurationComponent } from './components/0_navBar-Item-Component/dynamic-register-options/dynamic-register-options-configuration/dynamic-register-options-configuration.component';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HtmlDisplayerConfigurationComponent } from './components/1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component';
 import { LanpartySettingsComponent } from './components/3_settings_components/lanparty-settings/lanparty-settings.component';
 import { MatDatepickerModule} from '@angular/material/datepicker';
@@ -36,14 +33,16 @@ import { GamemodeSettingsComponent } from './components/3_settings_components/ga
 import { TournamentTypeSettingsComponent } from './components/3_settings_components/tournament-type-settings/tournament-type-settings.component';
 import { TournamentSettingsComponent } from './components/3_settings_components/tournament-settings/tournament-settings.component';
 import { TournamentConfigurationComponent } from './components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
-import {TournamentComponent} from './components/1_registerOptions-Component/tournament/tournament.component';
+import { TournamentComponent} from './components/1_registerOptions-Component/tournament/tournament.component';
 import { DisplayUserComponent } from './components/display-user/display-user.component';
 import { CreateTeamComponent } from './components/create-team/create-team.component';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { QuillModule } from 'ngx-quill';
 import { ShowTeamComponent } from './components/showTeam/show-team/show-team.component';
 import { BeamerViewComponent } from './views/beamer-view/beamer-view.component';
-import {EmptyComponent} from './util/components/empty.component';
+import { EmptyComponent} from './util/components/empty.component';
+import { MatMenuModule} from '@angular/material/menu';
+import { MenuItemComponent } from './components/nav-bar/menu-item/menu-item.component';
 
 @NgModule({
   declarations: [
@@ -51,14 +50,11 @@ import {EmptyComponent} from './util/components/empty.component';
     HomeComponent,
     NavBarComponent,
     NavBarSettingsComponent,
-    NavBarItemComponent,
     NavBarItemSettingsComponent,
     HomeSettingsComponent,
     RegisterItemComponent,
-    DynamicRegisterOptionsComponent,
     HtmlDisplayerComponent,
     SetAppNavigationComponent,
-    DynamicRegisterOptionsConfigurationComponent,
     HtmlDisplayerConfigurationComponent,
     LanpartySettingsComponent,
     GamemodeSettingsComponent,
@@ -70,7 +66,8 @@ import {EmptyComponent} from './util/components/empty.component';
     CreateTeamComponent,
     ShowTeamComponent,
     BeamerViewComponent,
-    EmptyComponent
+    EmptyComponent,
+    MenuItemComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +87,7 @@ import {EmptyComponent} from './util/components/empty.component';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMenuModule,
     CKEditorModule,
     DigitOnlyModule,
     QuillModule.forRoot()
@@ -97,6 +95,7 @@ import {EmptyComponent} from './util/components/empty.component';
   exports: [
     MatIconModule,
     MatCardModule,
+    MatMenuModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
