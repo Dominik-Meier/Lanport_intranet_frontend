@@ -16,10 +16,11 @@ export class Tournament {
   public endDate: Date;
   public registrationEndDate: Date;
   public finished: boolean;
+  public awards: string;
 
   constructor(id: number, name: string, lanparty: Lanparty, gameMode: GameMode, tournamentType: TournamentType,
               teamRegistration: boolean, numberOfParticipants: number, published: boolean, started: boolean,
-              startDate: Date, endDate: Date, registrationEndDate: Date, finished: boolean) {
+              startDate: Date, endDate: Date, registrationEndDate: Date, finished: boolean, awards: string) {
     this.id = id;
     this.name = name;
     this.lanparty = lanparty;
@@ -33,7 +34,7 @@ export class Tournament {
     this.endDate = endDate;
     this.registrationEndDate = registrationEndDate;
     this.finished = finished;
-    // TODO prices
+    this.awards = awards;
   }
 
   getId() {

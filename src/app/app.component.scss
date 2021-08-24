@@ -76,8 +76,7 @@ mat-card {
 }
 
 .label {
-  width: 10vw;
-  min-width: 110px;
+  width: 140px;
   font-weight: bold;
 }
 
@@ -86,6 +85,10 @@ mat-card {
   align-items: center;
   justify-content: left;
   word-wrap: break-word;
+}
+
+.ql-editor {
+  background-color: black;
 }
 
 

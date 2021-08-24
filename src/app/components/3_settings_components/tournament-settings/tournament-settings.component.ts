@@ -30,7 +30,7 @@ export class TournamentSettingsComponent implements OnInit {
   /** Table parameters */
   dataSource: MatTableDataSource<Tournament>;
   columnsToDisplay = ['select', 'name', 'lanparty', 'gameMode', 'tournamentType', 'teamRegistration',
-    'numberOfParticipants', 'published', 'started', 'startDate', 'endDate', 'registrationEndDate', 'finished'];
+    'numberOfParticipants', 'published', 'started', 'startDate', 'endDate', 'registrationEndDate', 'finished', 'awards'];
   selection = new SelectionModel<Lanparty>(false, []);
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class TournamentSettingsComponent implements OnInit {
 
   addTournament(event) {
     this.tournaments.push( new Tournament(null, 'Placeholder', null, null, null,
-      true, 0, false, false, new Date( Date.now()), new Date( Date.now()), new Date( Date.now()), false));
+      true, 0, false, false, new Date( Date.now()), new Date( Date.now()), new Date( Date.now()), false, ''));
     this.dataSource = new MatTableDataSource<Tournament>(this.tournaments);
   }
 
