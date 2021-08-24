@@ -24,6 +24,7 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
+  @Input() parentAppNavItem: number;
   @Input() config: NavBarItem[];
   @Output() saveConfig = new EventEmitter<NavBarItem[]>();
   public activeNavItem: NavBarItem;
@@ -64,9 +65,9 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   addNavBarItem(event) {
-    this.config.push(new NavBarItem(null, 'Placeholder', null, null, null,
-      null, false, false, null, false));
-    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+    const newNavBarItem = new NavBarItem(null, 'Placeholder', null, this.parentAppNavItem, [],
+      null, false, false, null, false);
+    this.appConfigService.addAppComponent(newNavBarItem).subscribe();
   }
 
   deleteNavBarItem(event, row){

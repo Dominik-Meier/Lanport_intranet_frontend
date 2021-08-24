@@ -1,13 +1,13 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Component, Input,  OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {DataDisplayerComponent} from '../../interfaces/dataDisplayer.component';
 import {ComponentWithNameComponent} from '../../interfaces/componentWithName.component';
 import * as QuillNamespace from 'quill';
-const Quill: any = QuillNamespace;
 import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
 import {EventEmitterService} from '../../../services/event-emitter.service';
 import {resolveNewHtmlDisplayerValue} from '../../../util/configUpdaterHandlerFunctions';
 import {Subscription} from 'rxjs';
+
+const Quill: any = QuillNamespace;
 Quill.register('modules/blotFormatter', BlotFormatter);
 
 @Component({
