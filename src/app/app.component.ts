@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
-import {DynamicElementService} from './services/dynamic-element.service';
 import {WebSocketService} from './services/web-socket.service';
 import {AuthService} from './services/auth-service.service';
 import {Subscription} from 'rxjs';
@@ -17,8 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'intranet';
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
 
-  constructor( private dynamicElementService: DynamicElementService,
-               private ws: WebSocketService,
+  constructor( private ws: WebSocketService,
                private authService: AuthService,
                private router: Router) {
     router.navigate(['/empty']);
@@ -28,7 +26,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.dynamicElementService.setInsertionPoint(this.dynamicElementInsertionPoint);
     this.ws.connect();
     this.authService.loadUser();
   }

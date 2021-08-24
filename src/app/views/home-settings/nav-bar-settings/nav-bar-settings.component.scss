@@ -8,26 +8,26 @@
 
 .header {
   position: relative;
-  height: 5vh;
-  width: 20vw;
+  height: 7.5vh;
+  width: 12vw;
 }
 
 .body {
   position: relative;
   height: 87vh;
-  width: 20vw;
+  width: 12vw;
   overflow: auto;
 }
 
 .footer {
   position: relative;
   height: 7vh;
-  width: 20vw;
+  width: 12vw;
 }
 
 .line-header {
   position: absolute;
-  width: 17.5vw;
+  width: 10vw;
   height: 0px;
   left: 1.25vw;
   top: 4.25vh;
@@ -38,7 +38,7 @@
 
 .line-footer {
   position: absolute;
-  width: 17.5vw;
+  width: 10vw;
   height: 0px;
   left: 1.25vw;
   bottom: 7.25vh;
@@ -52,7 +52,7 @@
   display: inline-block;
   left: 2.5vw;
   height: 5vh;
-  width: 15vw;
+  width: 7.5vw;
 }
 
 .header-intranet {
@@ -60,7 +60,7 @@
   text-align: center;
   align: center;
   line-height: 5vh;
-  font-size: 3vw;
+  font-size: 1vw;
 }
 
 .img {
@@ -76,5 +76,5 @@
 .user {
   position: absolute;
   top: 1.75vh;
-  left: 17.5vw;
+  left: 10vw;
 }

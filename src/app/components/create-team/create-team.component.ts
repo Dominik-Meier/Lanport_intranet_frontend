@@ -8,7 +8,6 @@ import {Team} from "../../models/Team";
   styleUrls: ['./create-team.component.scss']
 })
 
-// TODO rename to TeamForm and add input team (on create new team / on update existing team)
 export class CreateTeamComponent implements OnInit {
 
   createdTeam = new Team (null, null, null, null, []);

@@ -3,8 +3,7 @@
 .nav-bar-item {
   position: relative;
   height: $nav-bar-item-line-height;
-  width: $nav-bar-item-line-width;
-  padding: 2vh 2.5vw;
+  padding: 0.5vh 1vw;
 }
 
 .nav-bar-item-box{
@@ -33,5 +32,5 @@
   display: block;
   line-height: $nav-bar-item-line-height;
   text-align: center;
-  font-size: 1vw;
+  font-size: 0.75vw;
 }

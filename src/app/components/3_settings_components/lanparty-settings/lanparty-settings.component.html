@@ -49,10 +49,7 @@
     <th mat-header-cell *matHeaderCellDef>Start Date</th>
     <td mat-cell *matCellDef="let row" >
       <mat-form-field>
-        <input matInput [matDatepicker]="picker1" placeholder="Choose a Date" [(ngModel)]="row.startDate"
-               (dateChange)="startDateChanged($event, row)">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
+        <input matInput type="datetime-local" placeholder="Choose a Date" [(ngModel)]="row.startDate">
       </mat-form-field>
     </td>
   </ng-container>
@@ -62,10 +59,7 @@
     <th mat-header-cell *matHeaderCellDef>end Date</th>
     <td mat-cell *matCellDef="let row" >
       <mat-form-field>
-        <input matInput [matDatepicker]="picker2" placeholder="Choose a Date" [(ngModel)]="row.endDate"
-               (dateChange)="endDateChanged($event, row)">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
+        <input matInput type="datetime-local" placeholder="Choose a Date" [(ngModel)]="row.endDate">
       </mat-form-field>
     </td>
   </ng-container>
