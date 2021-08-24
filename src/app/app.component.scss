@@ -5,6 +5,9 @@ $nav-bar-item-line-height: 3.5vh;
 $nav-bar-item-line-width: 12.5vw;
 $nav-bar-item-line-min-width: 160px;
 $header-height: 64px;
+$background-main-window: linear-gradient(90deg, #565656 0%, rgba(160, 160, 160, 0.81) 100%);
+$main-background-mat-card: linear-gradient(90deg, #1F1F1F 0%, rgba(91, 91, 91, 0.81) 100%);
+$second-background-mat-card: linear-gradient(90deg, #7a7a7a 0%, rgba(200, 200, 200, 0.81) 100%);
 
 .mat-card-field {
   display: flex;
@@ -38,12 +41,22 @@ mat-card {
   background-color: #a9a9a9 !important;
 }
 
+.home-window-background {
+  background: $background-main-window;
+  height: 100%;
+}
+
 .componentDisplayer-SizeFitter {
   padding: 2.5vh 5vw 2.5vh 5vw;
   height: calc(100vh - 2.5vh - 64px - 16px);
 }
 
+.componentDisplayer-secondMatCard {
+  background: $second-background-mat-card;
+}
+
 .componentDisplayer-matCard {
+  background: $main-background-mat-card;
   padding: 2.5vh 1vw 2.5vh 1vw;
   height: 100%;
 }
@@ -56,6 +69,23 @@ mat-card {
 .display-flex-justify-center {
   display: flex !important;
   justify-content: center;
+}
+
+.font-white {
+  color: white;
+}
+
+.label {
+  width: 10vw;
+  min-width: 110px;
+  font-weight: bold;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  word-wrap: break-word;
 }
 
 
