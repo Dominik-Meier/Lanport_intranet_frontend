@@ -2,7 +2,6 @@ import {Lanparty} from './Lanparty';
 import {GameMode} from './GameMode';
 import {TournamentType} from './TournamentType';
 
-// TODO add registarion StartDate + EndDate
 export class Tournament {
   public id: number;
   public name: string;
@@ -14,11 +13,13 @@ export class Tournament {
   public published: boolean;
   public started: boolean;
   public startDate: Date;
+  public endDate: Date;
+  public registrationEndDate: Date;
   public finished: boolean;
 
   constructor(id: number, name: string, lanparty: Lanparty, gameMode: GameMode, tournamentType: TournamentType,
               teamRegistration: boolean, numberOfParticipants: number, published: boolean, started: boolean,
-              startDate: Date, finished: boolean) {
+              startDate: Date, endDate: Date, registrationEndDate: Date, finished: boolean) {
     this.id = id;
     this.name = name;
     this.lanparty = lanparty;
@@ -29,8 +30,10 @@ export class Tournament {
     this.published = published;
     this.started = started;
     this.startDate = startDate;
+    this.endDate = endDate;
+    this.registrationEndDate = registrationEndDate;
     this.finished = finished;
-    // TODO prices, time,
+    // TODO prices
   }
 
   getId() {

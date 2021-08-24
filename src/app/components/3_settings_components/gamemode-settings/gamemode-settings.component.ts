@@ -35,6 +35,7 @@ export class GamemodeSettingsComponent implements OnInit {
   }
 
   addGameMode(event) {
+    // TODO
     this.gameModes.push( new GameMode(null, 'Placeholder', 'Game X', 'Elimination', 0, 'not supported yet'));
     this.dataSource = new MatTableDataSource<GameMode>(this.gameModes);
   }
