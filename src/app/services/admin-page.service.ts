@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import {Subject} from "rxjs";
-import {NavBarItemSettings} from "../models/NavBarItemSettings";
-import {SetAppNavigationComponent} from "../components/3_settings_components/set-app-navigation/set-app-navigation.component";
-import {LanpartySettingsComponent} from "../components/3_settings_components/lanparty-settings/lanparty-settings.component";
-import {GamemodeSettingsComponent} from "../components/3_settings_components/gamemode-settings/gamemode-settings.component";
-import {TournamentTypeSettingsComponent} from "../components/3_settings_components/tournament-type-settings/tournament-type-settings.component";
-import {TournamentSettingsComponent} from "../components/3_settings_components/tournament-settings/tournament-settings.component";
+import {Subject} from 'rxjs';
+import {NavBarItemSettings} from '../models/NavBarItemSettings';
+import {SetAppNavigationComponent} from '../components/3_settings_components/set-app-navigation/set-app-navigation.component';
+import {LanpartySettingsComponent} from '../components/3_settings_components/lanparty-settings/lanparty-settings.component';
+import {GamemodeSettingsComponent} from '../components/3_settings_components/gamemode-settings/gamemode-settings.component';
+import {TournamentTypeSettingsComponent} from '../components/3_settings_components/tournament-type-settings/tournament-type-settings.component';
+import {TournamentSettingsComponent} from '../components/3_settings_components/tournament-settings/tournament-settings.component';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,6 @@ export class AdminPageService {
 
 
   constructor() {
-    //This is the navigation tree ob the settings!
     this.addNavBarItem( new NavBarItemSettings('App Navigation', [], SetAppNavigationComponent));
     this.addNavBarItem( new NavBarItemSettings('Lanparty', [], LanpartySettingsComponent));
     this.addNavBarItem( new NavBarItemSettings('Game Mode', [], GamemodeSettingsComponent));
@@ -34,13 +33,9 @@ export class AdminPageService {
     return this.navBarItems;
   }
 
-  getActiveNavBarItem() {
-    return this.activeNavBarItem;
-  }
-
   addNavBarItem(newNavBarItem: NavBarItemSettings) {
     this.navBarItems.push(newNavBarItem);
-    this.navBarItemsSubject.next(this.getNavBarItems());
+    this.navBarItemsSubject.next(this.navBarItems);
   }
 
   setNewActiveItem(navItem: NavBarItemSettings) {
@@ -50,14 +45,17 @@ export class AdminPageService {
         item.setActive(false);
       }
 
-      if (item.getName() === navItem.getName()) {
+      if (navItem && item.getName() === navItem.getName()) {
         item.setActive(true);
         this.activeNavBarItem = item;
       }
-    }
 
+      if (navItem === null) {
+        this.activeNavBarItem = null;
+      }
+    }
     this.navBarItemsSubject.next(this.getNavBarItems());
-    this.activeNavBarItemsSubject.next(this.getActiveNavBarItem());
+    this.activeNavBarItemsSubject.next(this.activeNavBarItem);
   }
 
 }

@@ -28,6 +28,7 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
     this.config = this.appConfigService.getConfig();
     this.subscriptions.push(this.eventEmitter.appConfigChangedObservable.subscribe( config => {
       configDiffer(this.config, config);
+      this.adminPageService.setNewActiveItem(null);
       this.setUsedComponent();
     }));
 
@@ -51,7 +52,7 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
 
   setUsedComponent() {
     this.dynamicElementInsertionPoint.clear();
-    if (this.activeNavBarItem.usedComponent && this.activeNavBarItem.usedComponent.name !== 'SetAppNavigationComponent') {
+    if (this.activeNavBarItem && this.activeNavBarItem.usedComponent && this.activeNavBarItem.usedComponent.name !== 'SetAppNavigationComponent') {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.usedComponent);
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
     }

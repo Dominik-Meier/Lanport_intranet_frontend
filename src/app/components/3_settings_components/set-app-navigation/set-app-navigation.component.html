@@ -83,7 +83,7 @@
 </table>
 
 <!-- Bottom component-->
-<app-set-app-navigation *ngIf="activeNavItem" [config]="activeNavItem.appComponents" (saveConfig)="applyConfig($event)"></app-set-app-navigation>
+<app-set-app-navigation *ngIf="activeNavItem" [config]="activeNavItem.appComponents" [parentAppNavItem]="activeNavItem.id" (saveConfig)="applyConfig($event)"></app-set-app-navigation>
 <div class="inserted-Configuration-Component">
   <ng-template #dynamicElementInsertionPoint></ng-template>
 </div>

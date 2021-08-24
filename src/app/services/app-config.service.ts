@@ -31,7 +31,7 @@ export class AppConfigService {
     const jsonData = [];
     data.forEach( item => jsonData.push(item.toJSON()));
 
-    return this.http.post(targetURL, {data: jsonData}).pipe(map(result => mapJSONToAppSettingsArray(result)));
+    return this.http.post(targetURL, {data: jsonData});
   }
 
   getAppConfig(): Observable<NavBarItem[]> {
@@ -44,5 +44,10 @@ export class AppConfigService {
   deleteAppComponent(item: NavBarItem) {
     const targetURL = this.url + 'settings/angularAppConfig/appComponent/' + item.id;
     return this.http.delete(targetURL);
+  }
+
+  addAppComponent(item: NavBarItem) {
+    const targetURL = this.url + 'settings/angularAppConfig/appComponent';
+    return this.http.post(targetURL, {data: item.toJSON()});
   }
 }
