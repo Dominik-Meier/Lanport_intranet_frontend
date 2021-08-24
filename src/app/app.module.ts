@@ -28,7 +28,6 @@ import { HtmlDisplayerConfigurationComponent } from './components/1_registerOpti
 import { LanpartySettingsComponent } from './components/3_settings_components/lanparty-settings/lanparty-settings.component';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { GamemodeSettingsComponent } from './components/3_settings_components/gamemode-settings/gamemode-settings.component';
 import { TournamentTypeSettingsComponent } from './components/3_settings_components/tournament-type-settings/tournament-type-settings.component';
 import { TournamentSettingsComponent } from './components/3_settings_components/tournament-settings/tournament-settings.component';
@@ -88,7 +87,6 @@ import { MenuItemComponent } from './components/nav-bar/menu-item/menu-item.comp
     MatDatepickerModule,
     MatNativeDateModule,
     MatMenuModule,
-    CKEditorModule,
     DigitOnlyModule,
     QuillModule.forRoot()
   ],
