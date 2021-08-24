@@ -16,7 +16,7 @@
                 <p class="no-margin">{{item[0]}}</p>
               </div>
               <div class="content">
-                <p class="no-margin">{{item[1]}}</p>
+                <span class="no-margin" style="white-space: pre;">{{item[1]}}</span>
               </div>
             </div>
           </mat-card-content>
@@ -63,13 +63,13 @@
         <mat-card class="scrollable-content componentDisplayer-secondMatCard">
           <mat-card-title>Preise</mat-card-title>
 
-          <mat-card-content >
+          <mat-card-content  *ngFor="let award of tournament.awards.split(','); let i = index">
             <div class="mat-card-field">
               <div class="label">
-                <p class="no-margin">Preise</p>
+                <p class="no-margin">{{i+1}}. Platz</p>
               </div>
               <div class="content">
-                <p class="no-margin"> Note implemented yet!</p>
+                <p class="no-margin">{{award}}</p>
               </div>
             </div>
           </mat-card-content>
