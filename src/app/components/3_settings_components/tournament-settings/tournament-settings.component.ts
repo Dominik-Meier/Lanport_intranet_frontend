@@ -86,11 +86,9 @@ export class TournamentSettingsComponent implements OnInit {
 
   deleteTournament(event, row: Tournament) {
     // TODO
-    console.log('not supported yet!');
   }
 
   applyConfig(event) {
-    console.log(this.tournaments);
     this.tournamentService.saveTournament(this.tournaments);
   }
 }

@@ -39,9 +39,13 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { QuillModule } from 'ngx-quill';
 import { ShowTeamComponent } from './components/showTeam/show-team/show-team.component';
 import { BeamerViewComponent } from './views/beamer-view/beamer-view.component';
-import { EmptyComponent} from './util/components/empty.component';
+import { EmptyComponent} from './components/util/empty-Component/empty.component';
 import { MatMenuModule} from '@angular/material/menu';
 import { MenuItemComponent } from './components/nav-bar/menu-item/menu-item.component';
+import { SnackBarTextDisplayerComponent } from './components/util/snack-bar-text-displayer/snack-bar-text-displayer.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HrefComponent } from './components/1_registerOptions-Component/href-component/href.component';
+import { HrefConfigurationComponent } from './components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +70,10 @@ import { MenuItemComponent } from './components/nav-bar/menu-item/menu-item.comp
     ShowTeamComponent,
     BeamerViewComponent,
     EmptyComponent,
-    MenuItemComponent
+    MenuItemComponent,
+    SnackBarTextDisplayerComponent,
+    HrefComponent,
+    HrefConfigurationComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +100,8 @@ import { MenuItemComponent } from './components/nav-bar/menu-item/menu-item.comp
   exports: [
     MatIconModule,
     MatCardModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSnackBarModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

@@ -37,7 +37,6 @@ export class LanpartySettingsComponent implements OnInit {
     this.lanparties = lans;
     this.oldLanparties = lans;
     this.dataSource = new MatTableDataSource<Lanparty>(this.lanparties);
-    console.log('lanparty: ', lans);
   }
 
   addLanparty(event) {
@@ -67,7 +66,6 @@ export class LanpartySettingsComponent implements OnInit {
 
   //TODO maybe creat a deleted flag not deleting acutaly?
   deleteLanparty(event, row) {
-    console.log('Not supported yet!');
   }
 
   applyConfig(event) {

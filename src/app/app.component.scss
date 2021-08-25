@@ -87,8 +87,11 @@ mat-card {
   word-wrap: break-word;
 }
 
-.ql-editor {
-  background-color: black;
+.add-pointer {
+  cursor: pointer;
 }
 
+app-html-displayer-configuration .ql-editor {
+  background-color: black;
+}
 

@@ -38,7 +38,6 @@ export class TournamentTypeService {
   saveTournamentTypes(tournamentTypes: TournamentType[]) {
     this.saveTournamentTypesBackend(tournamentTypes).subscribe( () => {
       this.getTournamentTypesBackend().subscribe( newSavedTournamentTypes => {
-        console.log(newSavedTournamentTypes);
         this.tournamentTypes = newSavedTournamentTypes;
         this.tournamentTypesSubject.next(newSavedTournamentTypes);
       });

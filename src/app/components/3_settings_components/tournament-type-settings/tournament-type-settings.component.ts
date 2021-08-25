@@ -28,7 +28,6 @@ export class TournamentTypeSettingsComponent implements OnInit {
     this.tournamentTypes = tournamentTypes;
     this.oldTournamentTypes = tournamentTypes;
     this.dataSource = new MatTableDataSource<TournamentType>(this.tournamentTypes);
-    console.log('tournamentTypes: ', tournamentTypes);
   }
 
   addTournamentType(event) {
@@ -42,7 +41,6 @@ export class TournamentTypeSettingsComponent implements OnInit {
 
   //TODO maybe creat a deleted flag not deleting acutaly?
   deleteTournamentType(event, row) {
-    console.log('Not supported yet!');
   }
 
   applyConfig(event) {
