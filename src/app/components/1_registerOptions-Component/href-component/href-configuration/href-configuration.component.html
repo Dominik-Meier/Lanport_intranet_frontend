@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Anzeige Text - {{data.name}}</h1>
+<form>
+  <mat-form-field style="width: 300px">
+    <mat-label>Link destination: </mat-label>
+    <input matInput [(ngModel)]="link" name="linkName" >
+  </mat-form-field>
+  <app-snack-bar-text-displayer class="add-pointer" [message]="'Use https:// or http://, www. does not work!'"
+  ></app-snack-bar-text-displayer>
+</form>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="link">Ok</button>
+</div>

@@ -91,7 +91,6 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   openDialog(row: NavBarItem): void {
-    console.log(row.usedComponent.componentName);
     const componentToLoad = this.selectableConfigurationComponents.get(row.usedComponent.componentName);
     // @ts-ignore
     const dialogRef = this.dialog.open( componentToLoad, {

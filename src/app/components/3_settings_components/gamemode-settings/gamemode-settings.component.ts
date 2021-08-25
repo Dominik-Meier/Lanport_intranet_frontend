@@ -31,7 +31,6 @@ export class GamemodeSettingsComponent implements OnInit {
     this.gameModes = gameModes;
     this.oldGameModes = gameModes;
     this.dataSource = new MatTableDataSource<GameMode>(this.gameModes);
-    console.log('gameModes: ', gameModes);
   }
 
   addGameMode(event) {
@@ -62,7 +61,6 @@ export class GamemodeSettingsComponent implements OnInit {
 
   //TODO maybe creat a deleted flag not deleting acutaly?
   deleteGameMode(event, row) {
-    console.log('Not supported yet!');
   }
 
   applyConfig(event) {

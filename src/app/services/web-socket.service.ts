@@ -16,11 +16,9 @@ export class WebSocketService  {
   constructor() { }
 
   public connect(): void {
-    console.log(environment.BASE_WS_URL);
     this.socket$ = webSocket('ws://localhost:3001');
     this.socket$.subscribe({
       next: (data) => {
-        console.log('received msg');
         this.eventSubject$.next(this.parseJson(data));
       },
       error: (err) => console.error(err),

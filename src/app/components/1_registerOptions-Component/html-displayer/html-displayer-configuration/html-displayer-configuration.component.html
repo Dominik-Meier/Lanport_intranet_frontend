@@ -1,7 +1,5 @@
 <h1 mat-dialog-title>Anzeige Text - {{data.name}}</h1>
 <div mat-dialog-content>
-<!--  <ckeditor [editor]="Editor" [(ngModel)]="displayedString"></ckeditor>-->
-  <!-- <ckeditor #editor [editor]="Editor" [(ngModel)]="displayedString" (ready)="onReady($event)"></ckeditor> -->
   <quill-editor
     [(ngModel)]="startString"
     (onContentChanged)="changeString($event)"
@@ -11,5 +9,5 @@
 
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="displayedString" cdkFocusInitial>Ok</button>
+  <button mat-button [mat-dialog-close]="displayedString">Ok</button>
 </div>

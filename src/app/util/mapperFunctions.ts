@@ -12,15 +12,19 @@ import {HtmlDisplayerComponent} from '../components/1_registerOptions-Component/
 import {TournamentComponent} from '../components/1_registerOptions-Component/tournament/tournament.component';
 import {HtmlDisplayerConfigurationComponent} from '../components/1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component';
 import {TournamentConfigurationComponent} from '../components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
+import {HrefComponent} from "../components/1_registerOptions-Component/href-component/href.component";
+import {HrefConfigurationComponent} from "../components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component";
 
 
 export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
 navBarComponentSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerComponent);
 navBarComponentSelectorMap.set('TournamentComponent', TournamentComponent);
+navBarComponentSelectorMap.set('HrefComponent', HrefComponent);
 
 export const navBarItemComponentConfigurationSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
 navBarItemComponentConfigurationSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('TournamentComponent', TournamentConfigurationComponent);
+navBarItemComponentConfigurationSelectorMap.set('HrefComponent', HrefConfigurationComponent);
 
 
 export function mapJSONToTournamentParticipant(data: any): TournamentParticipant {
@@ -59,7 +63,6 @@ export function mapJSONToTeamMemberArray(data: any): TeamMember[] {
 }
 
 export function mapJSONToTeamMember(data: any): TeamMember {
-  console.log(data);
   return new TeamMember(data.id, data.teamId, mapJsonToUser(data.user));
 }
 
@@ -98,7 +101,6 @@ export function mapJSONToTournamentArray(data: any): Tournament[] {
 }
 
 export function mapJSONToTournament(t: any): Tournament {
-  console.log(t);
   if (t === null) {
     return null;
   }

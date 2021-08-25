@@ -12,7 +12,6 @@ export class DisplayUserComponent implements OnInit {
               public dialogRef: MatDialogRef<DisplayUserComponent>,) { }
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
 }
