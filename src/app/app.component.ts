@@ -11,6 +11,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 // TODO implement messages on http error
+// TODO implement feedback component
+// TODO implement chat
 export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   title = 'intranet';
