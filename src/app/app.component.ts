@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-
+// TODO implement messages on http error
 export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   title = 'intranet';

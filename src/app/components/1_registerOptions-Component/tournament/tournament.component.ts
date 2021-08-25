@@ -89,7 +89,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       this.infosDisplayArray.push(['Teamteilnahme', this.getTeamteilnahmeText()]);
       this.infosDisplayArray.push(['Teamgrösse', this.getTeamSizeForInfo()]);
       this.infosDisplayArray.push([ this.getTeamSizeText(), this.tournament.getNumberOfParticipants()]);
-      this.infosDisplayArray.push(['Ende Anmeldungen', formatDate(this.tournament.registrationEndDate, 'd-M-yy, HH:mm', 'en-US')]);
+      this.infosDisplayArray.push(['Anmeldeschluss', formatDate(this.tournament.registrationEndDate, 'd-M-yy, HH:mm', 'en-US')]);
       this.infosDisplayArray.push(['Turnierzeiten',
         formatDate(this.tournament.startDate, 'd-M-yy, HH:mm', 'en-US').concat('   -   ').concat(
         formatDate(this.tournament.endDate, 'd-M-yy, HH:mm', 'en-US'))]);

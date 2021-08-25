@@ -30,7 +30,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
   public activeNavItem: NavBarItem;
   private subscriptions: Subscription[] = [];
   dataSource: MatTableDataSource<NavBarItem>;
-  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'enabledAtIntranet', 'actions'];
+  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'enabledAtIntranet', 'activeForBeamerPresentation', 'actions'];
   selectableComponents: Map<string, ComponentWithNameComponent> = navBarComponentSelectorMap;
   selectableConfigurationComponents: Map<string, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
 
@@ -58,6 +58,10 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
 
   setEnabledAtIntranet(event: MatCheckboxChange, row: NavBarItem) {
     row.setActiveForIntranet(event.checked);
+  }
+
+  setActiveForBeamerPresentation(event: MatCheckboxChange, row: NavBarItem) {
+    row.setActiveForBeamerPresentation(event.checked);
   }
 
   changeName(event, row){
