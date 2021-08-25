@@ -61,6 +61,17 @@
     </td>
   </ng-container>
 
+  <!--Table Beamer Presenation active -->
+  <ng-container matColumnDef="activeForBeamerPresentation">
+    <th mat-header-cell *matHeaderCellDef>Active</th>
+    <td mat-cell *matCellDef="let row" >
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="setActiveForBeamerPresentation($event, row)"
+                    [checked]="row.activeForBeamerPresentation">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
   <!--Table Data -->
   <ng-container matColumnDef="data">
     <th mat-header-cell *matHeaderCellDef>Data</th>

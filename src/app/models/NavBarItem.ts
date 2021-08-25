@@ -62,6 +62,10 @@ export class NavBarItem {
     this.activeForIntranet = activeForIntranet;
   }
 
+  setActiveForBeamerPresentation(activeForBeamerPresentation: boolean) {
+    this.activeForBeamerPresentation = activeForBeamerPresentation;
+  }
+
   setOptions( options: any) {
     this.appComponents = options;
   }

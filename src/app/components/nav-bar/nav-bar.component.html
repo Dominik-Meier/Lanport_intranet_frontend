@@ -1,10 +1,19 @@
 <div class="navbar navbar-dark height-80px navbar-bg">
 
-  <div class="add-pointer" *ngIf="checkUserRights()">
-    <button mat-mini-fab color="primary" (click)="this.onClickSettings($event)">
-      <mat-icon>settings</mat-icon>
-    </button>
+  <div class="display-flex-row">
+    <div class="add-pointer pr-3" *ngIf="checkUserRights()">
+      <button mat-mini-fab color="primary" (click)="this.onClickSettings($event)">
+        <mat-icon>settings</mat-icon>
+      </button>
+    </div>
+
+    <div class="add-pointer" *ngIf="checkUserRights()">
+      <button mat-mini-fab color="primary" (click)="this.onClickBeamerView()">
+        <mat-icon>computer</mat-icon>
+      </button>
+    </div>
   </div>
+
 
   <div class="flex-navbar-items width-75">
     <!--https://stackblitz.com/edit/dynamic-nested-menus?file=app%2Fapp.component.html-->
