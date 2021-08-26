@@ -6,7 +6,6 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {TournamentParticipant} from '../../models/TournamentParticipant';
 import {mapJSONToTournamentParticipant, mapJSONToTournamentParticipantArray} from '../../util/mapperFunctions';
-import { handleError } from 'src/app/util/handleError';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +27,7 @@ export class TournamentParticipantService {
   createTournamentParticipant(tp: TournamentParticipant): Observable<TournamentParticipant> {
     const targetURL = this.url + 'tournamentParticipants';
     return this.http.post<Team>(targetURL, tp).pipe(
-      catchError(handleError), map(
+       map(
       response => {
         return mapJSONToTournamentParticipant(response);
       }

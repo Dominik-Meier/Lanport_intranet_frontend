@@ -1,5 +1,35 @@
 import {Tournament} from '../models/Tournament';
 
+export function tournamentsDiffer(oldTournaments: Tournament[], newTournaments: Tournament[]){
+  if (oldTournaments) {
+    oldTournaments.forEach( oldTournament => {
+      const foundTournament = newTournaments.find(newTournament => oldTournament.id.toString() === newTournament.id.toString());
+      if (foundTournament) {
+        tournamentDiffer(oldTournament, foundTournament);
+      } else {
+        removeTournament(oldTournaments, oldTournament);
+      }
+    });
+    addMissingTournaments(oldTournaments, newTournaments);
+  }
+}
+
+function removeTournament(oldTournaments: Tournament[], tournamentToRemove: Tournament) {
+  const index = oldTournaments.indexOf(tournamentToRemove);
+  if (index !== null) {
+    oldTournaments.splice(index, 1);
+  }
+}
+
+function addMissingTournaments(oldTournaments: Tournament[], newTournaments: Tournament[]) {
+  newTournaments.forEach( newTournament => {
+    const missingTournament = oldTournaments.find( oldTournament => newTournament.id.toString() === oldTournament.id.toString());
+    if (!missingTournament) {
+      oldTournaments.push(newTournament);
+    }
+  });
+}
+
 export function tournamentDiffer(oldT: Tournament, newT: Tournament) {
   if (oldT.name !== newT.name) {oldT.name = newT.name; }
   if (oldT.teamRegistration !== newT.teamRegistration) {oldT.teamRegistration = newT.teamRegistration; }

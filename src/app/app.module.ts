@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarItemSettingsComponent} from './views/home-settings/nav-bar-item/nav-bar-item-settings.component';
 import { MatIconModule} from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { CookieService } from 'ngx-cookie-service';
 import { HomeSettingsComponent } from './views/home-settings/home-settings.component';
@@ -46,6 +46,7 @@ import { SnackBarTextDisplayerComponent } from './components/util/snack-bar-text
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HrefComponent } from './components/1_registerOptions-Component/href-component/href.component';
 import { HrefConfigurationComponent } from './components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
+import {HttpErrorInterceptor} from './util/httpErrorInterceptor';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,7 @@ import { HrefConfigurationComponent } from './components/1_registerOptions-Compo
     MatMenuModule,
     MatSnackBarModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 
