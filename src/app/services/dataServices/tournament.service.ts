@@ -5,12 +5,14 @@ import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Tournament} from '../../models/Tournament';
 import {mapJSONToTournamentArray} from '../../util/mapperFunctions';
+import {EventEmitterService} from '../event-emitter.service';
+import {tournamentsDiffer} from '../../util/tournamentUpdaterFunctions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TournamentService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private eventEmitter: EventEmitterService) {
     this.init();
   }
 
@@ -26,6 +28,14 @@ export class TournamentService {
       this.tournaments = res;
       this.tournamentsSubject.next(this.tournaments);
     });
+    this.eventEmitter.tournamentsUpdatedObservable.subscribe( event => {
+      this.updateTournamentAction(event);
+    });
+  }
+
+  updateTournamentAction(tournaments: Tournament[]) {
+    tournamentsDiffer(this.tournaments, tournaments);
+    this.tournamentsSubject.next(this.tournaments);
   }
 
   /**
@@ -42,14 +52,8 @@ export class TournamentService {
   }
 
   saveTournament(tournaments: Tournament[]) {
-    this.saveTournamentsBackend(tournaments).subscribe(() => {
-      this.getTournamentsBackend().subscribe(newSavedTournaments => {
-        this.tournaments = newSavedTournaments;
-        this.tournamentsSubject.next(newSavedTournaments);
-      });
-    });
+    this.saveTournamentsBackend(tournaments).subscribe();
   }
-
 
   /**
    * Remote methodes to the backend from here on!
@@ -66,5 +70,10 @@ export class TournamentService {
   saveTournamentsBackend(tournaments: Tournament[]): Observable<Tournament[]> {
     const targetURL = this.url + 'tournaments';
     return this.http.put<Tournament[]>(targetURL, tournaments);
+  }
+
+  addTournament() {
+    const targetURL = this.url + 'tournaments';
+    return this.http.post<Tournament[]>(targetURL, null);
   }
 }

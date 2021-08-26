@@ -59,10 +59,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/beamer']);
   }
 
-  onLPLogoClick(event) {
-    window.location.href = 'https://www.lanport.ch';
-  }
-
   callItemSelected(item) {
     this.itemSelected.emit(item);
   }

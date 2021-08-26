@@ -5,8 +5,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {environment} from '../../environments/environment';
 import {Observable, of, Subject} from 'rxjs';
 import {User} from '../models/User';
-import {catchError, map} from 'rxjs/operators';
-import {handleError} from "../util/handleError";
+import { map} from 'rxjs/operators';
 import {mapJsonToUser} from "../util/mapperFunctions";
 
 // https://www.malcontentboffin.com/2017/11/Angular-Third-Party-Cookies.html
@@ -64,6 +63,6 @@ export class AuthService {
 
   getUser(cookie: string): Observable<User> {
     const targetURL = this.url + 'users/' + cookie;
-    return this.http.get(targetURL).pipe(map( u => mapJsonToUser(u)), catchError(handleError));
+    return this.http.get(targetURL).pipe(map( u => mapJsonToUser(u)));
   }
 }

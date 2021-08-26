@@ -71,9 +71,7 @@ export class TournamentSettingsComponent implements OnInit {
   }
 
   addTournament(event) {
-    this.tournaments.push( new Tournament(null, 'Placeholder', null, null, null,
-      true, 0, false, false, new Date( Date.now()), new Date( Date.now()), new Date( Date.now()), false, ''));
-    this.dataSource = new MatTableDataSource<Tournament>(this.tournaments);
+    this.tournamentService.addTournament().subscribe();
   }
 
   changeName(event, row: Tournament) {

@@ -3,6 +3,8 @@ import {WebSocketService} from './services/web-socket.service';
 import {AuthService} from './services/auth-service.service';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
+import {ErrorMsgService} from './services/error-msg.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -10,9 +12,9 @@ import {Router} from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-// TODO implement messages on http error
 // TODO implement feedback component
 // TODO implement chat
+// TODO implement sponsors
 export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   title = 'intranet';
@@ -20,10 +22,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor( private ws: WebSocketService,
                private authService: AuthService,
-               private router: Router) {
+               private router: Router,
+               private errorMsgService: ErrorMsgService,
+               private snackBar: MatSnackBar) {
     router.navigate(['/empty']);
     this.subscriptions.push(this.authService.getActiveUserObservable.subscribe( () => {
       router.navigate(['/home']);
+    }));
+    this.subscriptions.push(errorMsgService.errorMsgObservable.subscribe( errMsg => {
+      this.snackBar.open(errMsg.serverMsg.concat(errMsg.errorMsg), 'Close');
     }));
   }
 

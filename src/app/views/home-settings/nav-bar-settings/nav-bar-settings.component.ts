@@ -25,8 +25,4 @@ export class NavBarSettingsComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  onLPLogoClick(event) {
-    window.location.href = 'https://www.lanport.ch';
-  }
-
 }
