@@ -31,6 +31,7 @@ export class TournamentService {
     this.eventEmitter.tournamentsUpdatedObservable.subscribe( event => {
       this.updateTournamentAction(event);
     });
+    this.eventEmitter.tournamentDeletedObservable.subscribe( t => this.removeTournamentFromList(t));
   }
 
   updateTournamentAction(tournaments: Tournament[]) {
@@ -55,6 +56,13 @@ export class TournamentService {
     this.saveTournamentsBackend(tournaments).subscribe();
   }
 
+  removeTournamentFromList(tournament: Tournament) {
+    const index = this.tournaments.findIndex( x => x.id.toString() === tournament.id.toString());
+    if (index) {
+      this.tournaments.splice(index, 1);
+    }
+  }
+
   /**
    * Remote methodes to the backend from here on!
    */
@@ -75,5 +83,10 @@ export class TournamentService {
   addTournament() {
     const targetURL = this.url + 'tournaments';
     return this.http.post<Tournament[]>(targetURL, null);
+  }
+
+  deleteTournament(id: number) {
+    const targetURL = this.url + 'tournaments/' + id.toString();
+    return this.http.delete(targetURL);
   }
 }
