@@ -12,6 +12,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
+// TODO implement deletes and refactor data API
 // TODO implement feedback component
 // TODO implement chat
 // TODO implement sponsors
