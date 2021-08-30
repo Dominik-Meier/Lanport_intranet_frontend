@@ -113,8 +113,12 @@ export function mapJSONToTournament(t: any): Tournament {
 
 export function mapJSONToTournamentTypeArray(data: any): TournamentType[] {
   const result: TournamentType[] = [];
-  data.forEach( tournamentType => result.push(new TournamentType(tournamentType.id, tournamentType.name)));
+  data.forEach( tournamentType => result.push(mapJSONToTournamentType(tournamentType)));
   return result;
+}
+
+export function mapJSONToTournamentType(tournamentType: any): TournamentType {
+  return new TournamentType(tournamentType.id, tournamentType.name);
 }
 
 export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {

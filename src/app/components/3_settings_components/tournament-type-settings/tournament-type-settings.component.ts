@@ -1,27 +1,37 @@
-import { Component, OnInit } from '@angular/core';import {MatTableDataSource} from "@angular/material/table";
+import {Component, OnDestroy, OnInit} from '@angular/core';import {MatTableDataSource} from "@angular/material/table";
 import {TournamentType} from "../../../models/TournamentType";
 import {TournamentTypeService} from "../../../services/dataServices/tournament-type.service";
+import {Subscription} from "rxjs";
+import {EventEmitterService} from "../../../services/event-emitter.service";
 
 @Component({
   selector: 'app-tournament-type-settings',
   templateUrl: './tournament-type-settings.component.html',
   styleUrls: ['./tournament-type-settings.component.scss']
 })
-export class TournamentTypeSettingsComponent implements OnInit {
+export class TournamentTypeSettingsComponent implements OnInit, OnDestroy {
   tournamentTypes: TournamentType[];
   oldTournamentTypes: TournamentType[];
+  subscriptions: Subscription[] = [];
 
   /** Table parameters */
   dataSource: MatTableDataSource<TournamentType>;
   columnsToDisplay = ['name', 'actions'];
 
-  constructor(private tournamentTypeService: TournamentTypeService) { }
+  constructor(private tournamentTypeService: TournamentTypeService,
+              private eventEmitter: EventEmitterService) { }
 
   ngOnInit(): void {
-    this.tournamentTypeService.getTournamentTypeObservable.subscribe( tournamentTypes => {
-      this.setTournamentTypes(tournamentTypes);
-    });
     this.setTournamentTypes(this.tournamentTypeService.getTournamentTypes());
+    this.subscriptions.push(this.tournamentTypeService.getTournamentTypeObservable.subscribe( tournamentTypes => {
+      this.setTournamentTypes(tournamentTypes);
+    }));
+    this.subscriptions.push(this.eventEmitter.tournamentTypeDeletedObservable.subscribe(() =>
+      this.dataSource = new MatTableDataSource<TournamentType>(this.tournamentTypes)));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach( sub => sub.unsubscribe());
   }
 
   setTournamentTypes(tournamentTypes: TournamentType[]) {
@@ -39,8 +49,8 @@ export class TournamentTypeSettingsComponent implements OnInit {
     row.setName(event);
   }
 
-  //TODO maybe creat a deleted flag not deleting acutaly?
   deleteTournamentType(event, row) {
+    this.tournamentTypeService.deleteTournamentType(row.id).subscribe();
   }
 
   applyConfig(event) {

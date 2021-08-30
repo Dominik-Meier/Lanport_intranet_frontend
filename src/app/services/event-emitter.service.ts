@@ -7,12 +7,13 @@ import {
   mapJSONToAppSettingsArray,
   mapJSONToTeam,
   mapJSONToTeamMember, mapJSONToTournament, mapJSONToTournamentArray,
-  mapJSONToTournamentParticipant
+  mapJSONToTournamentParticipant, mapJSONToTournamentType, mapJSONToTournamentTypeArray
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
 import {NavBarItem} from '../models/NavBarItem';
 import {Tournament} from '../models/Tournament';
+import {TournamentType} from "../models/TournamentType";
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,9 @@ export class EventEmitterService {
 
   private tournamentDeletedSubject = new Subject<Tournament>();
   public tournamentDeletedObservable = this.tournamentDeletedSubject.asObservable();
+
+  private tournamentTypeDeletedSubject = new Subject<TournamentType>();
+  public tournamentTypeDeletedObservable = this.tournamentTypeDeletedSubject.asObservable();
 
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
@@ -94,6 +98,11 @@ export class EventEmitterService {
 
         case 'TournamentDeletedEvent': {
           this.tournamentDeletedSubject.next(mapJSONToTournament(event.data));
+          break;
+        }
+
+        case 'TournamentTypeDeletedEvent': {
+          this.tournamentTypeDeletedSubject.next(mapJSONToTournamentType(event.data));
           break;
         }
       }

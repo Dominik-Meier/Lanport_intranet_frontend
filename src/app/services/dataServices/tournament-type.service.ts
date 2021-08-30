@@ -5,12 +5,16 @@ import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TournamentType} from '../../models/TournamentType';
 import {mapJSONToTournamentTypeArray} from '../../util/mapperFunctions';
+import {EventEmitterService} from '../event-emitter.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
+// TODO implement new add method which create the object first and than adds it to the list that the id is always present
 export class TournamentTypeService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private eventEmitter: EventEmitterService) {
     this.init();
   }
 
@@ -25,6 +29,7 @@ export class TournamentTypeService {
       this.tournamentTypes = res;
       this.tournamentTypesSubject.next(this.tournamentTypes);
     });
+    this.eventEmitter.tournamentTypeDeletedObservable.subscribe( t => this.removeTournamentTypeFromList(t));
   }
 
   /**
@@ -44,6 +49,13 @@ export class TournamentTypeService {
     });
   }
 
+  removeTournamentTypeFromList(tournamentTypeToDelete: TournamentType) {
+    const index = this.tournamentTypes.findIndex( x => x.getId().toString() === tournamentTypeToDelete.getId().toString());
+    if (index) {
+      this.tournamentTypes.splice(index, 1);
+    }
+  }
+
 
   /**
    * Remote methodes to the backend from here on!
@@ -59,5 +71,10 @@ export class TournamentTypeService {
   saveTournamentTypesBackend(tournamentTypes: TournamentType[]): Observable<TournamentType[]> {
     const targetURL = this.url + 'tournamentTypes';
     return this.http.put<TournamentType[]>(targetURL, tournamentTypes);
+  }
+
+  deleteTournamentType(id: number) {
+    const targetURL = this.url + 'tournamentTypes/' + id.toString();
+    return this.http.delete(targetURL);
   }
 }
