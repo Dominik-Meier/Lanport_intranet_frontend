@@ -8,7 +8,12 @@
       <!--    Infos     -->
       <div class="tournament-column-grid">
         <mat-card class="scrollable-content componentDisplayer-secondMatCard">
-          <mat-card-title>Infos</mat-card-title>
+          <mat-card-title>
+            Infos
+            <button class="float-right" mat-mini-fab color="primary" (click)="showRules()" *ngIf="tournament.gameMode.rules">
+              <mat-icon>local_police</mat-icon>
+            </button>
+          </mat-card-title>
 
           <mat-card-content *ngFor="let item of infosDisplayArray">
             <div class="mat-card-field">

@@ -69,6 +69,7 @@
   <ng-container matColumnDef="rules">
     <th mat-header-cell *matHeaderCellDef>Rules</th>
     <td mat-cell *matCellDef="let row" >
+      <button mat-raised-button (click)="changeRules($event, row)"> Set Rules </button>
     </td>
   </ng-container>
 

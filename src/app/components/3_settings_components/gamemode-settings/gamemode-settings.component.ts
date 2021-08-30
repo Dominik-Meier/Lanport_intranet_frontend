@@ -4,6 +4,8 @@ import {GameMode} from '../../../models/GameMode';
 import {GamemodeService} from '../../../services/dataServices/gamemode.service';
 import {Subscription} from 'rxjs';
 import {EventEmitterService} from '../../../services/event-emitter.service';
+import {HtmlDisplayerConfigurationComponent} from '../../1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-gamemode-settings',
@@ -20,7 +22,8 @@ export class GamemodeSettingsComponent implements OnInit, OnDestroy {
   columnsToDisplay = ['name', 'game', 'elimination', 'teamSize', 'rules', 'actions'];
 
   constructor(private gameModeService: GamemodeService,
-              private eventEmitter: EventEmitterService) { }
+              private eventEmitter: EventEmitterService,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.subscriptions.push(this.gameModeService.getGameModeObservable.subscribe( gamemodes => {
@@ -43,7 +46,7 @@ export class GamemodeSettingsComponent implements OnInit, OnDestroy {
 
   addGameMode(event) {
     // TODO new way over api first
-    this.gameModes.push( new GameMode(null, 'Placeholder', 'Game X', 'Elimination', 0, 'not supported yet'));
+    this.gameModes.push( new GameMode(null, 'Placeholder', 'Game X', 'Elimination', 0, ''));
     this.dataSource = new MatTableDataSource<GameMode>(this.gameModes);
   }
 
@@ -63,15 +66,22 @@ export class GamemodeSettingsComponent implements OnInit, OnDestroy {
     row.setTeamSize(event);
   }
 
-  changeRules(event, row: GameMode) {
-    row.setRules(event);
-  }
-
   deleteGameMode(event, row) {
     this.gameModeService.deleteGameMode(row.id).subscribe();
   }
 
   applyConfig(event) {
     this.gameModeService.saveGameModes(this.gameModes);
+  }
+
+  changeRules(event, row) {
+    const dialogRef = this.dialog.open( HtmlDisplayerConfigurationComponent, {
+      width: '50vw',
+      data: {data: row.rules, name: row.name}
+    });
+
+    dialogRef.afterClosed().subscribe( result => {
+      row.rules = result;
+    });
   }
 }
