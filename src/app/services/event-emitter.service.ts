@@ -4,7 +4,7 @@ import {Subject} from 'rxjs';
 import {WebSocketService} from './web-socket.service';
 import {WebSocketEvent} from '../models/WebSocketEvent';
 import {
-  mapJSONToAppSettingsArray,
+  mapJSONToAppSettingsArray, mapJSONToGameMode, mapJSONToGameModeArray,
   mapJSONToTeam,
   mapJSONToTeamMember, mapJSONToTournament, mapJSONToTournamentArray,
   mapJSONToTournamentParticipant, mapJSONToTournamentType, mapJSONToTournamentTypeArray
@@ -14,6 +14,7 @@ import {TeamMember} from '../models/TeamMember';
 import {NavBarItem} from '../models/NavBarItem';
 import {Tournament} from '../models/Tournament';
 import {TournamentType} from "../models/TournamentType";
+import {GameMode} from "../models/GameMode";
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,9 @@ export class EventEmitterService {
 
   private tournamentTypeDeletedSubject = new Subject<TournamentType>();
   public tournamentTypeDeletedObservable = this.tournamentTypeDeletedSubject.asObservable();
+
+  private gameModeDeletedSubject = new Subject<GameMode>();
+  public gameModeDeletedObservable = this.gameModeDeletedSubject.asObservable();
 
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
@@ -103,6 +107,11 @@ export class EventEmitterService {
 
         case 'TournamentTypeDeletedEvent': {
           this.tournamentTypeDeletedSubject.next(mapJSONToTournamentType(event.data));
+          break;
+        }
+
+        case 'GameModeDeletedEvent': {
+          this.gameModeDeletedSubject.next(mapJSONToGameMode(event.data));
           break;
         }
       }

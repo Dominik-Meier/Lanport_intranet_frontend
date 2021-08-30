@@ -5,13 +5,16 @@ import {Observable, Subject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {GameMode} from '../../models/GameMode';
 import {mapJSONToGameModeArray} from '../../util/mapperFunctions';
+import {EventEmitterService} from '../event-emitter.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
+// TODO implement new add method which create the object first and than adds it to the list that the id is always present
 export class GamemodeService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private eventEmitter: EventEmitterService) {
     this.init();
   }
 
@@ -26,6 +29,14 @@ export class GamemodeService {
       this.gameModes = res;
       this.gameModesSubject.next(this.gameModes);
     });
+    this.eventEmitter.gameModeDeletedObservable.subscribe( gm => this.removeGameModeFromList(gm));
+  }
+
+  removeGameModeFromList(gameMode: GameMode) {
+    const index = this.gameModes.findIndex( x => x.id.toString() === gameMode.id.toString());
+    if (index) {
+      this.gameModes.splice(index, 1);
+    }
   }
 
   /**
@@ -60,5 +71,10 @@ export class GamemodeService {
   saveGameModesBackend(gamemodes: GameMode[]): Observable<GameMode[]> {
     const targetURL = this.url + 'gamemodes';
     return this.http.put<GameMode[]>(targetURL, gamemodes);
+  }
+
+  deleteGameMode(id: number) {
+    const targetURL = this.url + 'gamemodes/' + id.toString();
+    return this.http.delete(targetURL);
   }
 }
