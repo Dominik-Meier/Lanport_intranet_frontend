@@ -13,6 +13,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./app.component.scss']
 })
 
+// TODO next check tournamentType delete view are updated correctly
+
 // TODO implement deletes and refactor data API
 // TODO implement feedback component
 // TODO implement chat

@@ -33,7 +33,7 @@
             <div  *ngIf="tournament.getTeamRegistration()">
               <div class="mat-card-field" *ngFor="let team of teams; let i = index" [attr.data-index]="i">
                 <div (click)="openTeam(team)" class="teamRow">
-                  <div class="label">
+                  <div class="label content">
                     <p class="no-margin" >Team {{i+1}}</p>
                   </div>
                   <div class="content">

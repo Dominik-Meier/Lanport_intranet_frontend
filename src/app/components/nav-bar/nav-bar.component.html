@@ -17,9 +17,9 @@
 
   <div class="flex-navbar-items width-75">
     <!--https://stackblitz.com/edit/dynamic-nested-menus?file=app%2Fapp.component.html-->
-    <div class="pl-1 pr-1 asda" *ngFor="let navBarItem of navBarItems">
+    <div *ngFor="let navBarItem of navBarItems">
       <span>
-        <span class="add-pointer" *ngIf="navBarItem.activeForIntranet &&navBarItem.appComponents && navBarItem.appComponents.length > 0">
+        <span class="add-pointer pl-1 pr-1" *ngIf="navBarItem.activeForIntranet &&navBarItem.appComponents && navBarItem.appComponents.length > 0">
           <button mat-raised-button class="navBar-btn" [matMenuTriggerFor]="menu.childMenu">
             <span class="font-size-large">{{navBarItem.name}}</span>
             <mat-icon>expand_more</mat-icon>
@@ -27,7 +27,7 @@
           <app-menu-item #menu [items]="navBarItem" (itemSelected)="callItemSelected($event)"></app-menu-item>
         </span>
         <!-- Leaf node buttons here see link above for this-->
-        <span *ngIf="navBarItem.activeForIntranet && ( !navBarItem.appComponents || navBarItem.appComponents.length === 0)">
+        <span class="pl-1 pr-1" *ngIf="navBarItem.activeForIntranet && ( !navBarItem.appComponents || navBarItem.appComponents.length === 0)">
           <button mat-raised-button class="navBar-btn" (click)="callItemSelected(navBarItem)">
             <span class="font-size-large">{{navBarItem.name}}</span>
           </button>
