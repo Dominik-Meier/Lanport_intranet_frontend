@@ -119,10 +119,6 @@ app-home .content {
   word-wrap: break-word;
 }
 
-app-home quill-editor {
-  width: 100%;
-}
-
 app-beamer-view .content {
   height: 100%;
   width: 100%;
@@ -132,7 +128,7 @@ app-beamer-view .content {
   word-wrap: break-word;
 }
 
-app-beamer-view quill-editor {
-  width: 100%;
+quill-editor {
+  width: inherit;
 }
 

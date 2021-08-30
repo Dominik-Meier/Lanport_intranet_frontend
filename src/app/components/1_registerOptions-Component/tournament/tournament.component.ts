@@ -18,6 +18,7 @@ import {EventEmitterService} from '../../../services/event-emitter.service';
 import {TeamMember} from '../../../models/TeamMember';
 import {Subscription} from 'rxjs';
 import {tournamentDiffer} from '../../../util/tournamentUpdaterFunctions';
+import {HtmlDisplayerComponent} from "../html-displayer/html-displayer.component";
 
 @Component({
   selector: 'app-tournament',
@@ -236,5 +237,13 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
         tournamentDiffer(this.tournament, thisTournament);
         this.setInfoArray();
       }
+  }
+
+  showRules() {
+      const dialogRef = this.dialog.open( HtmlDisplayerComponent, {
+        panelClass: 'custom-dialog-container',
+        width: '50vw',
+      });
+      dialogRef.componentInstance.data = {data: this.tournament.getGameMode().rules, name: 'Regeln '.concat(this.tournament.name)};
   }
 }
