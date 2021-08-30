@@ -1,30 +1,38 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
-import {Lanparty} from "../../../models/Lanparty";
-import {FormControl} from "@angular/forms";
-import {MatTableDataSource} from "@angular/material/table";
-import {GameMode} from "../../../models/GameMode";
-import {GamemodeService} from "../../../services/dataServices/gamemode.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MatTableDataSource} from '@angular/material/table';
+import {GameMode} from '../../../models/GameMode';
+import {GamemodeService} from '../../../services/dataServices/gamemode.service';
+import {Subscription} from 'rxjs';
+import {EventEmitterService} from '../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-gamemode-settings',
   templateUrl: './gamemode-settings.component.html',
   styleUrls: ['./gamemode-settings.component.scss']
 })
-export class GamemodeSettingsComponent implements OnInit {
+export class GamemodeSettingsComponent implements OnInit, OnDestroy {
   gameModes: GameMode[];
   oldGameModes: GameMode[];
+  subscriptions: Subscription[] = [];
 
   /** Table parameters */
   dataSource: MatTableDataSource<GameMode>;
   columnsToDisplay = ['name', 'game', 'elimination', 'teamSize', 'rules', 'actions'];
 
-  constructor(private gameModeService: GamemodeService) { }
+  constructor(private gameModeService: GamemodeService,
+              private eventEmitter: EventEmitterService) { }
 
   ngOnInit(): void {
-    this.gameModeService.getGameModeObservable.subscribe( gamemodes => {
+    this.subscriptions.push(this.gameModeService.getGameModeObservable.subscribe( gamemodes => {
       this.setGameModes(gamemodes);
-    });
+    }));
+    this.subscriptions.push(this.eventEmitter.gameModeDeletedObservable.subscribe(
+      () => this.dataSource = new MatTableDataSource<GameMode>(this.gameModes)));
     this.setGameModes(this.gameModeService.getGameModes());
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   setGameModes(gameModes: GameMode[]) {
@@ -34,7 +42,7 @@ export class GamemodeSettingsComponent implements OnInit {
   }
 
   addGameMode(event) {
-    // TODO
+    // TODO new way over api first
     this.gameModes.push( new GameMode(null, 'Placeholder', 'Game X', 'Elimination', 0, 'not supported yet'));
     this.dataSource = new MatTableDataSource<GameMode>(this.gameModes);
   }
@@ -59,8 +67,8 @@ export class GamemodeSettingsComponent implements OnInit {
     row.setRules(event);
   }
 
-  //TODO maybe creat a deleted flag not deleting acutaly?
   deleteGameMode(event, row) {
+    this.gameModeService.deleteGameMode(row.id).subscribe();
   }
 
   applyConfig(event) {
