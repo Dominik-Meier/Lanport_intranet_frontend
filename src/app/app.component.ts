@@ -16,7 +16,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 // TODO next check tournamentType delete view are updated correctly
 
 // TODO implement deletes and refactor data API
-// TODO implement gameMode Rules
 // TODO implement feedback component
 // TODO implement chat
 // TODO implement sponsors
@@ -41,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.ws.connect();
-    this.authService.loadUser();
+    this.authService.login();
   }
 
   ngOnDestroy() {
