@@ -5,14 +5,16 @@ export class User {
   payed: boolean;
   seat: string;
   level: string;
+  token: string;
 
-  constructor(id: number, name: string, registered: boolean, payed: boolean, seat: string, level: string) {
+  constructor(id: number, name: string, registered: boolean, payed: boolean, seat: string, level: string, token: string) {
     this.id = id;
     this.nickname = name;
     this.registered = registered;
     this.payed = payed;
     this.seat = seat;
     this.level = level;
+    this.token = token;
   }
 
   getId() {
