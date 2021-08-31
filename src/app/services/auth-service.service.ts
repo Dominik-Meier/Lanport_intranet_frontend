@@ -6,7 +6,8 @@ import {environment} from '../../environments/environment';
 import {Observable, of, Subject} from 'rxjs';
 import {User} from '../models/User';
 import { map} from 'rxjs/operators';
-import {mapJsonToUser} from "../util/mapperFunctions";
+import {mapJsonToUser} from '../util/mapperFunctions';
+import {TokenStorageService} from './token-storage.service';
 
 // https://www.malcontentboffin.com/2017/11/Angular-Third-Party-Cookies.html
 // https://blog.angular-university.io/angular-jwt-authentication/
@@ -18,7 +19,8 @@ import {mapJsonToUser} from "../util/mapperFunctions";
 export class AuthService {
 
   constructor(private http: HttpClient,
-              private cookieService: CookieService) {
+              private cookieService: CookieService,
+              private tokenService: TokenStorageService) {
   }
 
   private url = environment.BASE_API_URL;
@@ -61,8 +63,15 @@ export class AuthService {
     }
   }
 
+  /**
+   * Login method of intranet
+   * @param cookie to validate
+   */
   getUser(cookie: string): Observable<User> {
     const targetURL = this.url + 'users/' + cookie;
-    return this.http.get(targetURL).pipe(map( u => mapJsonToUser(u)));
+    return this.http.get(targetURL).pipe(map( (u: User) => {
+      this.tokenService.saveToken(u.token);
+      return mapJsonToUser(u);
+    }));
   }
 }
