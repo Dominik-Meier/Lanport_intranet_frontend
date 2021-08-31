@@ -47,6 +47,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HrefComponent } from './components/1_registerOptions-Component/href-component/href.component';
 import { HrefConfigurationComponent } from './components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
 import {HttpErrorInterceptor} from './util/httpErrorInterceptor';
+import {OAuthModule} from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import {HttpErrorInterceptor} from './util/httpErrorInterceptor';
     MatNativeDateModule,
     MatMenuModule,
     DigitOnlyModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
+    OAuthModule.forRoot()
   ],
   exports: [
     MatIconModule,
