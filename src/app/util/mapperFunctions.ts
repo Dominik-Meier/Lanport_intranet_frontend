@@ -139,7 +139,7 @@ export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
     }
 
     resultArr.push( new NavBarItem(element.id, element.name, componentOuter, element.appComponentId, appComponents,
-      element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false));
+      element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false, element.beamerTimer));
     appComponents = [];
   }
   return resultArr;

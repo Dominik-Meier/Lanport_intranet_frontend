@@ -50,6 +50,18 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="beamerTimer">
+    <th mat-header-cell *matHeaderCellDef>Beamer Timer</th>
+    <td mat-cell *matCellDef="let row">
+      <mat-form-field [style.fontSize]="12">
+        <input matInput digitOnly [(ngModel)]="row.beamerTimer"
+                  cdkTextareaAutosize="1"
+                  cdkAutosizeMaxRows="1"
+        >
+      </mat-form-field>
+    </td>
+  </ng-container>
+
   <!--Table Active -->
   <ng-container matColumnDef="enabledAtIntranet">
     <th mat-header-cell *matHeaderCellDef>Active</th>
