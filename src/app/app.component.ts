@@ -19,6 +19,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 // TODO implement feedback component
 // TODO implement chat
 // TODO implement sponsors
+// TODO implement beamer timer
+// TODO implement readme
 export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   title = 'intranet';
