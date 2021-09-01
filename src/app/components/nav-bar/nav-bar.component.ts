@@ -34,12 +34,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   }
 
   checkUserRights() {
-    let allowed = false;
-    if (this.user){
-      if (this.user.getLevel().toUpperCase() === 'ADMIN') { allowed = true; }
-      if (this.user.getLevel().toUpperCase() === 'MITGLIED') { allowed = true; }
-    }
-    return allowed;
+    return this.authService.checkUserRights();
   }
 
   onClickUser(event) {

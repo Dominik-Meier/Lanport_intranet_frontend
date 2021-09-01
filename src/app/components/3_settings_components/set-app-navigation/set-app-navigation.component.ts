@@ -30,7 +30,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
   public activeNavItem: NavBarItem;
   private subscriptions: Subscription[] = [];
   dataSource: MatTableDataSource<NavBarItem>;
-  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'enabledAtIntranet', 'activeForBeamerPresentation', 'actions'];
+  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'enabledAtIntranet', 'activeForBeamerPresentation', 'beamerTimer', 'actions'];
   selectableComponents: Map<string, ComponentWithNameComponent> = navBarComponentSelectorMap;
   selectableConfigurationComponents: Map<string, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
 
@@ -70,7 +70,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
 
   addNavBarItem(event) {
     const newNavBarItem = new NavBarItem(null, 'Placeholder', null, this.parentAppNavItem, [],
-      null, false, false, null, false);
+      null, false, false, null, false, 5000);
     this.appConfigService.addAppComponent(newNavBarItem).subscribe();
   }
 

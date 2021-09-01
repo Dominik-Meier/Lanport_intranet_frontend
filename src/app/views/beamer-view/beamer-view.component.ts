@@ -1,9 +1,9 @@
 import {
+  AfterViewChecked,
   Component,
   ComponentFactoryResolver,
   HostListener,
   Injector,
-  Input,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -13,10 +13,10 @@ import {
 import {Router} from '@angular/router';
 import {AppConfigService} from '../../services/app-config.service';
 import {NavBarItem} from '../../models/NavBarItem';
-import {interval, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {EventEmitterService} from '../../services/event-emitter.service';
 import {configDiffer} from '../../util/configUpdaterHandlerFunctions';
-import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-beamer-view',
@@ -24,7 +24,7 @@ import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition}
   styleUrls: ['./beamer-view.component.scss']
 })
 // TODO refactor and clean up this class
-export class BeamerViewComponent implements OnInit, OnDestroy {
+export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   private subscriptions: Subscription[] = [];
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
@@ -33,6 +33,8 @@ export class BeamerViewComponent implements OnInit, OnDestroy {
   beamerItems: NavBarItem[] = [];
   viewRefs = new Map<number, ViewRef>();
   counter = 0;
+  period = 1000;
+  infLoop;
 
   constructor(private router: Router,
               private appConfigService: AppConfigService,
@@ -53,20 +55,31 @@ export class BeamerViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // TODO make this timer configurable
-    this.subscriptions.push(interval(5000).subscribe( () => {
-      this.dynamicElementInsertionPoint.detach(0);
-      this.dynamicElementInsertionPoint.insert(this.viewRefs.get(this.beamerItems[this.counter].id));
-      this.viewRefs.size - this.counter <= 1 ? this.counter = 0 : this.counter++;
-    }));
     this.snackBar.open('Press escape to exit.', 'Close', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
   }
 
+  ngAfterViewChecked() {
+    if (this.infLoop !== null){
+      clearInterval(this.infLoop);
+    }
+
+    this.infLoop = setInterval( () => {
+      this.dynamicElementInsertionPoint.detach(0);
+      this.dynamicElementInsertionPoint.insert(this.viewRefs.get(this.beamerItems[this.counter].id));
+      this.period = this.beamerItems[this.counter].beamerTimer;
+      this.viewRefs.size - this.counter <= 1 ? this.counter = 0 : this.counter++;
+    }, this.period);
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach( sub => sub.unsubscribe());
     this.viewRefs.forEach(view => view.destroy());
+    if (this.infLoop !== null){
+      clearInterval(this.infLoop);
+    }
   }
 
   createViews(items: NavBarItem[]) {
