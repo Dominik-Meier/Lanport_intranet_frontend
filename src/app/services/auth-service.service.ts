@@ -1,16 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import * as moment from 'moment';
 import {CookieService} from 'ngx-cookie-service';
 import {environment} from '../../environments/environment';
-import {Observable, of, Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {User} from '../models/User';
 import { map} from 'rxjs/operators';
 import {mapJsonToUser} from '../util/mapperFunctions';
-
-// https://www.malcontentboffin.com/2017/11/Angular-Third-Party-Cookies.html
-// https://blog.angular-university.io/angular-jwt-authentication/
-// https://itnext.io/angular-8-how-to-use-cookies-14ab3f2e93fc?gi=108e16bfef9a
 
 @Injectable({
   providedIn: 'root',
@@ -90,14 +85,13 @@ export class AuthService {
     return false;
   }
 
-/*  public refreshToken() {
+  public refreshToken() {
     const targetURL = this.url + 'users/refreshToken';
     return this.http.post(targetURL, {refreshToken: this.getRefreshToken()}).pipe(
       map( (newUser: User) => {
-        console.log(newUser);
         this.saveToken(newUser.token, newUser.refreshToken);
         return newUser;
       })
     );
-  }*/
+  }
 }
