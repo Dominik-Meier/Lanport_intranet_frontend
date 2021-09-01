@@ -28,6 +28,15 @@ export class AuthService {
     return this.activeUser;
   }
 
+  checkUserRights() {
+    let allowed = false;
+    if (this.activeUser){
+      if (this.activeUser.getLevel().toUpperCase() === 'ADMIN') { allowed = true; }
+      if (this.activeUser.getLevel().toUpperCase() === 'MITGLIED') { allowed = true; }
+    }
+    return allowed;
+  }
+
   /**
    * dev mode set cookie at browser console
    * document.cookie="keyofcookie=valueofcookie"
