@@ -1,19 +1,22 @@
-import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {LanpartyService} from '../../../services/dataServices/lanparty.service';
 import {Lanparty} from '../../../models/Lanparty';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {FormControl} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {EventEmitterService} from '../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-lanparty-settings',
   templateUrl: './lanparty-settings.component.html',
   styleUrls: ['./lanparty-settings.component.scss']
 })
-export class LanpartySettingsComponent implements OnInit {
+export class LanpartySettingsComponent implements OnInit, OnDestroy {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   lanparties: Lanparty[];
   oldLanparties: Lanparty[];
+  subscriptions: Subscription[] = [];
 
   startDate = new FormControl(new Date());
   endDate = new FormControl(new Date());
@@ -23,13 +26,22 @@ export class LanpartySettingsComponent implements OnInit {
   columnsToDisplay = ['select', 'name', 'active', 'startDate', 'endDate', 'actions'];
   selection = new SelectionModel<Lanparty>(false, []);
 
-  constructor(private lanpartyService: LanpartyService) { }
+  constructor(private lanpartyService: LanpartyService, private eventEmitter: EventEmitterService) { }
 
   ngOnInit(): void {
     this.lanpartyService.getLanpartiesObservable.subscribe( lans => {
       this.setLanparties(lans);
     });
     this.setLanparties(this.lanpartyService.getLanparties());
+    /**
+     * Be careful as this method builds on that the event at tournament service is executed fist
+     */
+    this.subscriptions.push(this.eventEmitter.lanpartyDeletedObservable.subscribe(
+      () => { this.dataSource = new MatTableDataSource<Lanparty>(this.lanparties); }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach( sub => sub.unsubscribe());
   }
 
   setLanparties(lans: Lanparty[]) {
@@ -39,8 +51,7 @@ export class LanpartySettingsComponent implements OnInit {
   }
 
   addLanparty(event) {
-    this.lanparties.push( new Lanparty(null, 'Placeholder', false, new Date( Date.now()), new Date( Date.now())));
-    this.dataSource = new MatTableDataSource<Lanparty>(this.lanparties);
+    this.lanpartyService.createLanparty().subscribe();
   }
 
   changeName(event, row: Lanparty) {
@@ -55,16 +66,8 @@ export class LanpartySettingsComponent implements OnInit {
     row.setActive(event);
   }
 
-  startDateChanged(event, row: Lanparty) {
-    row.setStartDate(event.value);
-  }
-
-  endDateChanged(event, row: Lanparty) {
-    row.setEndDate(event.value);
-  }
-
-  // TODO maybe creat a deleted flag not deleting acutaly?
   deleteLanparty(event, row) {
+    this.lanpartyService.deleteLanparty(row).subscribe();
   }
 
   applyConfig(event) {

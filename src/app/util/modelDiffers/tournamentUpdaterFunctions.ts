@@ -1,4 +1,4 @@
-import {Tournament} from '../models/Tournament';
+import {Tournament} from '../../models/Tournament';
 
 export function tournamentsDiffer(oldTournaments: Tournament[], newTournaments: Tournament[]){
   if (oldTournaments) {

@@ -4,8 +4,7 @@ import {NavBarItem} from '../../models/NavBarItem';
 import {AppConfigService} from '../../services/app-config.service';
 import {EventEmitterService} from '../../services/event-emitter.service';
 import {Subscription} from 'rxjs';
-import {SetAppNavigationComponent} from '../../components/3_settings_components/set-app-navigation/set-app-navigation.component';
-import {configDiffer} from '../../util/configUpdaterHandlerFunctions';
+import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunctions';
 
 @Component({
   selector: 'app-home-settings',

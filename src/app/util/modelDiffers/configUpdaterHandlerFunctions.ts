@@ -1,5 +1,5 @@
-import {NavBarItem} from '../models/NavBarItem';
-import {RegisterOptionItem} from '../models/registerOptionItem';
+import {NavBarItem} from '../../models/NavBarItem';
+import {RegisterOptionItem} from '../../models/registerOptionItem';
 
 export function configDiffer(oldConfig: NavBarItem[], newConfig: NavBarItem[]) {
   if (oldConfig) {

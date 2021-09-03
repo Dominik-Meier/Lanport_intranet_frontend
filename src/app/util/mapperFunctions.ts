@@ -87,7 +87,7 @@ export function mapJSONToGameMode(gamemode: any): GameMode {
     gamemode.teamSize, gamemode.rules);
 }
 
-export function mapJSONToLanartyArray(data: any): Lanparty[] {
+export function mapJSONToLanpartyArray(data: any): Lanparty[] {
   const result: Lanparty[] = [];
   data.forEach( lanparty => result.push(new Lanparty(lanparty.id, lanparty.name, lanparty.active,
     lanparty.startDate, lanparty.endDate)));

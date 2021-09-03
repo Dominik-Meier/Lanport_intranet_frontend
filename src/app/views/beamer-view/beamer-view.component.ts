@@ -15,7 +15,7 @@ import {AppConfigService} from '../../services/app-config.service';
 import {NavBarItem} from '../../models/NavBarItem';
 import {Subscription} from 'rxjs';
 import {EventEmitterService} from '../../services/event-emitter.service';
-import {configDiffer} from '../../util/configUpdaterHandlerFunctions';
+import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunctions';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 @Component({

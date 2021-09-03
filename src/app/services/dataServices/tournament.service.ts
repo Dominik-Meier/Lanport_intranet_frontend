@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {Tournament} from '../../models/Tournament';
 import {mapJSONToTournamentArray} from '../../util/mapperFunctions';
 import {EventEmitterService} from '../event-emitter.service';
-import {tournamentsDiffer} from '../../util/tournamentUpdaterFunctions';
+import {tournamentsDiffer} from '../../util/modelDiffers/tournamentUpdaterFunctions';
 
 @Injectable({
   providedIn: 'root'
