@@ -19,6 +19,8 @@ import {TeamMember} from '../../../models/TeamMember';
 import {Subscription} from 'rxjs';
 import {tournamentDiffer} from '../../../util/modelDiffers/tournamentUpdaterFunctions';
 import {HtmlDisplayerComponent} from '../html-displayer/html-displayer.component';
+import {GameMode} from '../../../models/GameMode';
+import {gameModeDiffer} from '../../../util/modelDiffers/gameModeUpdater';
 
 @Component({
   selector: 'app-tournament',
@@ -63,6 +65,7 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     this.subscriptions.push(this.eventEmitter.teamMemberLeftObservable.subscribe(tm => this.teamMemberLeftAction(tm)));
     this.subscriptions.push(this.eventEmitter.teamDeletedObservable.subscribe(t => this.teamDeletedAction(t)));
     this.subscriptions.push(this.eventEmitter.tournamentsUpdatedObservable.subscribe(t => this.updateTournamentAction(t)));
+    this.subscriptions.push(this.eventEmitter.gameModesUpdatedObservable.subscribe(gm => this.updateTournamentGameModeAction(gm)));
   }
 
   ngOnDestroy() {
@@ -237,6 +240,14 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
         tournamentDiffer(this.tournament, thisTournament);
         this.setInfoArray();
       }
+  }
+
+  updateTournamentGameModeAction(gameModes: GameMode[]) {
+    const newGameMode = gameModes.find(x => x.id.toString() === this.tournament.gameMode.id.toString());
+    if (newGameMode) {
+      gameModeDiffer(this.tournament.gameMode, newGameMode);
+      this.setInfoArray();
+    }
   }
 
   showRules() {

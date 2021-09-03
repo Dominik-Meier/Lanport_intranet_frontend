@@ -17,6 +17,7 @@ import {Subscription} from 'rxjs';
 import {EventEmitterService} from '../../services/event-emitter.service';
 import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunctions';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
+import {navBarComponentSelectorMap} from '../../util/mapperFunctions';
 
 @Component({
   selector: 'app-beamer-view',
@@ -152,7 +153,8 @@ export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked 
   }
 
   createComponentViewRef(component) {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component.usedComponent);
+    const componentToLoad: any = navBarComponentSelectorMap.get(component.usedComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToLoad);
     const componentRef = componentFactory.create(this.injector);
     const viewRef = componentRef.hostView;
     (componentRef.instance as NavBarItem).data = component;

@@ -5,6 +5,7 @@ import {AppConfigService} from '../../services/app-config.service';
 import {EventEmitterService} from '../../services/event-emitter.service';
 import {Subscription} from 'rxjs';
 import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunctions';
+import {navBarItemComponentConfigurationSelectorMap} from '../../util/mapperFunctions';
 
 @Component({
   selector: 'app-home-settings',
@@ -52,7 +53,8 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
   setUsedComponent() {
     this.dynamicElementInsertionPoint.clear();
     if (this.activeNavBarItem && this.activeNavBarItem.name !== 'App Navigation') {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.usedComponent);
+      const componentToLoad: any = navBarItemComponentConfigurationSelectorMap.get(this.activeNavBarItem.usedComponent);
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToLoad);
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
     }
   }

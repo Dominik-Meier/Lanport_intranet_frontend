@@ -11,6 +11,7 @@ import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunction
 import {AppConfigService} from '../../services/app-config.service';
 import {EventEmitterService} from '../../services/event-emitter.service';
 import {NavBarItem} from '../../models/NavBarItem';
+import {navBarComponentSelectorMap} from "../../util/mapperFunctions";
 
 @Component({
   selector: 'app-home',
@@ -52,7 +53,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (item != null) {
       this.activeNavBarItem = item;
       if (this.activeNavBarItem.usedComponent) {
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.usedComponent);
+        console.log(this.activeNavBarItem.usedComponent);
+        const componentToLoad: any = navBarComponentSelectorMap.get(this.activeNavBarItem.usedComponent);
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToLoad);
         this.componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
         (this.componentRef.instance as RegisterItemComponent).data = this.activeNavBarItem;
         this.navItemIsActive = true;
