@@ -18,7 +18,7 @@ import {EventEmitterService} from '../../../services/event-emitter.service';
 import {TeamMember} from '../../../models/TeamMember';
 import {Subscription} from 'rxjs';
 import {tournamentDiffer} from '../../../util/tournamentUpdaterFunctions';
-import {HtmlDisplayerComponent} from "../html-displayer/html-displayer.component";
+import {HtmlDisplayerComponent} from '../html-displayer/html-displayer.component';
 
 @Component({
   selector: 'app-tournament',

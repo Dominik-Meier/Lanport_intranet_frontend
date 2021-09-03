@@ -1,5 +1,5 @@
-import { Type} from "@angular/core";
-import {RegisterOptionItem} from "./registerOptionItem";
+import {Type} from '@angular/core';
+import {RegisterOptionItem} from './registerOptionItem';
 
 export class NavBarItemSettings {
   private name: string;

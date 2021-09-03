@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import {RegisterOptionItem} from "../../models/registerOptionItem";
+import {RegisterOptionItem} from '../../models/registerOptionItem';
 
 @Component({
   selector: 'app-register-item',

@@ -6,8 +6,8 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {NavBarItemSettings} from "../../../models/NavBarItemSettings";
-import {AdminPageService} from "../../../services/admin-page.service";
+import {NavBarItemSettings} from '../../../models/NavBarItemSettings';
+import {AdminPageService} from '../../../services/admin-page.service';
 
 
 @Component({
