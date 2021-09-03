@@ -26,11 +26,11 @@ export class Lanparty {
   }
 
   getStartDate() {
-    return this.startDate
+    return this.startDate;
   }
 
   getEndDate() {
-    return this.endDate
+    return this.endDate;
   }
 
   setName(name: string) {

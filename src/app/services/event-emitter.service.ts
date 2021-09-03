@@ -13,8 +13,8 @@ import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
 import {NavBarItem} from '../models/NavBarItem';
 import {Tournament} from '../models/Tournament';
-import {TournamentType} from "../models/TournamentType";
-import {GameMode} from "../models/GameMode";
+import {TournamentType} from '../models/TournamentType';
+import {GameMode} from '../models/GameMode';
 
 @Injectable({
   providedIn: 'root'

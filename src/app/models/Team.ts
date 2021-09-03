@@ -1,5 +1,5 @@
-import {Tournament} from "./Tournament";
-import {TeamMember} from "./TeamMember";
+import {Tournament} from './Tournament';
+import {TeamMember} from './TeamMember';
 
 export class Team {
   public id: number;

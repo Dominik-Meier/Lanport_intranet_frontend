@@ -16,7 +16,7 @@ export class WebSocketService  {
   constructor() { }
 
   public connect(): void {
-    this.socket$ = webSocket('ws://localhost:3001');
+    this.socket$ = webSocket(this.wsUrl);
     this.socket$.subscribe({
       next: (data) => {
         this.eventSubject$.next(this.parseJson(data));

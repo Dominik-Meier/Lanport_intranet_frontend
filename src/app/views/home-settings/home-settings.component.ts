@@ -43,7 +43,7 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
   }
 
   ifSetConfigActive() {
-    return (this.activeNavBarItem && this.activeNavBarItem.usedComponent.name === 'SetAppNavigationComponent');
+    return (this.activeNavBarItem && this.activeNavBarItem.name === 'App Navigation');
   }
 
   saveConfig(config: NavBarItem[]) {
@@ -52,7 +52,7 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
 
   setUsedComponent() {
     this.dynamicElementInsertionPoint.clear();
-    if (this.activeNavBarItem && this.activeNavBarItem.usedComponent && this.activeNavBarItem.usedComponent.name !== 'SetAppNavigationComponent') {
+    if (this.activeNavBarItem && this.activeNavBarItem.name !== 'App Navigation') {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.usedComponent);
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
     }

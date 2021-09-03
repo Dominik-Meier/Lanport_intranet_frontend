@@ -6,7 +6,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 
-import {BehaviorSubject, Observable,} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {ErrorMsgService} from '../services/error-msg.service';
 import {catchError, filter, switchMap, take} from 'rxjs/operators';
 import {ErrorMsg} from '../models/errorMsg';

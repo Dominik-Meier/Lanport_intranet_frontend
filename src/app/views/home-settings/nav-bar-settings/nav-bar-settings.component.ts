@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {AdminPageService} from "../../../services/admin-page.service";
+import {Router} from '@angular/router';
+import {AdminPageService} from '../../../services/admin-page.service';
 
 @Component({
   selector: 'app-nav-bar-settings',

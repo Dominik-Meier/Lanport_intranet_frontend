@@ -12,8 +12,8 @@ import {HtmlDisplayerComponent} from '../components/1_registerOptions-Component/
 import {TournamentComponent} from '../components/1_registerOptions-Component/tournament/tournament.component';
 import {HtmlDisplayerConfigurationComponent} from '../components/1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component';
 import {TournamentConfigurationComponent} from '../components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
-import {HrefComponent} from "../components/1_registerOptions-Component/href-component/href.component";
-import {HrefConfigurationComponent} from "../components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component";
+import {HrefComponent} from '../components/1_registerOptions-Component/href-component/href.component';
+import {HrefConfigurationComponent} from '../components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
 
 
 export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
@@ -138,7 +138,7 @@ export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
       appComponents = mapJSONToAppSettingsArray(element.appComponents);
     }
 
-    resultArr.push( new NavBarItem(element.id, element.name, componentOuter, element.appComponentId, appComponents,
+    resultArr.push( new NavBarItem(element.id, element.name, element.usedComponent, element.appComponentId, appComponents,
       element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false, element.beamerTimer));
     appComponents = [];
   }

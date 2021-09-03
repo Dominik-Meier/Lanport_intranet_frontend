@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';import {MatTableDataSource} from "@angular/material/table";
-import {TournamentType} from "../../../models/TournamentType";
-import {TournamentTypeService} from "../../../services/dataServices/tournament-type.service";
-import {Subscription} from "rxjs";
-import {EventEmitterService} from "../../../services/event-emitter.service";
+import {Component, OnDestroy, OnInit} from '@angular/core'; import {MatTableDataSource} from '@angular/material/table';
+import {TournamentType} from '../../../models/TournamentType';
+import {TournamentTypeService} from '../../../services/dataServices/tournament-type.service';
+import {Subscription} from 'rxjs';
+import {EventEmitterService} from '../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-tournament-type-settings',
