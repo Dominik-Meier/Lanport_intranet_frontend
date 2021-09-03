@@ -29,6 +29,8 @@ export class GamemodeSettingsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.gameModeService.getGameModeObservable.subscribe( gamemodes => {
       this.setGameModes(gamemodes);
     }));
+    this.subscriptions.push(this.eventEmitter.gameModesUpdatedObservable.subscribe(
+      () => this.dataSource = new MatTableDataSource<GameMode>(this.gameModes)));
     this.subscriptions.push(this.eventEmitter.gameModeDeletedObservable.subscribe(
       () => this.dataSource = new MatTableDataSource<GameMode>(this.gameModes)));
     this.setGameModes(this.gameModeService.getGameModes());
@@ -45,9 +47,7 @@ export class GamemodeSettingsComponent implements OnInit, OnDestroy {
   }
 
   addGameMode(event) {
-    // TODO new way over api first
-    this.gameModes.push( new GameMode(null, 'Placeholder', 'Game X', 'Elimination', 0, ''));
-    this.dataSource = new MatTableDataSource<GameMode>(this.gameModes);
+    this.gameModeService.createGameMode().subscribe();
   }
 
   changeName(event, row: GameMode) {

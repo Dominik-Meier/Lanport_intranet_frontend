@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {GameMode} from '../../models/GameMode';
 import {mapJSONToGameModeArray} from '../../util/mapperFunctions';
 import {EventEmitterService} from '../event-emitter.service';
+import {gameModesDiffer} from '../../util/modelDiffers/gameModeUpdater';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,12 @@ export class GamemodeService {
       this.gameModes = res;
       this.gameModesSubject.next(this.gameModes);
     });
+    this.eventEmitter.gameModesUpdatedObservable.subscribe(gm => this.updateGameModes(gm));
     this.eventEmitter.gameModeDeletedObservable.subscribe( gm => this.removeGameModeFromList(gm));
+  }
+
+  updateGameModes(newGameModes: GameMode[]) {
+    gameModesDiffer(this.gameModes, newGameModes);
   }
 
   removeGameModeFromList(gameMode: GameMode) {
@@ -66,6 +72,11 @@ export class GamemodeService {
     return this.http.get<GameMode[]>(targetURL).pipe( map(
       response => mapJSONToGameModeArray(response)
     ));
+  }
+
+  createGameMode() {
+    const targetURL = this.url + 'gamemodes';
+    return this.http.post<GameMode[]>(targetURL, null);
   }
 
   saveGameModesBackend(gamemodes: GameMode[]): Observable<GameMode[]> {
