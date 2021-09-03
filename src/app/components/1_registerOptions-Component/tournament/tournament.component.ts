@@ -17,7 +17,7 @@ import {ShowTeamComponent} from '../../showTeam/show-team/show-team.component';
 import {EventEmitterService} from '../../../services/event-emitter.service';
 import {TeamMember} from '../../../models/TeamMember';
 import {Subscription} from 'rxjs';
-import {tournamentDiffer} from '../../../util/tournamentUpdaterFunctions';
+import {tournamentDiffer} from '../../../util/modelDiffers/tournamentUpdaterFunctions';
 import {HtmlDisplayerComponent} from '../html-displayer/html-displayer.component';
 
 @Component({

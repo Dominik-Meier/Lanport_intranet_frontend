@@ -4,7 +4,7 @@ import {ComponentWithNameComponent} from '../../interfaces/componentWithName.com
 import * as QuillNamespace from 'quill';
 import BlotFormatter from 'quill-blot-formatter/dist/BlotFormatter';
 import {EventEmitterService} from '../../../services/event-emitter.service';
-import {resolveNewHtmlDisplayerValue} from '../../../util/configUpdaterHandlerFunctions';
+import {resolveNewHtmlDisplayerValue} from '../../../util/modelDiffers/configUpdaterHandlerFunctions';
 import {Subscription} from 'rxjs';
 
 const Quill: any = QuillNamespace;

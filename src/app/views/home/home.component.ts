@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {RegisterItemComponent} from '../../components/interfaces/registerItem.component';
 import {Subscription} from 'rxjs';
-import {configDiffer} from '../../util/configUpdaterHandlerFunctions';
+import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunctions';
 import {AppConfigService} from '../../services/app-config.service';
 import {EventEmitterService} from '../../services/event-emitter.service';
 import {NavBarItem} from '../../models/NavBarItem';
