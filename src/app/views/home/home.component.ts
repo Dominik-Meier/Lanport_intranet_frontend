@@ -53,7 +53,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (item != null) {
       this.activeNavBarItem = item;
       if (this.activeNavBarItem.usedComponent) {
-        console.log(this.activeNavBarItem.usedComponent);
         const componentToLoad: any = navBarComponentSelectorMap.get(this.activeNavBarItem.usedComponent);
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToLoad);
         this.componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);

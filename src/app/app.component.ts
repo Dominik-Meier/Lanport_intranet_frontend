@@ -13,7 +13,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./app.component.scss']
 })
 
-// TODO on tournament select error
+// TODO on config tournament select error
 // TODO unsubscribe all subscriptions
 // TODO implement deletes and refactor data API
 // TODO implement feedback component
