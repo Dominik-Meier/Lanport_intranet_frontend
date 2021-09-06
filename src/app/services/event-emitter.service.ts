@@ -7,7 +7,7 @@ import {
   mapJSONToAppSettingsArray, mapJSONToGameMode, mapJSONToLanpartyArray, mapJSONToLanparty,
   mapJSONToTeam,
   mapJSONToTeamMember, mapJSONToTournament, mapJSONToTournamentArray,
-  mapJSONToTournamentParticipant, mapJSONToTournamentType, mapJSONToGameModeArray
+  mapJSONToTournamentParticipant, mapJSONToTournamentType, mapJSONToGameModeArray, mapJSONToTournamentTypeArray
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
@@ -48,6 +48,9 @@ export class EventEmitterService {
 
   private tournamentDeletedSubject = new Subject<Tournament>();
   public tournamentDeletedObservable = this.tournamentDeletedSubject.asObservable();
+
+  private tournamentTypesUpdatedSubject = new Subject<TournamentType[]>();
+  public tournamentTypesUpdatedObservable = this.tournamentTypesUpdatedSubject.asObservable();
 
   private tournamentTypeDeletedSubject = new Subject<TournamentType>();
   public tournamentTypeDeletedObservable = this.tournamentTypeDeletedSubject.asObservable();
@@ -112,6 +115,11 @@ export class EventEmitterService {
 
         case 'TournamentDeletedEvent': {
           this.tournamentDeletedSubject.next(mapJSONToTournament(event.data));
+          break;
+        }
+
+        case 'TournamentTypesUpdatedEvent': {
+          this.tournamentTypesUpdatedSubject.next(mapJSONToTournamentTypeArray(event.data));
           break;
         }
 
