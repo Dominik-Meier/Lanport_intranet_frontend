@@ -53,8 +53,7 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
   setUsedComponent() {
     this.dynamicElementInsertionPoint.clear();
     if (this.activeNavBarItem && this.activeNavBarItem.name !== 'App Navigation') {
-      const componentToLoad: any = navBarItemComponentConfigurationSelectorMap.get(this.activeNavBarItem.usedComponent);
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToLoad);
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.usedComponent);
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
     }
   }

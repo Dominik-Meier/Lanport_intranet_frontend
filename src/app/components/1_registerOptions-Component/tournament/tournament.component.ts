@@ -255,6 +255,6 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
         panelClass: 'custom-dialog-container',
         width: '50vw',
       });
-      dialogRef.componentInstance.data = {data: this.tournament.getGameMode().rules, name: 'Regeln '.concat(this.tournament.name)};
+      dialogRef.componentInstance.data = {data: this.tournament.getGameMode().rules, name: 'Regelwerk '.concat(this.tournament.name)};
   }
 }
