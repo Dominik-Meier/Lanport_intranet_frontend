@@ -121,9 +121,9 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   loadTeams() {
     if (this.tournament){
-      this.teamService.getTeamByTournament(this.tournament.getId()).subscribe(res => {
+      this.subscriptions.push(this.teamService.getTeamByTournament(this.tournament.getId()).subscribe(res => {
         this.teams = res;
-      });
+      }));
     }
   }
 
@@ -148,9 +148,8 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   loadTournamentParticipant() {
     if (this.tournament){
-      this.tournamentParticipantService.getTournamentParticipantByTournament(this.tournament.getId()).subscribe(res => {
-        this.tournamentParticipants = res;
-      });
+      this.subscriptions.push(this.tournamentParticipantService.getTournamentParticipantByTournament(
+        this.tournament.getId()).subscribe(res => { this.tournamentParticipants = res; }));
     }
   }
 
