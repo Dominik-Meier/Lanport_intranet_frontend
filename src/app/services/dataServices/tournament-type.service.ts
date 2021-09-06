@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {TournamentType} from '../../models/TournamentType';
 import {mapJSONToTournamentTypeArray} from '../../util/mapperFunctions';
 import {EventEmitterService} from '../event-emitter.service';
+import {tournamentTypesDiffer} from '../../util/modelDiffers/tournamentTypeUpdater';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class TournamentTypeService {
       this.tournamentTypesSubject.next(this.tournamentTypes);
     });
     this.eventEmitter.tournamentTypeDeletedObservable.subscribe( t => this.removeTournamentTypeFromList(t));
+    this.eventEmitter.tournamentTypesUpdatedObservable.subscribe( t => this.updateTournamentType(t));
   }
 
   /**
@@ -38,6 +40,10 @@ export class TournamentTypeService {
 
   getTournamentTypes() {
     return this.tournamentTypes;
+  }
+
+  updateTournamentType(tournamentType: TournamentType[]) {
+    tournamentTypesDiffer(this.tournamentTypes, tournamentType);
   }
 
   saveTournamentTypes(tournamentTypes: TournamentType[]) {
@@ -66,6 +72,11 @@ export class TournamentTypeService {
     return this.http.get<TournamentType[]>(targetURL).pipe( map(
       response => mapJSONToTournamentTypeArray(response)
     ));
+  }
+
+  createTournamentType() {
+    const targetURL = this.url + 'tournamentTypes';
+    return this.http.post<TournamentType[]>(targetURL, null);
   }
 
   saveTournamentTypesBackend(tournamentTypes: TournamentType[]): Observable<TournamentType[]> {
