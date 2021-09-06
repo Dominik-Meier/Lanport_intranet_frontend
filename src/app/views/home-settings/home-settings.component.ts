@@ -32,10 +32,10 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
       this.setUsedComponent();
     }));
 
-    this.adminPageService.activeNavBarItemsObservable.subscribe( activeNavItem => {
+    this.subscriptions.push(this.adminPageService.activeNavBarItemsObservable.subscribe( activeNavItem => {
       this.activeNavBarItem = activeNavItem;
       this.setUsedComponent();
-    });
+    }));
   }
 
   ngOnDestroy() {

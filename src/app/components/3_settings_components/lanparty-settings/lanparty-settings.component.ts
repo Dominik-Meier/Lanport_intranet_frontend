@@ -29,9 +29,9 @@ export class LanpartySettingsComponent implements OnInit, OnDestroy {
   constructor(private lanpartyService: LanpartyService, private eventEmitter: EventEmitterService) { }
 
   ngOnInit(): void {
-    this.lanpartyService.getLanpartiesObservable.subscribe( lans => {
+    this.subscriptions.push(this.lanpartyService.getLanpartiesObservable.subscribe( lans => {
       this.setLanparties(lans);
-    });
+    }));
     this.setLanparties(this.lanpartyService.getLanparties());
     /**
      * Be careful as this method builds on that the event at tournament service is executed fist
