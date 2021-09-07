@@ -103,9 +103,16 @@ export class TournamentSettingsComponent implements OnInit, OnDestroy {
     this.tournamentService.createChallongeTournament(row.id).subscribe();
   }
 
-
   createChallongeParticipants(event, row: Tournament) {
     this.tournamentService.createChallongeParticipants(row.id).subscribe();
+  }
+
+  clearChallongeParticipants(event, row: Tournament) {
+    this.tournamentService.clearChallongeParticipants(row.id).subscribe();
+  }
+
+  startChallongeTournament(event, row: Tournament) {
+    this.tournamentService.startChallongeParticipants(row.id).subscribe();
   }
 
   applyConfig(event) {

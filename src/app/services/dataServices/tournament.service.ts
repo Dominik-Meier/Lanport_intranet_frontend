@@ -99,4 +99,14 @@ export class TournamentService {
     const targetURL = this.url + 'tournaments/challonge/' + id.toString() + '/participants/';
     return this.http.post<any>(targetURL, null);
   }
+
+  clearChallongeParticipants(id) {
+    const targetURL = this.url + 'tournaments/challonge/' + id.toString() + '/participants/';
+    return this.http.delete<any>(targetURL);
+  }
+
+  startChallongeParticipants(id) {
+    const targetURL = this.url + 'tournaments/challonge/' + id.toString() + '/start';
+    return this.http.post<any>(targetURL, null);
+  }
 }
