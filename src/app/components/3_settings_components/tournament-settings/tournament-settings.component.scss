@@ -22,3 +22,9 @@ mat-form-field {
 .table-container {
   overflow-x: scroll;
 }
+
+.tournament-actions {
+  width: 150px;
+  display: flex;
+  justify-content: space-around;
+}

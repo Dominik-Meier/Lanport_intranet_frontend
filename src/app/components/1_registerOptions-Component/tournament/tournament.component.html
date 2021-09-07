@@ -31,8 +31,18 @@
       <!--    Teams / Player     -->
       <div class="tournament-column-grid ">
         <mat-card class="scrollable-content componentDisplayer-secondMatCard">
-          <mat-card-title *ngIf="tournament.getTeamRegistration()">Teams</mat-card-title>
-          <mat-card-title *ngIf="!tournament.getTeamRegistration()">Spieler</mat-card-title>
+          <mat-card-title *ngIf="tournament.getTeamRegistration()">
+            Teams
+            <button class="float-right" mat-mini-fab color="primary" (click)="showBracket()" *ngIf="tournament.challongeParticipantsAdded">
+              <mat-icon>emoji_events</mat-icon>
+            </button>
+          </mat-card-title>
+          <mat-card-title *ngIf="!tournament.getTeamRegistration()">
+            Spieler
+            <button class="float-right" mat-mini-fab color="primary" (click)="showBracket()" *ngIf="tournament.challongeParticipantsAdded">
+              <mat-icon>emoji_events</mat-icon>
+            </button>
+          </mat-card-title>
 
           <mat-card-content >
             <div  *ngIf="tournament.getTeamRegistration()">
