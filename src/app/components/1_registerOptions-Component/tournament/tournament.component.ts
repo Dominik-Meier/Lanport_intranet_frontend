@@ -236,6 +236,23 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       x => x.getUser().getId() === this.authService.getActiveUser().getId());
   }
 
+  openForTeamRegistration() {
+    const team = this.checkTeamJoined();
+    return (!team && !this.tournament.started);
+  }
+
+
+  openForPlayerRegistration() {
+    const player = this.checkTournamentJoined();
+    return (!player && !this.tournament.started);
+  }
+
+
+  openForPlayerLeave() {
+    const player = this.checkTournamentJoined();
+    return (player && !this.tournament.started);
+  }
+
   updateTournamentAction(tournaments: Tournament[]) {
       const thisTournament = tournaments.find( x => x.id.toString() === this.tournamentId.toString());
       if (thisTournament) {

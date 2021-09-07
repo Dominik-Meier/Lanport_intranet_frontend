@@ -115,7 +115,7 @@
         <mat-card-title>
           <div *ngIf="tournament.getTeamRegistration()">
             <p class="inline">Actions</p>
-            <button (click)="createTeam($event)" [disabled]="checkTeamJoined()" mat-raised-button color="primary">
+            <button (click)="createTeam($event)" [disabled]="!openForTeamRegistration()" mat-raised-button color="primary">
               <mat-icon>add</mat-icon>
               Team erstellen
             </button>
@@ -123,11 +123,11 @@
 
           <div *ngIf="!tournament.getTeamRegistration()">
             <p class="inline">Actions</p>
-            <button  (click)="joinTournament()" [disabled]="checkTournamentJoined()" mat-raised-button color="primary" class="mr-2">
+            <button  (click)="joinTournament()" [disabled]="!openForPlayerRegistration()" mat-raised-button color="primary" class="mr-2">
               <mat-icon>add</mat-icon>
               Turnier beitreten
             </button>
-            <button (click)="leaveTournament()" [disabled]="!checkTournamentJoined()" mat-raised-button color="primary">
+            <button (click)="leaveTournament()" [disabled]="!openForPlayerLeave()" mat-raised-button color="primary">
               <mat-icon>remove</mat-icon>
               Turnier verlassen
             </button>
