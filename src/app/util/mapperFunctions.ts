@@ -112,7 +112,7 @@ export function mapJSONToTournament(t: any): Tournament {
     new GameMode(t.gamemode?.id, t.gamemode?.name, t.gamemode?.game, t.gamemode?.elimination, t.gamemode?.teamSize, t.gamemode?.rules),
     new TournamentType(t.tournamentType?.id, t.tournamentType?.name),
     t.teamRegistration, t.numberOfParticipants, t.published, t.started, t.startDate, t.endDate, t.registrationEndDate,
-    t.finished, t.awards, t.challongeParticipantsAdded);
+    t.finished, t.awards, t.challongeParticipantsAdded, t.challongeTournamentStarted);
 }
 
 export function mapJSONToTournamentTypeArray(data: any): TournamentType[] {

@@ -41,6 +41,8 @@ export function tournamentDiffer(oldT: Tournament, newT: Tournament) {
   if (oldT.awards !== newT.awards) {oldT.awards = newT.awards; }
   if (oldT.challongeParticipantsAdded !== newT.challongeParticipantsAdded)
     { oldT.challongeParticipantsAdded = newT.challongeParticipantsAdded; }
+  if (oldT.challongeTournamentStarted !== newT.challongeTournamentStarted)
+  { oldT.challongeTournamentStarted = newT.challongeTournamentStarted; }
 
   if (oldT.gameMode !== newT.gameMode) { oldT.gameMode = newT.gameMode; }
   if (oldT.tournamentType !== newT.tournamentType) { oldT.tournamentType = newT.tournamentType; }
