@@ -267,4 +267,14 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       });
       dialogRef.componentInstance.data = {data: this.tournament.getGameMode().rules, name: 'Regelwerk '.concat(this.tournament.name)};
   }
+
+  showBracket() {
+    const dialogRef = this.dialog.open( HtmlDisplayerComponent, {
+      panelClass: 'custom-dialog-container',
+      width: '50vw',
+    });
+    const uri = 'https://challonge.com/' + this.tournament.getLanparty().name + '_' + this.tournament.name + '/module';
+    const data = '<iframe src="' + uri + '" width="100%" height="500" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>';
+    dialogRef.componentInstance.data = {data, name: 'Bracket '.concat(this.tournament.name)};
+  }
 }
