@@ -19,7 +19,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 // TODO implement chat
 // TODO implement sponsors
 // TODO landing page
+// TODO admin console for team, team members and participants
 // TODO implement AuthGuard and role access
+// TODO twitch embedded streams
 export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   title = 'intranet';
