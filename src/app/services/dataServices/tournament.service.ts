@@ -95,6 +95,11 @@ export class TournamentService {
     return this.http.post<any>(targetURL, null);
   }
 
+  updateChallongeTournament(id) {
+    const targetURL = this.url + 'tournaments/challonge/' + id.toString();
+    return this.http.put<any>(targetURL, null);
+  }
+
   createChallongeParticipants(id) {
     const targetURL = this.url + 'tournaments/challonge/' + id.toString() + '/participants/';
     return this.http.post<any>(targetURL, null);

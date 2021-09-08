@@ -13,6 +13,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./app.component.scss']
 })
 
+// TODO reconnect ws if connection lost
+
 // TODO implement feedback component
 // TODO implement chat
 // TODO implement sponsors

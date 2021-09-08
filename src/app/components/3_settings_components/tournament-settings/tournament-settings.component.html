@@ -174,11 +174,12 @@
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let row" >
         <div class="tournament-actions">
-          <mat-icon (click)="deleteTournament($event, row)">delete_forever</mat-icon>
-          <mat-icon (click)="createChallongeTournament($event, row)">file_upload</mat-icon>
-          <mat-icon (click)="createChallongeParticipants($event, row)">group_add</mat-icon>
-          <mat-icon (click)="clearChallongeParticipants($event, row)">person_off</mat-icon>
-          <mat-icon (click)="startChallongeTournament($event, row)">play_arrow</mat-icon>
+          <mat-icon (click)="deleteTournament($event, row)" matTooltip="Delete Tournament">delete_forever</mat-icon>
+          <mat-icon (click)="createChallongeTournament($event, row)" matTooltip="Upload to Challonge">file_upload</mat-icon>
+          <mat-icon (click)="updateChallongeTournament($event, row)" matTooltip="Update at Challonge">refresh</mat-icon>
+          <mat-icon (click)="createChallongeParticipants($event, row)" matTooltip="Add participants to Challonge">group_add</mat-icon>
+          <mat-icon (click)="clearChallongeParticipants($event, row)" matTooltip="Remove participants at Challonge">person_off</mat-icon>
+          <mat-icon (click)="startChallongeTournament($event, row)" matTooltip="Start tournament at Challonge">play_arrow</mat-icon>
         </div>
       </td>
     </ng-container>
