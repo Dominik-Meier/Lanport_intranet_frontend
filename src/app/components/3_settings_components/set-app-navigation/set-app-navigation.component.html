@@ -75,7 +75,7 @@
 
   <!--Table Beamer Presenation active -->
   <ng-container matColumnDef="activeForBeamerPresentation">
-    <th mat-header-cell *matHeaderCellDef>Active</th>
+    <th mat-header-cell *matHeaderCellDef>Beamer Active</th>
     <td mat-cell *matCellDef="let row" >
       <mat-checkbox (click)="$event.stopPropagation()"
                     (change)="setActiveForBeamerPresentation($event, row)"

@@ -48,6 +48,7 @@ import { HrefComponent } from './components/1_registerOptions-Component/href-com
 import { HrefConfigurationComponent } from './components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
 import {HttpErrorInterceptor} from './util/httpErrorInterceptor';
 import {OAuthModule} from 'angular-oauth2-oidc';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -77,29 +78,30 @@ import {OAuthModule} from 'angular-oauth2-oidc';
     HrefComponent,
     HrefConfigurationComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatCardModule,
-    MatTableModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatInputModule,
-    FormsModule,
-    MatDialogModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatMenuModule,
-    DigitOnlyModule,
-    QuillModule.forRoot(),
-    OAuthModule.forRoot()
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatCardModule,
+        MatTableModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatInputModule,
+        FormsModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMenuModule,
+        DigitOnlyModule,
+        QuillModule.forRoot(),
+        OAuthModule.forRoot(),
+        MatTooltipModule
+    ],
   exports: [
     MatIconModule,
     MatCardModule,

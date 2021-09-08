@@ -2,7 +2,7 @@
   <mat-card class="componentDisplayer-matCard display-flex-column">
     <mat-card-title class="pb-3 display-flex-justify-center font-white">{{tournament.name}}</mat-card-title>
 
-    <!--  Tournament infos and prices   -->
+    <!--  Tournament infos   -->
     <div class="tournament-top-grid" *ngIf="tournament.getPublished()">
 
       <!--    Infos     -->
@@ -102,7 +102,7 @@
 
     <div class="tournament-top-grid" *ngIf="!tournament.getPublished()">
       <!--    Infos when not published   -->
-      <div class="tournament-column-grid-90">
+      <div class="float-left-text-center">
         <mat-card class="top-card scrollable-content">
           <mat-card-title>Turnier wurde noch nicht veröffentlicht. Coming soon...</mat-card-title>
         </mat-card>
