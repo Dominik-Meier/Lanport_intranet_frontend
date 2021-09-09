@@ -14,17 +14,22 @@ import {HtmlDisplayerConfigurationComponent} from '../components/1_registerOptio
 import {TournamentConfigurationComponent} from '../components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
 import {HrefComponent} from '../components/1_registerOptions-Component/href-component/href.component';
 import {HrefConfigurationComponent} from '../components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
+import {Feedback} from '../models/Feedback';
+import {FeedbackComponent} from '../components/1_registerOptions-Component/feedback/feedback.component';
+import {FeedbackConfigurationComponent} from '../components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
 
 
 export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
 navBarComponentSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerComponent);
 navBarComponentSelectorMap.set('TournamentComponent', TournamentComponent);
 navBarComponentSelectorMap.set('HrefComponent', HrefComponent);
+navBarComponentSelectorMap.set('FeedbackComponent', FeedbackComponent);
 
 export const navBarItemComponentConfigurationSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
 navBarItemComponentConfigurationSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('TournamentComponent', TournamentConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('HrefComponent', HrefConfigurationComponent);
+navBarItemComponentConfigurationSelectorMap.set('FeedbackComponent', FeedbackConfigurationComponent);
 
 
 export function mapJSONToTournamentParticipant(data: any): TournamentParticipant {
@@ -142,5 +147,17 @@ export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
       element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false, element.beamerTimer));
     appComponents = [];
   }
+  return resultArr;
+}
+
+export function mapJSONToFeedback(data: any): Feedback {
+  const user = mapJsonToUser(data.user);
+  return new Feedback(data.id, data.wasGood, data.wasBad, data.suggestions, data.isPublic, data.isAnonymous,
+    data.userId, user, data.lanpartyId);
+}
+
+export function mapJSONToFeedbackArray(data: any): Feedback[] {
+  const resultArr: Feedback[] = [];
+  data.forEach(feedback => resultArr.push(mapJSONToFeedback(feedback)));
   return resultArr;
 }

@@ -4,10 +4,19 @@ import {Subject} from 'rxjs';
 import {WebSocketService} from './web-socket.service';
 import {WebSocketEvent} from '../models/WebSocketEvent';
 import {
-  mapJSONToAppSettingsArray, mapJSONToGameMode, mapJSONToLanpartyArray, mapJSONToLanparty,
+  mapJSONToAppSettingsArray,
+  mapJSONToGameMode,
+  mapJSONToLanpartyArray,
+  mapJSONToLanparty,
   mapJSONToTeam,
-  mapJSONToTeamMember, mapJSONToTournament, mapJSONToTournamentArray,
-  mapJSONToTournamentParticipant, mapJSONToTournamentType, mapJSONToGameModeArray, mapJSONToTournamentTypeArray
+  mapJSONToTeamMember,
+  mapJSONToTournament,
+  mapJSONToTournamentArray,
+  mapJSONToTournamentParticipant,
+  mapJSONToTournamentType,
+  mapJSONToGameModeArray,
+  mapJSONToTournamentTypeArray,
+  mapJSONToFeedback
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
@@ -16,6 +25,7 @@ import {Tournament} from '../models/Tournament';
 import {TournamentType} from '../models/TournamentType';
 import {GameMode} from '../models/GameMode';
 import {Lanparty} from '../models/Lanparty';
+import {Feedback} from '../models/Feedback';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +76,15 @@ export class EventEmitterService {
 
   private lanpartyDeletedSubject = new Subject<Lanparty>();
   public lanpartyDeletedObservable = this.lanpartyDeletedSubject.asObservable();
+
+  private feedbackCreatedSubject = new Subject<Feedback>();
+  public feedbackCreatedObservable = this.feedbackCreatedSubject.asObservable();
+
+  private feedbackUpdatedSubject = new Subject<Feedback>();
+  public feedbackUpdatedObservable = this.feedbackUpdatedSubject.asObservable();
+
+  private feedbackDeletedSubject = new Subject<Feedback>();
+  public feedbackDeletedObservable = this.feedbackDeletedSubject.asObservable();
 
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
@@ -145,6 +164,21 @@ export class EventEmitterService {
 
         case 'LanpartyDeletedEvent': {
           this.lanpartyDeletedSubject.next(mapJSONToLanparty(event.data));
+          break;
+        }
+
+        case 'FeedbackCreatedEvent': {
+          this.feedbackCreatedSubject.next(mapJSONToFeedback(event.data));
+          break;
+        }
+
+        case 'FeedbackUpdatedEvent': {
+          this.feedbackUpdatedSubject.next(mapJSONToFeedback(event.data));
+          break;
+        }
+
+        case 'FeedbackDeletedEvent': {
+          this.feedbackDeletedSubject.next(mapJSONToFeedback(event.data));
           break;
         }
       }

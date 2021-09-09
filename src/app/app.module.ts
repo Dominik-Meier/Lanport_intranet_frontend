@@ -49,6 +49,10 @@ import { HrefConfigurationComponent } from './components/1_registerOptions-Compo
 import {HttpErrorInterceptor} from './util/httpErrorInterceptor';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { FeedbackComponent } from './components/1_registerOptions-Component/feedback/feedback.component';
+import { FeedbackConfigurationComponent } from './components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
+import { FeedbackModalComponent } from './components/1_registerOptions-Component/feedback/feedback-modal/feedback-modal.component';
+import { FeedbackCardComponent } from './components/1_registerOptions-Component/feedback/feedback-card/feedback-card.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +80,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MenuItemComponent,
     SnackBarTextDisplayerComponent,
     HrefComponent,
-    HrefConfigurationComponent
+    HrefConfigurationComponent,
+    FeedbackComponent,
+    FeedbackConfigurationComponent,
+    FeedbackModalComponent,
+    FeedbackCardComponent
   ],
     imports: [
         BrowserModule,
