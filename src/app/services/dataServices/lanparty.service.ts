@@ -89,13 +89,4 @@ export class LanpartyService {
     const targetURL = this.url + 'lanparties';
     return this.http.put<Lanparty[]>(targetURL, lanparties);
   }
-
-  // Not needed atm!
-  // addLanparty(lanparty: Lanparty) {
-  //   const targetURL = this.url + 'lanparties';
-  //   return this.http.post(targetURL, lanparty).pipe(map( res => {
-  //     return this.mapJSONToLanparty(res);
-  //   }))
-  // }
-
 }

@@ -1,0 +1,52 @@
+<div>
+  <h1 mat-dialog-title *ngIf="!disabled">Neues Feedback</h1>
+  <h1 mat-dialog-title *ngIf="disabled">Feedback</h1>
+  <form #feedbackForm="ngForm">
+
+    <div class="form-group">
+      <label>Das fand ich gut:</label>
+      <textarea  type="text" class="form-control" id="wasGood"
+              maxlength="350"
+             [(ngModel)]="feedback.wasGood" name="wasGood"
+             #wasGood="ngModel" [disabled]="disabled"></textarea>
+      <div [hidden]="wasGood.valid" class="alert alert-danger" *ngIf="!disabled">Max 350. Zeichen</div>
+    </div>
+
+    <div class="form-group">
+      <label>Das fand ich schlecht:</label>
+      <textarea  type="text" class="form-control" id="wasBad"
+             maxlength="350"
+             [(ngModel)]="feedback.wasBad" name="wasBad"
+             #wasBad="ngModel" [disabled]="disabled"></textarea>
+      <div [hidden]="wasBad.valid" class="alert alert-danger" *ngIf="!disabled">Max 350. Zeichen</div>
+    </div>
+
+    <div class="form-group">
+      <label>Verbesserungsvorschläge: </label>
+      <textarea  type="text" class="form-control" id="suggestions"
+             maxlength="350"
+             [(ngModel)]="feedback.suggestions" name="suggestions"
+                 #suggestions="ngModel" [disabled]="disabled"></textarea>
+      <div [hidden]="suggestions.valid" class="alert alert-danger" *ngIf="!disabled">Max 350. Zeichen</div>
+    </div>
+
+    <div class="form-group" *ngIf="!disabled">
+      <label>Veröffentlichen: </label>
+      <mat-checkbox  class="form-control" id="isPublic"
+             [(ngModel)]="feedback.isPublic" name="isPublic" [disabled]="disabled"
+      ></mat-checkbox>
+    </div>
+
+    <div class="form-group" *ngIf="!disabled">
+      <label>Anonym:</label>
+      <mat-checkbox  class="form-control" id="isAnonymous"
+                     [(ngModel)]="feedback.isAnonymous" name="isAnonymous"
+      ></mat-checkbox>
+    </div>
+
+    <div mat-dialog-actions>
+      <button type="button" class="btn btn-default" (click)="onNoClick()">No Thanks</button>
+      <button type="submit" class="btn btn-success" [mat-dialog-close]="feedback" [disabled]="!feedbackForm.form.valid">Ok</button>
+    </div>
+  </form>
+</div>

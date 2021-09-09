@@ -1,0 +1,32 @@
+<mat-card class="feedback-card">
+  <mat-card-title>
+    <p *ngIf="feedback.isAnonymous"> Anonyme schreibt: </p>
+    <p *ngIf="!feedback.isAnonymous"> {{feedback.user.nickname}} schreibt: </p>
+  </mat-card-title>
+  <mat-card-content>
+    <div class="mat-card-field">
+      <div class="feedback-label">
+        <p class="no-margin">+</p>
+      </div>
+      <div class="content">
+        <p class="no-margin nowrap">{{feedback.wasGood}}</p>
+      </div>
+    </div>
+    <div class="mat-card-field">
+      <div class="feedback-label">
+        <p class="no-margin">-</p>
+      </div>
+      <div class="content">
+        <p class="no-margin nowrap">{{feedback.wasBad}}</p>
+      </div>
+    </div>
+    <div class="mat-card-field">
+      <div class="feedback-label">
+        <p class="no-margin">~</p>
+      </div>
+      <div class="content">
+        <p class="no-margin nowrap">{{feedback.suggestions}}</p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
