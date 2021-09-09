@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import {Subject} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {delay, retryWhen} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class WebSocketService  {
 
   public connect(): void {
     this.socket$ = webSocket(this.wsUrl);
-    this.socket$.subscribe({
+    this.socket$.pipe(retryWhen(errors => errors.pipe(delay(1000)))).subscribe({
       next: (data) => {
         this.eventSubject$.next(this.parseJson(data));
       },
