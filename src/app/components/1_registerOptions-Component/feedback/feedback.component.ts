@@ -28,7 +28,7 @@ export class FeedbackComponent extends ComponentWithNameComponent implements OnI
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.feedbackService.getFeedback().subscribe( f => {this.feedback = f; console.log(this.feedback); }));
+    this.subscriptions.push(this.feedbackService.getFeedback().subscribe( f => this.feedback = f));
     this.subscriptions.push(this.eventEmitter.feedbackCreatedObservable.subscribe(f => this.addFeedback(f)));
     this.subscriptions.push(this.eventEmitter.feedbackUpdatedObservable.subscribe(f => this.updateFeedback(f)));
     this.subscriptions.push(this.eventEmitter.feedbackUpdatedObservable.subscribe(f => this.deleteFeedback(f)));
