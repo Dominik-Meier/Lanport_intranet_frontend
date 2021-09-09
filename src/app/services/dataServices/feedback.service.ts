@@ -12,7 +12,7 @@ import {mapJSONToFeedback, mapJSONToFeedbackArray} from '../../util/mapperFuncti
 export class FeedbackService {
   private url = environment.BASE_API_URL;
 
-  constructor(private http: HttpClient, private eventEmitter: EventEmitterService) { }
+  constructor(private http: HttpClient) { }
 
   getFeedbackById(id: number) {
     const targetURL = this.url + 'feedback/' + id.toString();

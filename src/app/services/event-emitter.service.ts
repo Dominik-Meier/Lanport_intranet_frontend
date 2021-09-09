@@ -16,7 +16,7 @@ import {
   mapJSONToTournamentType,
   mapJSONToGameModeArray,
   mapJSONToTournamentTypeArray,
-  mapJSONToFeedback
+  mapJSONToFeedback, mapJSONToMeal, mapJSONToMealOption
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
@@ -26,6 +26,8 @@ import {TournamentType} from '../models/TournamentType';
 import {GameMode} from '../models/GameMode';
 import {Lanparty} from '../models/Lanparty';
 import {Feedback} from '../models/Feedback';
+import {Meal} from '../models/meal';
+import {MealOption} from '../models/MealOption';
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +87,25 @@ export class EventEmitterService {
 
   private feedbackDeletedSubject = new Subject<Feedback>();
   public feedbackDeletedObservable = this.feedbackDeletedSubject.asObservable();
+
+  private mealCreatedSubject = new Subject<Meal>();
+  public mealCreatedObservable = this.mealCreatedSubject.asObservable();
+
+  private mealUpdatedSubject = new Subject<Meal>();
+  public mealUpdatedObservable = this.mealUpdatedSubject.asObservable();
+
+  private mealDeletedSubject = new Subject<Meal>();
+  public mealDeletedObservable = this.mealDeletedSubject.asObservable();
+
+  private mealOptionCreatedSubject = new Subject<MealOption>();
+  public mealOptionCreatedObservable = this.mealOptionCreatedSubject.asObservable();
+
+  private mealOptionUpdatedSubject = new Subject<MealOption>();
+  public mealOptionUpdatedObservable = this.mealOptionUpdatedSubject.asObservable();
+
+  private mealOptionDeletedSubject = new Subject<MealOption>();
+  public mealOptionDeletedObservable = this.mealOptionDeletedSubject.asObservable();
+
 
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
@@ -179,6 +200,36 @@ export class EventEmitterService {
 
         case 'FeedbackDeletedEvent': {
           this.feedbackDeletedSubject.next(mapJSONToFeedback(event.data));
+          break;
+        }
+
+        case 'MealCreatedEvent': {
+          this.mealCreatedSubject.next(mapJSONToMeal(event.data));
+          break;
+        }
+
+        case 'MealUpdatedEvent': {
+          this.mealUpdatedSubject.next(mapJSONToMeal(event.data));
+          break;
+        }
+
+        case 'MealDeletedEvent': {
+          this.mealDeletedSubject.next(mapJSONToMeal(event.data));
+          break;
+        }
+
+        case 'MealOptionCreatedEvent': {
+          this.mealOptionCreatedSubject.next(mapJSONToMealOption(event.data));
+          break;
+        }
+
+        case 'MealOptionUpdatedEvent': {
+          this.mealOptionUpdatedSubject.next(mapJSONToMealOption(event.data));
+          break;
+        }
+
+        case 'MealOptionDeletedEvent': {
+          this.mealOptionDeletedSubject.next(mapJSONToMealOption(event.data));
           break;
         }
       }

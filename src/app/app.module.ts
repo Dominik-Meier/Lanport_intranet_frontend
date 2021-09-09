@@ -53,6 +53,8 @@ import { FeedbackComponent } from './components/1_registerOptions-Component/feed
 import { FeedbackConfigurationComponent } from './components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
 import { FeedbackModalComponent } from './components/1_registerOptions-Component/feedback/feedback-modal/feedback-modal.component';
 import { FeedbackCardComponent } from './components/1_registerOptions-Component/feedback/feedback-card/feedback-card.component';
+import { MealSettingsComponent } from './components/3_settings_components/meal-settings/meal-settings.component';
+import { CreateMealComponent } from './components/create-meal/create-meal.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,9 @@ import { FeedbackCardComponent } from './components/1_registerOptions-Component/
     FeedbackComponent,
     FeedbackConfigurationComponent,
     FeedbackModalComponent,
-    FeedbackCardComponent
+    FeedbackCardComponent,
+    MealSettingsComponent,
+    CreateMealComponent
   ],
     imports: [
         BrowserModule,

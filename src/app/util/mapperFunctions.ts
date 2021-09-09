@@ -15,8 +15,10 @@ import {TournamentConfigurationComponent} from '../components/1_registerOptions-
 import {HrefComponent} from '../components/1_registerOptions-Component/href-component/href.component';
 import {HrefConfigurationComponent} from '../components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
 import {Feedback} from '../models/Feedback';
-import {FeedbackComponent} from '../components/1_registerOptions-Component/feedback/feedback.component';
 import {FeedbackConfigurationComponent} from '../components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
+import {MealOption} from '../models/MealOption';
+import {Meal} from '../models/meal';
+import {FeedbackComponent} from '../components/1_registerOptions-Component/feedback/feedback.component';
 
 
 export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
@@ -160,4 +162,20 @@ export function mapJSONToFeedbackArray(data: any): Feedback[] {
   const resultArr: Feedback[] = [];
   data.forEach(feedback => resultArr.push(mapJSONToFeedback(feedback)));
   return resultArr;
+}
+
+export function mapJSONToMealArray(data: any): Meal[] {
+  const meals: Meal[] = [];
+  data.forEach(meal => meals.push(mapJSONToMeal(meal)));
+  return meals;
+}
+
+export function mapJSONToMeal(data: any): Meal {
+  const mealOptions: MealOption[] = [];
+  data.mealOptions?.forEach( mo => mealOptions.push(mapJSONToMealOption(mo)));
+  return new Meal(data.id , data.name, data.startTime, data.endTime, data.lanpartyId, mealOptions, data.infos);
+}
+
+export function mapJSONToMealOption(data: any): MealOption {
+  return new MealOption(data.id , data.name, data.mealId, data.infos);
 }

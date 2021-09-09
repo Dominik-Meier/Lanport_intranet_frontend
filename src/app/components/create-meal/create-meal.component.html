@@ -1,0 +1,69 @@
+<div>
+  <h1 mat-dialog-title >{{meal.name}}</h1>
+    <div>
+      <table>
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" id="name"
+                     [(ngModel)]="meal.name" name="name">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Start</mat-label>
+              <input matInput type="datetime-local" id="startTime"
+                     [(ngModel)]="meal.startTime" name="startTime">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Ende</mat-label>
+              <input matInput type="datetime-local" id="endTime"
+                     [(ngModel)]="meal.endTime" name="endTime">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="form-group">
+      <label>Infos</label>
+      <textarea  type="text" class="form-control" id="infos"
+                 [(ngModel)]="meal.infos" name="infos"></textarea>
+    </div>
+
+    <div>
+      <label>Extras</label>
+      <button class="float-right" mat-mini-fab color="primary" (click)="addMealOption()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <table *ngFor="let mealOption of meal.mealOptions">
+        <tr>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <input matInput type="text" [(ngModel)]="mealOption.name">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="fill">
+              <mat-label>Infos</mat-label>
+              <input matInput type="text" [(ngModel)]="mealOption.infos">
+            </mat-form-field>
+          </td>
+          <td>
+            <button class="float-right" mat-mini-fab color="primary" (click)="saveMealOption(mealOption)">
+              <mat-icon>save</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div mat-dialog-actions>
+      <button type="button" class="btn btn-default" (click)="onNoClick()">No Thanks</button>
+      <button type="submit" class="btn btn-success" [mat-dialog-close]="meal">Ok</button>
+    </div>
+</div>
