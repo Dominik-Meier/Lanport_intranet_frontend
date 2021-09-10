@@ -13,6 +13,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./app.component.scss']
 })
 
+// TODO implement at various locations lanpartyId and if the current is active e.g tournament, food
+// TODO menuItem each meal can only once be selected
+
 // TODO implement feedback component
 // TODO implement chat
 // TODO implement sponsors

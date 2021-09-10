@@ -16,7 +16,7 @@ import {
   mapJSONToTournamentType,
   mapJSONToGameModeArray,
   mapJSONToTournamentTypeArray,
-  mapJSONToFeedback, mapJSONToMeal, mapJSONToMealOption
+  mapJSONToFeedback, mapJSONToMeal, mapJSONToMealOption, mapJSONToMenu, mapJSONToMenuItem
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
@@ -28,6 +28,8 @@ import {Lanparty} from '../models/Lanparty';
 import {Feedback} from '../models/Feedback';
 import {Meal} from '../models/meal';
 import {MealOption} from '../models/MealOption';
+import {Menu} from '../models/Menu';
+import {MenuItem} from '../models/MenuItem';
 
 @Injectable({
   providedIn: 'root'
@@ -106,6 +108,23 @@ export class EventEmitterService {
   private mealOptionDeletedSubject = new Subject<MealOption>();
   public mealOptionDeletedObservable = this.mealOptionDeletedSubject.asObservable();
 
+  private menuCreatedSubject = new Subject<Menu>();
+  public menuCreatedObservable = this.menuCreatedSubject.asObservable();
+
+  private menuUpdatedSubject = new Subject<Menu>();
+  public menuUpdatedObservable = this.menuUpdatedSubject.asObservable();
+
+  private menuDeletedSubject = new Subject<Menu>();
+  public menuDeletedObservable = this.menuDeletedSubject.asObservable();
+
+  private menuItemCreatedSubject = new Subject<MenuItem>();
+  public menuItemCreatedObservable = this.menuItemCreatedSubject.asObservable();
+
+  private menuItemUpdatedSubject = new Subject<MenuItem>();
+  public menuItemUpdatedObservable = this.menuItemUpdatedSubject.asObservable();
+
+  private menuItemDeletedSubject = new Subject<MenuItem>();
+  public menuItemDeletedObservable = this.menuItemDeletedSubject.asObservable();
 
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
@@ -230,6 +249,36 @@ export class EventEmitterService {
 
         case 'MealOptionDeletedEvent': {
           this.mealOptionDeletedSubject.next(mapJSONToMealOption(event.data));
+          break;
+        }
+
+        case 'MenuCreatedEvent': {
+          this.menuCreatedSubject.next(mapJSONToMenu(event.data));
+          break;
+        }
+
+        case 'MenuUpdatedEvent': {
+          this.menuUpdatedSubject.next(mapJSONToMenu(event.data));
+          break;
+        }
+
+        case 'MenuDeletedEvent': {
+          this.menuDeletedSubject.next(mapJSONToMenu(event.data));
+          break;
+        }
+
+        case 'MenuItemCreatedEvent': {
+          this.menuItemCreatedSubject.next(mapJSONToMenuItem(event.data));
+          break;
+        }
+
+        case 'MenuItemUpdatedEvent': {
+          this.menuItemUpdatedSubject.next(mapJSONToMenuItem(event.data));
+          break;
+        }
+
+        case 'MenuItemDeletedEvent': {
+          this.menuItemDeletedSubject.next(mapJSONToMenuItem(event.data));
           break;
         }
       }

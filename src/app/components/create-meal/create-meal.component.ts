@@ -2,7 +2,7 @@ import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Meal} from '../../models/meal';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MealService} from '../../services/dataServices/meal.service';
-import {MealOption} from "../../models/MealOption";
+import {MealOption} from '../../models/MealOption';
 
 @Component({
   selector: 'app-create-meal',
@@ -30,5 +30,9 @@ export class CreateMealComponent implements OnInit {
 
   saveMealOption(mealOption: MealOption) {
     this.mealService.updateMealOption(mealOption).subscribe();
+  }
+
+  deleteMealOption(mealOption: MealOption) {
+    this.mealService.deleteMealOption(mealOption.id).subscribe();
   }
 }

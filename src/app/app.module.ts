@@ -49,12 +49,17 @@ import { HrefConfigurationComponent } from './components/1_registerOptions-Compo
 import {HttpErrorInterceptor} from './util/httpErrorInterceptor';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {MatTooltipModule} from '@angular/material/tooltip';
+// @ts-ignore
 import { FeedbackComponent } from './components/1_registerOptions-Component/feedback/feedback.component';
 import { FeedbackConfigurationComponent } from './components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
+// @ts-ignore
 import { FeedbackModalComponent } from './components/1_registerOptions-Component/feedback/feedback-modal/feedback-modal.component';
 import { FeedbackCardComponent } from './components/1_registerOptions-Component/feedback/feedback-card/feedback-card.component';
 import { MealSettingsComponent } from './components/3_settings_components/meal-settings/meal-settings.component';
 import { CreateMealComponent } from './components/create-meal/create-meal.component';
+import { KitchenViewComponent } from './views/kitchen-view/kitchen-view.component';
+import { MenuSettingsComponent } from './components/3_settings_components/menu-settings/menu-settings.component';
+import { CreateMenuComponent } from './components/create-menu/create-menu.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +93,10 @@ import { CreateMealComponent } from './components/create-meal/create-meal.compon
     FeedbackModalComponent,
     FeedbackCardComponent,
     MealSettingsComponent,
-    CreateMealComponent
+    CreateMealComponent,
+    KitchenViewComponent,
+    MenuSettingsComponent,
+    CreateMenuComponent
   ],
     imports: [
         BrowserModule,

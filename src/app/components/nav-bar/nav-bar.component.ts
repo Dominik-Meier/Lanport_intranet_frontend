@@ -54,6 +54,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/beamer']);
   }
 
+  onClickKitchenView() {
+    this.router.navigate(['/kitchen']);
+  }
+
   callItemSelected(item) {
     this.itemSelected.emit(item);
   }

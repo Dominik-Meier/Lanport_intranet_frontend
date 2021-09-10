@@ -19,6 +19,8 @@ import {FeedbackConfigurationComponent} from '../components/1_registerOptions-Co
 import {MealOption} from '../models/MealOption';
 import {Meal} from '../models/meal';
 import {FeedbackComponent} from '../components/1_registerOptions-Component/feedback/feedback.component';
+import {MenuItem} from '../models/MenuItem';
+import {Menu} from '../models/Menu';
 
 
 export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
@@ -172,10 +174,30 @@ export function mapJSONToMealArray(data: any): Meal[] {
 
 export function mapJSONToMeal(data: any): Meal {
   const mealOptions: MealOption[] = [];
-  data.mealOptions?.forEach( mo => mealOptions.push(mapJSONToMealOption(mo)));
+  data?.mealOptions?.forEach( mo => mealOptions.push(mapJSONToMealOption(mo)));
   return new Meal(data.id , data.name, data.startTime, data.endTime, data.lanpartyId, mealOptions, data.infos);
 }
 
 export function mapJSONToMealOption(data: any): MealOption {
   return new MealOption(data.id , data.name, data.mealId, data.infos);
+}
+
+export function mapJSONToMenuArray(data: any): Menu[] {
+  const menus = [];
+  data?.forEach(menu => menus.push(mapJSONToMenu(menu)));
+  return menus;
+}
+
+export function mapJSONToMenu(data: any): Menu {
+  return new Menu(data.id , data.name, data.startTime, data.endTime, data.lanpartyId, data.infos, mapJSONToMenuItemArray(data.menuItems));
+}
+
+export function mapJSONToMenuItem(data: any): MenuItem {
+  return new MenuItem(data.id , data.menuId, data.mealId, mapJSONToMeal(data.meal));
+}
+
+export function mapJSONToMenuItemArray(data: any): MenuItem[] {
+  const menuItems = [];
+  data?.forEach(menuItem => menuItems.push(mapJSONToMenuItem(menuItem)));
+  return menuItems;
 }
