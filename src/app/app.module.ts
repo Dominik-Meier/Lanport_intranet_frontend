@@ -60,6 +60,14 @@ import { CreateMealComponent } from './components/create-meal/create-meal.compon
 import { KitchenViewComponent } from './views/kitchen-view/kitchen-view.component';
 import { MenuSettingsComponent } from './components/3_settings_components/menu-settings/menu-settings.component';
 import { CreateMenuComponent } from './components/create-menu/create-menu.component';
+import { MealOrderComponent } from './components/1_registerOptions-Component/meal-order/meal-order.component';
+import { MealOrderConfigurationComponent } from './components/1_registerOptions-Component/meal-order/meal-order-configuration/meal-order-configuration.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatRadioModule} from '@angular/material/radio';
+import {MealOrderStatusPipe} from './util/pipes/mealOrderStatusPipe';
+import { MealOrderStatusBackgroundColorDirective } from './util/directive/meal-order-status-background-color.directive';
+import {MatChipsModule} from '@angular/material/chips';
+import { OrderMealComponent } from './components/order-meal/order-meal.component';
 
 @NgModule({
   declarations: [
@@ -96,32 +104,40 @@ import { CreateMenuComponent } from './components/create-menu/create-menu.compon
     CreateMealComponent,
     KitchenViewComponent,
     MenuSettingsComponent,
-    CreateMenuComponent
+    CreateMenuComponent,
+    MealOrderComponent,
+    MealOrderConfigurationComponent,
+    MealOrderStatusPipe,
+    MealOrderStatusBackgroundColorDirective,
+    OrderMealComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FontAwesomeModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatCardModule,
-        MatTableModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatInputModule,
-        FormsModule,
-        MatDialogModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatMenuModule,
-        DigitOnlyModule,
-        QuillModule.forRoot(),
-        OAuthModule.forRoot(),
-        MatTooltipModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatCardModule,
+    MatTableModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMenuModule,
+    DigitOnlyModule,
+    QuillModule.forRoot(),
+    OAuthModule.forRoot(),
+    MatTooltipModule,
+    MatExpansionModule,
+    MatRadioModule,
+    MatChipsModule
+  ],
   exports: [
     MatIconModule,
     MatCardModule,

@@ -1,0 +1,73 @@
+@import "src/app/app.component";
+
+.tournament-top-grid {
+  height: 45vh;
+  flex: 1 1;
+}
+
+.tournament-bottom-grid {
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  flex: 0 1;
+}
+
+.tournament-column-grid {
+  width: 33.33%;
+  float: left;
+  text-align: center;
+  padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+  height: 95%;
+  overflow: auto;
+}
+
+.kitchen-list-item {
+  height: 30px;
+  margin: 3px 0 3px 0;
+  border: 1.5px solid #3f51b5;
+  border-radius: 5px;
+  padding: 0 7px 0 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kitchen-list-element-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+}
+
+.kitchen-list-element-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+}
+
+.kitchen-list-element-last {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 100px;
+  margin-left: auto;
+  padding-bottom: 2px;
+}
+
+.mat-raised-button {
+  padding: 0 10px;
+  min-width: 40px;
+  line-height: 24px;
+}
+
+.left-hr-line {
+  padding: 9px 0 9px 0;
+  border-left: 1.5px solid #3f51b5;
+}
+
+.mat-expansion-panel {
+  background: rgba(0, 0, 0, 0);
+  border: 1.5px solid #3f51b5;
+}
+
+.mat-expansion-panel-header {
+  padding: 0 12px;
+}

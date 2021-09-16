@@ -16,7 +16,7 @@ import {
   mapJSONToTournamentType,
   mapJSONToGameModeArray,
   mapJSONToTournamentTypeArray,
-  mapJSONToFeedback, mapJSONToMeal, mapJSONToMealOption, mapJSONToMenu, mapJSONToMenuItem
+  mapJSONToFeedback, mapJSONToMeal, mapJSONToMealOption, mapJSONToMenu, mapJSONToMenuItem, mapJSONToMealOrder
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
@@ -30,6 +30,7 @@ import {Meal} from '../models/meal';
 import {MealOption} from '../models/MealOption';
 import {Menu} from '../models/Menu';
 import {MenuItem} from '../models/MenuItem';
+import {MealOrder} from "../models/MealOrder";
 
 @Injectable({
   providedIn: 'root'
@@ -125,6 +126,12 @@ export class EventEmitterService {
 
   private menuItemDeletedSubject = new Subject<MenuItem>();
   public menuItemDeletedObservable = this.menuItemDeletedSubject.asObservable();
+
+  private mealOrderPlacedSubject = new Subject<MealOrder>();
+  public mealOrderPlacedObservable = this.mealOrderPlacedSubject.asObservable();
+
+  private mealOrderStatusUpdatedSubject = new Subject<MealOrder>();
+  public mealOrderStatusUpdatedObservable = this.mealOrderStatusUpdatedSubject.asObservable();
 
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
@@ -279,6 +286,16 @@ export class EventEmitterService {
 
         case 'MenuItemDeletedEvent': {
           this.menuItemDeletedSubject.next(mapJSONToMenuItem(event.data));
+          break;
+        }
+
+        case 'MealOrderPlacedEvent': {
+          this.mealOrderPlacedSubject.next(mapJSONToMealOrder(event.data));
+          break;
+        }
+
+        case 'MealOrderStatusUpdatedEvent': {
+          this.mealOrderStatusUpdatedSubject.next(mapJSONToMealOrder(event.data));
           break;
         }
       }

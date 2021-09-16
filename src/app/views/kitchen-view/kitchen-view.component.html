@@ -1,1 +1,139 @@
-<p>kitchen-view works!</p>
+<div class="componentDisplayer-SizeFitter display-flex-column" >
+  <mat-card class="componentDisplayer-matCard display-flex-column">
+
+    <div class="tournament-top-grid" >
+
+      <!--    Warteliste     -->
+      <div class="tournament-column-grid">
+        <mat-card class="scrollable-content componentDisplayer-secondMatCard">
+          <mat-card-title>Warteliste </mat-card-title>
+          <mat-card-content>
+            <ng-container  *ngFor="let order of orders">
+              <mat-accordion *ngIf="order.status.toUpperCase() === 'ORDERED'" hideToggle>
+                <mat-expansion-panel class="mb-2">
+                  <mat-expansion-panel-header>
+                    <div class="kitchen-list-element-number">
+                      {{order.id}}
+                    </div>
+                    <div class="left-hr-line"></div>
+                    <div class="kitchen-list-element-name">
+                      {{order.user.nickname}}
+                    </div>
+
+                    <div class="kitchen-list-element-last">
+                      <button mat-raised-button color="primary" (click)="statusUpdate(order, 'progress')">
+                        <mat-icon>arrow_forward</mat-icon>
+                      </button>
+                    </div>
+                  </mat-expansion-panel-header>
+
+                  <mat-chip-list aria-label="ingredients" [selectable]="false">
+                    <ng-container *ngFor="let ing of order.mealOrderOptions">
+                      <mat-chip *ngIf="ing.isOrdered" [selectable]="false" disableRipple>{{ing.mealOption.name}}</mat-chip>
+                    </ng-container>
+                  </mat-chip-list>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!--    In Arbeit     -->
+      <div class="tournament-column-grid">
+        <mat-card class="scrollable-content componentDisplayer-secondMatCard">
+          <mat-card-title>In Arbeit </mat-card-title>
+          <mat-card-content>
+            <ng-container  *ngFor="let order of orders">
+              <mat-accordion *ngIf="order.status.toUpperCase() === 'PROGRESS'" hideToggle>
+                <mat-expansion-panel class="mb-2">
+                  <mat-expansion-panel-header>
+                    <div class="kitchen-list-element-number">
+                      {{order.id}}
+                    </div>
+                    <div class="left-hr-line"></div>
+                    <div class="kitchen-list-element-name">
+                      {{order.user.nickname}}
+                    </div>
+
+                    <div class="kitchen-list-element-last">
+                      <button mat-raised-button color="primary" (click)="statusUpdate(order, 'ordered')" class="mr-2">
+                        <mat-icon>arrow_back</mat-icon>
+                      </button>
+                      <button mat-raised-button color="primary" (click)="statusUpdate(order, 'made')">
+                        <mat-icon>arrow_forward</mat-icon>
+                      </button>
+                    </div>
+                  </mat-expansion-panel-header>
+                  <hr>
+
+                  <mat-chip-list aria-label="ingredients" [selectable]="false">
+                    <ng-container *ngFor="let ing of order.mealOrderOptions">
+                      <mat-chip *ngIf="ing.isOrdered" [selectable]="false" disableRipple>{{ing.mealOption.name}}</mat-chip>
+                    </ng-container>
+                  </mat-chip-list>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!--    Zum Abholen     -->
+      <div class="tournament-column-grid">
+        <mat-card class="scrollable-content componentDisplayer-secondMatCard">
+          <mat-card-title>Zum Abholen </mat-card-title>
+          <mat-card-content>
+            <ng-container  *ngFor="let order of orders">
+              <mat-accordion *ngIf="order.status.toUpperCase() === 'MADE'" hideToggle>
+                <mat-expansion-panel class="mb-2">
+                  <mat-expansion-panel-header>
+                    <div class="kitchen-list-element-number">
+                      {{order.id}}
+                    </div>
+                    <div class="left-hr-line"></div>
+                    <div class="kitchen-list-element-name">
+                      {{order.user.nickname}}
+                    </div>
+
+                    <div class="kitchen-list-element-last">
+                      <button mat-raised-button color="primary" (click)="statusUpdate(order, 'progress')" class="mr-2">
+                        <mat-icon>arrow_back</mat-icon>
+                      </button>
+                      <button mat-raised-button color="primary" (click)="statusUpdate(order, 'done')">
+                        <mat-icon>arrow_forward</mat-icon>
+                      </button>
+                    </div>
+                  </mat-expansion-panel-header>
+
+                  <mat-chip-list aria-label="ingredients" [selectable]="false">
+                    <ng-container *ngFor="let ing of order.mealOrderOptions">
+                      <mat-chip *ngIf="ing.isOrdered" [selectable]="false" disableRipple>{{ing.mealOption.name}}</mat-chip>
+                    </ng-container>
+                  </mat-chip-list>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </ng-container>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <!-- Tournament Actions  -->
+    <div class="tournament-bottom-grid">
+      <mat-card class="componentDisplayer-secondMatCard">
+        <mat-card-title>
+
+          <div>
+            <p class="inline">Actions</p>
+            <button mat-raised-button color="primary" class="mr-2" (click)="createNewOrder()">
+              <mat-icon>add</mat-icon>
+              Neue Bestellung
+            </button>
+          </div>
+        </mat-card-title>
+
+      </mat-card>
+    </div>
+  </mat-card>
+</div>

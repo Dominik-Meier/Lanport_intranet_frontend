@@ -3,11 +3,17 @@ import {HttpClient} from '@angular/common/http';
 import {EventEmitterService} from '../event-emitter.service';
 import {environment} from '../../../environments/environment';
 import {map} from 'rxjs/operators';
-import {mapJSONToMeal, mapJSONToMealArray} from '../../util/mapperFunctions';
+import {
+  mapJSONToMeal,
+  mapJSONToMealArray,
+  mapJSONToMealOrder,
+  mapJSONToMealOrderArray
+} from '../../util/mapperFunctions';
 import {Meal} from '../../models/meal';
 import {MealOption} from '../../models/MealOption';
 import {mealDiffer, mealOptionDiffer} from '../../util/modelDiffers/mealUpdater';
 import {Subject} from 'rxjs';
+import {MealOrder} from "../../models/MealOrder";
 
 @Injectable({
   providedIn: 'root'
@@ -110,5 +116,25 @@ export class MealService {
   deleteMealOption(id) {
     const targetURL = this.url + 'meal/option/' + id.toString();
     return this.http.delete(targetURL);
+  }
+
+  getAllOrderedMeals() {
+    const targetURL = this.url + 'mealOrder';
+    return this.http.get(targetURL).pipe( map( data => mapJSONToMealOrderArray(data)));
+  }
+
+  getAllOrderedMealsByUserId(userId) {
+    const targetURL = this.url + 'mealOrder';
+    return this.http.get(targetURL, {params: {userId}}).pipe( map( data => mapJSONToMealOrderArray(data)));
+  }
+
+  orderMeal(mealOrder: MealOrder) {
+    const targetURL = this.url + 'mealOrder';
+    return this.http.post(targetURL, mealOrder);
+  }
+
+  updateMealStatus(mealOrderId, newStatus: string) {
+    const targetURL = this.url + 'mealOrder/' + mealOrderId.toString() + '/status/' + newStatus.toString();
+    return this.http.put(targetURL, null);
   }
 }

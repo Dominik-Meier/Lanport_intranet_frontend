@@ -21,6 +21,10 @@ import {Meal} from '../models/meal';
 import {FeedbackComponent} from '../components/1_registerOptions-Component/feedback/feedback.component';
 import {MenuItem} from '../models/MenuItem';
 import {Menu} from '../models/Menu';
+import {MealOrderComponent} from '../components/1_registerOptions-Component/meal-order/meal-order.component';
+import {MealOrderConfigurationComponent} from '../components/1_registerOptions-Component/meal-order/meal-order-configuration/meal-order-configuration.component';
+import {MealOrder} from '../models/MealOrder';
+import {MealOrderOption} from '../models/MealOrderOption';
 
 
 export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
@@ -28,12 +32,14 @@ navBarComponentSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerComponent)
 navBarComponentSelectorMap.set('TournamentComponent', TournamentComponent);
 navBarComponentSelectorMap.set('HrefComponent', HrefComponent);
 navBarComponentSelectorMap.set('FeedbackComponent', FeedbackComponent);
+navBarComponentSelectorMap.set('MealOrderComponent', MealOrderComponent);
 
 export const navBarItemComponentConfigurationSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
 navBarItemComponentConfigurationSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('TournamentComponent', TournamentConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('HrefComponent', HrefConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('FeedbackComponent', FeedbackConfigurationComponent);
+navBarItemComponentConfigurationSelectorMap.set('MealOrderComponent', MealOrderConfigurationComponent);
 
 
 export function mapJSONToTournamentParticipant(data: any): TournamentParticipant {
@@ -189,7 +195,8 @@ export function mapJSONToMenuArray(data: any): Menu[] {
 }
 
 export function mapJSONToMenu(data: any): Menu {
-  return new Menu(data.id , data.name, data.startTime, data.endTime, data.lanpartyId, data.infos, mapJSONToMenuItemArray(data.menuItems));
+  return new Menu(data.id , data.name, data.startTime, data.endTime, data.lanpartyId, data.infos, data.cultivable,
+    mapJSONToMenuItemArray(data.menuItems));
 }
 
 export function mapJSONToMenuItem(data: any): MenuItem {
@@ -200,4 +207,26 @@ export function mapJSONToMenuItemArray(data: any): MenuItem[] {
   const menuItems = [];
   data?.forEach(menuItem => menuItems.push(mapJSONToMenuItem(menuItem)));
   return menuItems;
+}
+
+export function mapJSONToMealOrderArray(data: any): MealOrder[] {
+  const mealOrders = [];
+  data?.forEach(mealOrder => mealOrders.push(mapJSONToMealOrder(mealOrder)));
+  return mealOrders;
+}
+
+export function mapJSONToMealOrder(data: any): MealOrder {
+  const mealOrderOptions = mapJSONToMealOrderOptionsArray(data.mealOrderOptions);
+  return new MealOrder(data.id, data.menuId, data.mealId, data.userId, data.status, data.extras,
+    data.orderTime, mealOrderOptions, data.meal, data.user, data.menu);
+}
+
+export function mapJSONToMealOrderOptionsArray(data: any): MealOrderOption[] {
+  const mealOrderOptions = [];
+  data?.forEach(mealOrderOption => mealOrderOptions.push(mapJSONToMealOrderOption(mealOrderOption)));
+  return mealOrderOptions;
+}
+
+export function mapJSONToMealOrderOption(data: any): MealOrderOption {
+  return new MealOrderOption(data.id, data.mealOrderId, data.mealOptionId, data.isOrdered, data.mealOption);
 }

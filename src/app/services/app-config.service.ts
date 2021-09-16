@@ -30,7 +30,6 @@ export class AppConfigService {
     const targetURL = this.url + 'settings/angularAppConfig';
     const jsonData = [];
     data.forEach( item => jsonData.push(item.toJSON()));
-
     return this.http.post(targetURL, {data: jsonData});
   }
 

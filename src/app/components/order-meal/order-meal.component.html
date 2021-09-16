@@ -1,0 +1,39 @@
+<mat-card class="w-66 m-2 componentDisplayer-secondMatCard scrollable-content h-72" style="box-sizing: border-box;">
+  <mat-card-title class="pb-3 display-flex-justify-center font-white">Offene Bestellungen</mat-card-title>
+
+  <!--Order menus card-->
+  <mat-card-content>
+    <div class="example-action-buttons pb-1">
+      <button mat-raised-button (click)="accordion.openAll()" class="mr-2">Expand All</button>
+      <button mat-raised-button (click)="accordion.closeAll()">Collapse All</button>
+    </div>
+
+    <div>
+      <mat-accordion multi>
+        <mat-expansion-panel *ngFor="let menu of menus">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{menu.name}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-radio-group [(ngModel)]="selectedMenuItem">
+            <mat-radio-button *ngFor="let menuItem of menu.menuItems" [value]="menuItem" class="pr-2" color="primary" (change)="menuSelected($event)">
+              {{menuItem.meal.name}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div *ngIf="selectedMenuItem && selectedMenuItem.menuId === menu.id">
+            <section [formGroup]="selectedOptions">
+              <mat-checkbox *ngFor="let ingredients of selectedMenuItem.meal.mealOptions" class="pr-3"
+                            color="primary" formControlName="{{ingredients.name}}">{{ingredients.name}}
+              </mat-checkbox>
+            </section>
+          </div>
+          <button mat-raised-button class="float-right" [disabled]="!isOrderable(menu)" [mat-dialog-close]="generateOrder()">Bestellen</button>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </mat-card-content>
+  <div mat-dialog-actions>
+    <button type="button" class="btn btn-default" (click)="onNoClick()">No Thanks</button>
+  </div>
+</mat-card>

@@ -13,10 +13,17 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./app.component.scss']
 })
 
+// Questions
+// How to handle not registerd users
+// How to handle money
+// how to handle double purchase -> online and at counter
+// Need of request to page DB to see money and change its values
+
 // TODO implement at various locations lanpartyId and if the current is active e.g tournament, food
 // TODO menuItem each meal can only once be selected
+// TODO item / beamer position place
+// TODO mechanism to reopen done order as they disappear from the ui atm
 
-// TODO implement feedback component
 // TODO implement chat
 // TODO implement sponsors
 // TODO landing page
