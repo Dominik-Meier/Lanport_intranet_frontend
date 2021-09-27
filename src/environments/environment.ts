@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  BASE_API_URL: 'http://localhost:3000/api/',
-  BASE_WS_URL: 'ws://localhost:3001',
+  BASE_API_URL: 'https://localhost:3000/api/',
+  BASE_WS_URL: 'wss://localhost:3000/ws',
 };
 
 /*
