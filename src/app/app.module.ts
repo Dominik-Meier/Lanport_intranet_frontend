@@ -85,6 +85,30 @@ import { FeedbackCardComponent } from './components/1_registerOptions-Component/
     FeedbackConfigurationComponent,
     FeedbackModalComponent,
     FeedbackCardComponent
+    HrefConfigurationComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatCardModule,
+    MatTableModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMenuModule,
+    DigitOnlyModule,
+    QuillModule.forRoot(),
+    OAuthModule.forRoot()
   ],
     imports: [
         BrowserModule,

@@ -24,6 +24,7 @@ import {navBarComponentSelectorMap} from '../../util/mapperFunctions';
   templateUrl: './beamer-view.component.html',
   styleUrls: ['./beamer-view.component.scss']
 })
+
 export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   private subscriptions: Subscription[] = [];
