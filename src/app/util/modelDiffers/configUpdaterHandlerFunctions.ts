@@ -1,5 +1,5 @@
-import {NavBarItem} from '../models/NavBarItem';
-import {RegisterOptionItem} from '../models/registerOptionItem';
+import {NavBarItem} from '../../models/NavBarItem';
+import {RegisterOptionItem} from '../../models/registerOptionItem';
 
 export function configDiffer(oldConfig: NavBarItem[], newConfig: NavBarItem[]) {
   if (oldConfig) {
@@ -27,17 +27,18 @@ function addMissingNavBarItems(oldConfig, newConfig) {
   }
 }
 
-function updateNavBarItem(registerOptionItem, newRegisterOptionItem) {
-  if (registerOptionItem.id !== newRegisterOptionItem.id) { registerOptionItem.id = newRegisterOptionItem.id; }
-  if (registerOptionItem.name !== newRegisterOptionItem.name) { registerOptionItem.name = newRegisterOptionItem.name; }
-  if (registerOptionItem.usedComponent !== newRegisterOptionItem.usedComponent)
-  { registerOptionItem.usedComponent = newRegisterOptionItem.usedComponent; }
-  if (registerOptionItem.data !== newRegisterOptionItem.data) { registerOptionItem.data = newRegisterOptionItem.data; }
-  if (registerOptionItem.activeForIntranet !== newRegisterOptionItem.activeForIntranet)
-  { registerOptionItem.activeForIntranet = newRegisterOptionItem.activeForIntranet; }
-  if (registerOptionItem.activeForBeamerPresentation !== newRegisterOptionItem.activeForBeamerPresentation)
-  { registerOptionItem.activeForBeamerPresentation = newRegisterOptionItem.activeForBeamerPresentation; }
-  if (registerOptionItem.icon !== newRegisterOptionItem.icon) { registerOptionItem.icon = newRegisterOptionItem.icon; }
+function updateNavBarItem(oldNavBarItem: NavBarItem, newNabBarItem: NavBarItem) {
+  if (oldNavBarItem.id !== newNabBarItem.id) { oldNavBarItem.id = newNabBarItem.id; }
+  if (oldNavBarItem.name !== newNabBarItem.name) { oldNavBarItem.name = newNabBarItem.name; }
+  if (oldNavBarItem.usedComponent !== newNabBarItem.usedComponent)
+  { oldNavBarItem.usedComponent = newNabBarItem.usedComponent; }
+  if (oldNavBarItem.data !== newNabBarItem.data) { oldNavBarItem.data = newNabBarItem.data; }
+  if (oldNavBarItem.activeForIntranet !== newNabBarItem.activeForIntranet)
+  { oldNavBarItem.activeForIntranet = newNabBarItem.activeForIntranet; }
+  if (oldNavBarItem.activeForBeamerPresentation !== newNabBarItem.activeForBeamerPresentation)
+  { oldNavBarItem.activeForBeamerPresentation = newNabBarItem.activeForBeamerPresentation; }
+  if (oldNavBarItem.icon !== newNabBarItem.icon) { oldNavBarItem.icon = newNabBarItem.icon; }
+  if (oldNavBarItem.beamerTimer !== newNabBarItem.beamerTimer) { oldNavBarItem.beamerTimer = newNabBarItem.beamerTimer; }
 }
 
 export function resolveNewHtmlDisplayerValue(oldData: RegisterOptionItem, newConfig: NavBarItem[]) {

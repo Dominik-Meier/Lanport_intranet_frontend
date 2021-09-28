@@ -6,7 +6,7 @@ import {ComponentWithNameComponent} from '../components/interfaces/componentWith
 export class NavBarItem {
   public id: number;
   public name: string;
-  public usedComponent: ComponentWithNameComponent;
+  public usedComponent: string;
   public appComponentId: number;
   public appComponents: NavBarItem[];
   public data: any;
@@ -16,7 +16,7 @@ export class NavBarItem {
   public active: boolean;
   public beamerTimer: number;
 
-  constructor(id: number, name: string, usedComponent: ComponentWithNameComponent, parentNavBarItem: number,
+  constructor(id: number, name: string, usedComponent: string, parentNavBarItem: number,
               appComponents: NavBarItem[] = [], data: any, activeForIntranet: boolean,
               activeForBeamerPresentation: boolean, icon: string, active: boolean, beamerTimer: number) {
     this.id = id;
@@ -83,7 +83,7 @@ export class NavBarItem {
     return {
       id: this.id,
       name: this.name,
-      usedComponent: this.usedComponent ? this.usedComponent.componentName : '',
+      usedComponent: this.usedComponent ? this.usedComponent : '',
       appComponentId: this.appComponentId,
       appComponents: appComponentsAsJson,
       data: this.data,

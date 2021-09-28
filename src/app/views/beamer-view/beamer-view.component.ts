@@ -15,20 +15,21 @@ import {AppConfigService} from '../../services/app-config.service';
 import {NavBarItem} from '../../models/NavBarItem';
 import {Subscription} from 'rxjs';
 import {EventEmitterService} from '../../services/event-emitter.service';
-import {configDiffer} from '../../util/configUpdaterHandlerFunctions';
+import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunctions';
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
+import {navBarComponentSelectorMap} from '../../util/mapperFunctions';
 
 @Component({
   selector: 'app-beamer-view',
   templateUrl: './beamer-view.component.html',
   styleUrls: ['./beamer-view.component.scss']
 })
-// TODO refactor and clean up this class
+
 export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   private subscriptions: Subscription[] = [];
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  verticalPosition: MatSnackBarVerticalPosition = 'top';
+  private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  private verticalPosition: MatSnackBarVerticalPosition = 'top';
   appConfig: NavBarItem[] = this.appConfigService.getConfig();
   beamerItems: NavBarItem[] = [];
   viewRefs = new Map<number, ViewRef>();
@@ -45,54 +46,12 @@ export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked 
     this.subscriptions.push(this.appConfigService.getAppConfig().subscribe( config => {
       this.appConfig = config;
       this.filterNotActiveForBeamerPresentation(config);
-      this.createViews(this.beamerItems);
+      this.createViews();
     }));
     this.subscriptions.push(this.eventEmitter.appConfigChangedObservable.subscribe(config => {
       configDiffer(this.appConfig, config);
       this.diffActiveForBeamerPresentationAfterConfigUpdate(config);
     }));
-  }
-
-  ngOnInit(): void {
-    // TODO make this timer configurable
-    this.snackBar.open('Press escape to exit.', 'Close', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-    });
-  }
-
-  ngAfterViewChecked() {
-    if (this.infLoop !== null){
-      clearInterval(this.infLoop);
-    }
-
-    this.infLoop = setInterval( () => {
-      this.dynamicElementInsertionPoint.detach(0);
-      this.dynamicElementInsertionPoint.insert(this.viewRefs.get(this.beamerItems[this.counter].id));
-      this.period = this.beamerItems[this.counter].beamerTimer;
-      this.viewRefs.size - this.counter <= 1 ? this.counter = 0 : this.counter++;
-    }, this.period);
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach( sub => sub.unsubscribe());
-    this.viewRefs.forEach(view => view.destroy());
-    if (this.infLoop !== null){
-      clearInterval(this.infLoop);
-    }
-  }
-
-  createViews(items: NavBarItem[]) {
-    items.forEach( item => {
-      // @ts-ignore
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(item.usedComponent);
-      const componentRef = componentFactory.create(this.injector);
-      const viewRef = componentRef.hostView;
-      (componentRef.instance as NavBarItem).data = item;
-      this.viewRefs.set(item.id, viewRef);
-    });
-    this.dynamicElementInsertionPoint.clear();
-    this.dynamicElementInsertionPoint.insert(this.viewRefs.get(this.beamerItems[this.counter].id));
   }
 
   filterNotActiveForBeamerPresentation(config: NavBarItem[]) {
@@ -105,6 +64,49 @@ export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked 
     });
   }
 
+  createViews() {
+    this.beamerItems.forEach( item => {
+      this.createComponentViewRef(item);
+    });
+    this.dynamicElementInsertionPoint.clear();
+    this.dynamicElementInsertionPoint.insert(this.viewRefs.get(this.beamerItems[this.counter].id));
+  }
+
+  ngOnInit(): void {
+    this.snackBar.open('Press escape to exit.', 'Close', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
+
+  ngAfterViewChecked() {
+    this.initComponentCycle();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach( sub => sub.unsubscribe());
+    this.viewRefs.forEach(view => view.destroy());
+    if (this.infLoop !== null){
+      clearInterval(this.infLoop);
+    }
+  }
+
+  initComponentCycle() {
+    if (this.infLoop !== null){
+      clearInterval(this.infLoop);
+    }
+
+    /**
+     * Cycle through the viewRefs and set the timer of the current view
+     */
+    this.infLoop = setInterval( () => {
+      this.dynamicElementInsertionPoint.detach(0);
+      this.dynamicElementInsertionPoint.insert(this.viewRefs.get(this.beamerItems[this.counter].id));
+      this.period = this.beamerItems[this.counter].beamerTimer;
+      this.viewRefs.size - this.counter <= 1 ? this.counter = 0 : this.counter++;
+    }, this.period);
+  }
+
   diffActiveForBeamerPresentationAfterConfigUpdate(config: NavBarItem[]) {
     this.addItems(config);
     this.removeItems(this.beamerItems, config);
@@ -115,22 +117,17 @@ export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked 
       const foundItem = this.beamerItems.find(x => x.id.toString() === newItem.id.toString());
       if (!foundItem && newItem.appComponents !== null && newItem.appComponents.length <= 0 && newItem.activeForBeamerPresentation) {
         this.beamerItems.push(newItem);
-        // @ts-ignore
-        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(newItem.usedComponent);
-        const componentRef = componentFactory.create(this.injector);
-        const viewRef = componentRef.hostView;
-        (componentRef.instance as NavBarItem).data = newItem;
-        this.viewRefs.set(newItem.id, viewRef);
+        this.createComponentViewRef(newItem);
       } else if ( newItem.appComponents !== null && newItem.appComponents.length > 0) {
         this.addItems(newItem.appComponents);
       }
     });
   }
 
-  getIndex(config: NavBarItem[], index: number[]) {
+  getIds(config: NavBarItem[], index: number[]) {
     config.forEach( item => {
       if (item.appComponents !== null && item.appComponents.length > 0) {
-        this.getIndex(item.appComponents, index);
+        this.getIds(item.appComponents, index);
       } else {
         if (item.activeForBeamerPresentation) {
           index.push(item.id);
@@ -142,8 +139,8 @@ export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked 
   removeItems(oldBeamerItem: NavBarItem[], newConfig: NavBarItem[]) {
     const newConfigIds = [];
     const oldConfigIds = [];
-    this.getIndex(newConfig, newConfigIds);
-    this.getIndex(oldBeamerItem, oldConfigIds);
+    this.getIds(newConfig, newConfigIds);
+    this.getIds(oldBeamerItem, oldConfigIds);
     const ids = oldConfigIds.filter(x => {
       return !newConfigIds.includes(x);
     });
@@ -154,6 +151,15 @@ export class BeamerViewComponent implements OnInit, OnDestroy, AfterViewChecked 
         this.beamerItems.splice(index, 1);
       }
     });
+  }
+
+  createComponentViewRef(component) {
+    const componentToLoad: any = navBarComponentSelectorMap.get(component.usedComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(componentToLoad);
+    const componentRef = componentFactory.create(this.injector);
+    const viewRef = componentRef.hostView;
+    (componentRef.instance as NavBarItem).data = component;
+    this.viewRefs.set(component.id, viewRef);
   }
 
   @HostListener('document:keydown', ['$event'])

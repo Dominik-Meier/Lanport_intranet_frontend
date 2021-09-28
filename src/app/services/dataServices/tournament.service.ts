@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {Tournament} from '../../models/Tournament';
 import {mapJSONToTournamentArray} from '../../util/mapperFunctions';
 import {EventEmitterService} from '../event-emitter.service';
-import {tournamentsDiffer} from '../../util/tournamentUpdaterFunctions';
+import {tournamentsDiffer} from '../../util/modelDiffers/tournamentUpdaterFunctions';
 
 @Injectable({
   providedIn: 'root'
@@ -88,5 +88,30 @@ export class TournamentService {
   deleteTournament(id: number) {
     const targetURL = this.url + 'tournaments/' + id.toString();
     return this.http.delete(targetURL);
+  }
+
+  createChallongeTournament(id) {
+    const targetURL = this.url + 'tournaments/challonge/' + id.toString();
+    return this.http.post<any>(targetURL, null);
+  }
+
+  updateChallongeTournament(id) {
+    const targetURL = this.url + 'tournaments/challonge/' + id.toString();
+    return this.http.put<any>(targetURL, null);
+  }
+
+  createChallongeParticipants(id) {
+    const targetURL = this.url + 'tournaments/challonge/' + id.toString() + '/participants/';
+    return this.http.post<any>(targetURL, null);
+  }
+
+  clearChallongeParticipants(id) {
+    const targetURL = this.url + 'tournaments/challonge/' + id.toString() + '/participants/';
+    return this.http.delete<any>(targetURL);
+  }
+
+  startChallongeParticipants(id) {
+    const targetURL = this.url + 'tournaments/challonge/' + id.toString() + '/start';
+    return this.http.post<any>(targetURL, null);
   }
 }

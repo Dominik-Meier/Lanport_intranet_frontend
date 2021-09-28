@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';import {MatTableDataSource} from "@angular/material/table";
-import {TournamentType} from "../../../models/TournamentType";
-import {TournamentTypeService} from "../../../services/dataServices/tournament-type.service";
-import {Subscription} from "rxjs";
-import {EventEmitterService} from "../../../services/event-emitter.service";
+import {Component, OnDestroy, OnInit} from '@angular/core'; import {MatTableDataSource} from '@angular/material/table';
+import {TournamentType} from '../../../models/TournamentType';
+import {TournamentTypeService} from '../../../services/dataServices/tournament-type.service';
+import {Subscription} from 'rxjs';
+import {EventEmitterService} from '../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-tournament-type-settings',
@@ -26,23 +26,26 @@ export class TournamentTypeSettingsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.tournamentTypeService.getTournamentTypeObservable.subscribe( tournamentTypes => {
       this.setTournamentTypes(tournamentTypes);
     }));
-    this.subscriptions.push(this.eventEmitter.tournamentTypeDeletedObservable.subscribe(() =>
-      this.dataSource = new MatTableDataSource<TournamentType>(this.tournamentTypes)));
+    this.subscriptions.push(this.eventEmitter.tournamentTypesUpdatedObservable.subscribe(() => this.updateDataTable()));
+    this.subscriptions.push(this.eventEmitter.tournamentTypeDeletedObservable.subscribe(() => this.updateDataTable()));
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach( sub => sub.unsubscribe());
   }
 
-  setTournamentTypes(tournamentTypes: TournamentType[]) {
-    this.tournamentTypes = tournamentTypes;
-    this.oldTournamentTypes = tournamentTypes;
+  updateDataTable() {
     this.dataSource = new MatTableDataSource<TournamentType>(this.tournamentTypes);
   }
 
+  setTournamentTypes(tournamentTypes: TournamentType[]) {
+    this.tournamentTypes = tournamentTypes;
+    this.oldTournamentTypes = tournamentTypes;
+    this.updateDataTable();
+  }
+
   addTournamentType(event) {
-    this.tournamentTypes.push( new TournamentType(null, 'Placeholder'));
-    this.dataSource = new MatTableDataSource<TournamentType>(this.tournamentTypes);
+    this.tournamentTypeService.createTournamentType().subscribe();
   }
 
   changeName(event, row: TournamentType) {

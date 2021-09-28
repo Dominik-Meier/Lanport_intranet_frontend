@@ -1,6 +1,6 @@
 import {
   Component,
-  DoCheck, EventEmitter,
+  EventEmitter,
   Input,
   OnDestroy,
   OnInit, Output,
@@ -22,7 +22,7 @@ import {MatDialog} from '@angular/material/dialog';
   templateUrl: './set-app-navigation.component.html',
   styleUrls: ['./set-app-navigation.component.scss']
 })
-export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
+export class SetAppNavigationComponent implements OnInit, OnDestroy {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   @Input() parentAppNavItem: number;
   @Input() config: NavBarItem[];
@@ -31,7 +31,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
   private subscriptions: Subscription[] = [];
   dataSource: MatTableDataSource<NavBarItem>;
   columnsToDisplay = ['select', 'name', 'componentName', 'data', 'enabledAtIntranet', 'activeForBeamerPresentation', 'beamerTimer', 'actions'];
-  selectableComponents: Map<string, ComponentWithNameComponent> = navBarComponentSelectorMap;
+  selectableComponents = Array.from(navBarComponentSelectorMap.keys());
   selectableConfigurationComponents: Map<string, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
 
 
@@ -45,10 +45,6 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
         this.activeNavItem = event.added[0];
       }
     }));
-    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
-  }
-
-  ngDoCheck() {
     this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 
@@ -95,7 +91,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   openDialog(row: NavBarItem): void {
-    const componentToLoad = this.selectableConfigurationComponents.get(row.usedComponent.componentName);
+    const componentToLoad = this.selectableConfigurationComponents.get(row.usedComponent);
     // @ts-ignore
     const dialogRef = this.dialog.open( componentToLoad, {
       width: '50vw',

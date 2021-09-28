@@ -1,0 +1,16 @@
+<div class="componentDisplayer-SizeFitter display-flex-column" *ngIf="this.data">
+  <mat-card class="componentDisplayer-matCard display-flex-column">
+    <mat-card-title class="pb-3 display-flex-justify-center font-white">
+      {{this.data.name}}
+      <button class="position-absolute right-1" mat-mini-fab color="primary" (click)="newFeedback()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-card-title>
+    <div class="card-wrap">
+      <div *ngFor="let oneFeedback of feedback" class="add-pointer" (click)="showFeedback(oneFeedback)">
+        <app-feedback-card [feedback]="oneFeedback" *ngIf="oneFeedback.isPublic"></app-feedback-card>
+      </div>
+    </div>
+  </mat-card>
+</div>
+

@@ -48,6 +48,11 @@ import { HrefComponent } from './components/1_registerOptions-Component/href-com
 import { HrefConfigurationComponent } from './components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
 import {HttpErrorInterceptor} from './util/httpErrorInterceptor';
 import {OAuthModule} from 'angular-oauth2-oidc';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { FeedbackComponent } from './components/1_registerOptions-Component/feedback/feedback.component';
+import { FeedbackConfigurationComponent } from './components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
+import { FeedbackModalComponent } from './components/1_registerOptions-Component/feedback/feedback-modal/feedback-modal.component';
+import { FeedbackCardComponent } from './components/1_registerOptions-Component/feedback/feedback-card/feedback-card.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +80,11 @@ import {OAuthModule} from 'angular-oauth2-oidc';
     MenuItemComponent,
     SnackBarTextDisplayerComponent,
     HrefComponent,
+    HrefConfigurationComponent,
+    FeedbackComponent,
+    FeedbackConfigurationComponent,
+    FeedbackModalComponent,
+    FeedbackCardComponent
     HrefConfigurationComponent
   ],
   imports: [
@@ -100,6 +110,30 @@ import {OAuthModule} from 'angular-oauth2-oidc';
     QuillModule.forRoot(),
     OAuthModule.forRoot()
   ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatCardModule,
+        MatTableModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatInputModule,
+        FormsModule,
+        MatDialogModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatMenuModule,
+        DigitOnlyModule,
+        QuillModule.forRoot(),
+        OAuthModule.forRoot(),
+        MatTooltipModule
+    ],
   exports: [
     MatIconModule,
     MatCardModule,

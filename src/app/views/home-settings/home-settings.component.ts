@@ -4,8 +4,8 @@ import {NavBarItem} from '../../models/NavBarItem';
 import {AppConfigService} from '../../services/app-config.service';
 import {EventEmitterService} from '../../services/event-emitter.service';
 import {Subscription} from 'rxjs';
-import {SetAppNavigationComponent} from '../../components/3_settings_components/set-app-navigation/set-app-navigation.component';
-import {configDiffer} from '../../util/configUpdaterHandlerFunctions';
+import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunctions';
+import {navBarItemComponentConfigurationSelectorMap} from '../../util/mapperFunctions';
 
 @Component({
   selector: 'app-home-settings',
@@ -32,10 +32,10 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
       this.setUsedComponent();
     }));
 
-    this.adminPageService.activeNavBarItemsObservable.subscribe( activeNavItem => {
+    this.subscriptions.push(this.adminPageService.activeNavBarItemsObservable.subscribe( activeNavItem => {
       this.activeNavBarItem = activeNavItem;
       this.setUsedComponent();
-    });
+    }));
   }
 
   ngOnDestroy() {
@@ -43,7 +43,7 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
   }
 
   ifSetConfigActive() {
-    return (this.activeNavBarItem && this.activeNavBarItem.usedComponent.name === 'SetAppNavigationComponent');
+    return (this.activeNavBarItem && this.activeNavBarItem.name === 'App Navigation');
   }
 
   saveConfig(config: NavBarItem[]) {
@@ -52,7 +52,7 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
 
   setUsedComponent() {
     this.dynamicElementInsertionPoint.clear();
-    if (this.activeNavBarItem && this.activeNavBarItem.usedComponent && this.activeNavBarItem.usedComponent.name !== 'SetAppNavigationComponent') {
+    if (this.activeNavBarItem && this.activeNavBarItem.name !== 'App Navigation') {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.activeNavBarItem.usedComponent);
       const componentRef = this.dynamicElementInsertionPoint.createComponent(componentFactory);
     }

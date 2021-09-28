@@ -17,8 +17,12 @@ import {ShowTeamComponent} from '../../showTeam/show-team/show-team.component';
 import {EventEmitterService} from '../../../services/event-emitter.service';
 import {TeamMember} from '../../../models/TeamMember';
 import {Subscription} from 'rxjs';
-import {tournamentDiffer} from '../../../util/tournamentUpdaterFunctions';
-import {HtmlDisplayerComponent} from "../html-displayer/html-displayer.component";
+import {tournamentDiffer} from '../../../util/modelDiffers/tournamentUpdaterFunctions';
+import {HtmlDisplayerComponent} from '../html-displayer/html-displayer.component';
+import {GameMode} from '../../../models/GameMode';
+import {gameModeDiffer} from '../../../util/modelDiffers/gameModeUpdater';
+import {TournamentType} from '../../../models/TournamentType';
+import {tournamentTypeDiffer} from '../../../util/modelDiffers/tournamentTypeUpdater';
 
 @Component({
   selector: 'app-tournament',
@@ -63,6 +67,8 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
     this.subscriptions.push(this.eventEmitter.teamMemberLeftObservable.subscribe(tm => this.teamMemberLeftAction(tm)));
     this.subscriptions.push(this.eventEmitter.teamDeletedObservable.subscribe(t => this.teamDeletedAction(t)));
     this.subscriptions.push(this.eventEmitter.tournamentsUpdatedObservable.subscribe(t => this.updateTournamentAction(t)));
+    this.subscriptions.push(this.eventEmitter.gameModesUpdatedObservable.subscribe(gm => this.updateTournamentGameModeAction(gm)));
+    this.subscriptions.push(this.eventEmitter.tournamentTypesUpdatedObservable.subscribe(tt => this.updateTournamentTypeAction(tt)));
   }
 
   ngOnDestroy() {
@@ -115,9 +121,9 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   loadTeams() {
     if (this.tournament){
-      this.teamService.getTeamByTournament(this.tournament.getId()).subscribe(res => {
+      this.subscriptions.push(this.teamService.getTeamByTournament(this.tournament.getId()).subscribe(res => {
         this.teams = res;
-      });
+      }));
     }
   }
 
@@ -142,9 +148,8 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
 
   loadTournamentParticipant() {
     if (this.tournament){
-      this.tournamentParticipantService.getTournamentParticipantByTournament(this.tournament.getId()).subscribe(res => {
-        this.tournamentParticipants = res;
-      });
+      this.subscriptions.push(this.tournamentParticipantService.getTournamentParticipantByTournament(
+        this.tournament.getId()).subscribe(res => { this.tournamentParticipants = res; }));
     }
   }
 
@@ -231,6 +236,23 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       x => x.getUser().getId() === this.authService.getActiveUser().getId());
   }
 
+  openForTeamRegistration() {
+    const team = this.checkTeamJoined();
+    return (!team && !this.tournament.started);
+  }
+
+
+  openForPlayerRegistration() {
+    const player = this.checkTournamentJoined();
+    return (!player && !this.tournament.started);
+  }
+
+
+  openForPlayerLeave() {
+    const player = this.checkTournamentJoined();
+    return (player && !this.tournament.started);
+  }
+
   updateTournamentAction(tournaments: Tournament[]) {
       const thisTournament = tournaments.find( x => x.id.toString() === this.tournamentId.toString());
       if (thisTournament) {
@@ -239,11 +261,37 @@ export class TournamentComponent extends ComponentWithNameComponent implements O
       }
   }
 
+  updateTournamentGameModeAction(gameModes: GameMode[]) {
+    const newGameMode = gameModes.find(x => x.id.toString() === this.tournament.gameMode.id.toString());
+    if (newGameMode) {
+      gameModeDiffer(this.tournament.gameMode, newGameMode);
+      this.setInfoArray();
+    }
+  }
+
+  updateTournamentTypeAction(tournamentTypes: TournamentType[]) {
+    const newTournamentType = tournamentTypes.find(x => x.getId().toString() === this.tournament.tournamentType.getId().toString());
+    if (newTournamentType) {
+      tournamentTypeDiffer(this.tournament.tournamentType, newTournamentType);
+      this.setInfoArray();
+    }
+  }
+
   showRules() {
       const dialogRef = this.dialog.open( HtmlDisplayerComponent, {
         panelClass: 'custom-dialog-container',
         width: '50vw',
       });
-      dialogRef.componentInstance.data = {data: this.tournament.getGameMode().rules, name: 'Regeln '.concat(this.tournament.name)};
+      dialogRef.componentInstance.data = {data: this.tournament.getGameMode().rules, name: 'Regelwerk '.concat(this.tournament.name)};
+  }
+
+  showBracket() {
+    const dialogRef = this.dialog.open( HtmlDisplayerComponent, {
+      panelClass: 'custom-dialog-container',
+      width: '50vw',
+    });
+    const uri = 'https://challonge.com/' + this.tournament.getLanparty().name + '_' + this.tournament.name + '/module';
+    const data = '<iframe src="' + uri + '" width="100%" height="500" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>';
+    dialogRef.componentInstance.data = {data, name: 'Bracket '.concat(this.tournament.name)};
   }
 }

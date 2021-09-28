@@ -1,16 +1,18 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Lanparty} from '../../models/Lanparty';
 import {environment} from '../../../environments/environment';
 import {Observable, Subject} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
-import {mapJSONToLanartyArray} from '../../util/mapperFunctions';
+import {map} from 'rxjs/operators';
+import {mapJSONToLanpartyArray} from '../../util/mapperFunctions';
+import {EventEmitterService} from '../event-emitter.service';
+import {lanpartiesDiffer} from '../../util/modelDiffers/lanpartyUpdater';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LanpartyService{
-  constructor(private http: HttpClient) {
+export class LanpartyService {
+  constructor(private http: HttpClient, private eventEmitter: EventEmitterService) {
     this.init();
   }
 
@@ -26,6 +28,11 @@ export class LanpartyService{
       this.lanparties = res;
       this.lanparitesSubject.next(this.lanparties);
     });
+    /**
+     * Be careful as this method builds on that the event at tournament service is executed fist
+     */
+    this.eventEmitter.lanpartyDeletedObservable.subscribe( l => this.removeLanpartyFromList(l));
+    this.eventEmitter.lanpartiesUpdatedObservable.subscribe( l => this.updateLanparties(l));
   }
 
   /**
@@ -34,6 +41,18 @@ export class LanpartyService{
 
   getLanparties() {
     return this.lanparties;
+  }
+
+  updateLanparties(l: Lanparty[]) {
+    lanpartiesDiffer(this.lanparties, l);
+    this.lanparitesSubject.next(this.lanparties);
+  }
+
+  removeLanpartyFromList(lanparty: Lanparty) {
+    const index = this.lanparties.findIndex( x => x.getId().toString() === lanparty.getId().toString());
+    if (index) {
+      this.lanparties.splice(index, 1);
+    }
   }
 
   saveLanparties(lanparties: Lanparty[]) {
@@ -49,10 +68,20 @@ export class LanpartyService{
    * Remote methodes to the backend from here on!
    */
 
+  createLanparty() {
+    const targetURL = this.url + 'lanparties/';
+    return this.http.post(targetURL, null);
+  }
+
+  deleteLanparty(lanparty: Lanparty) {
+    const targetURL = this.url + 'lanparties/' + lanparty.id.toString();
+    return this.http.delete(targetURL);
+  }
+
   getLanpartiesBackend(): Observable<Lanparty[]> {
     const targetURL = this.url + 'lanparties';
     return this.http.get<Lanparty[]>(targetURL).pipe( map(
-      response => mapJSONToLanartyArray(response)
+      response => mapJSONToLanpartyArray(response)
     ));
   }
 
@@ -60,13 +89,4 @@ export class LanpartyService{
     const targetURL = this.url + 'lanparties';
     return this.http.put<Lanparty[]>(targetURL, lanparties);
   }
-
-  // Not needed atm!
-  // addLanparty(lanparty: Lanparty) {
-  //   const targetURL = this.url + 'lanparties';
-  //   return this.http.post(targetURL, lanparty).pipe(map( res => {
-  //     return this.mapJSONToLanparty(res);
-  //   }))
-  // }
-
 }

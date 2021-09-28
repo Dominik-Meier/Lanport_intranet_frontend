@@ -1,4 +1,4 @@
-import {Tournament} from '../models/Tournament';
+import {Tournament} from '../../models/Tournament';
 
 export function tournamentsDiffer(oldTournaments: Tournament[], newTournaments: Tournament[]){
   if (oldTournaments) {
@@ -38,6 +38,11 @@ export function tournamentDiffer(oldT: Tournament, newT: Tournament) {
   if (oldT.started !== newT.started) {oldT.started = newT.started; }
   if (oldT.finished !== newT.finished) {oldT.finished = newT.finished; }
   if (oldT.startDate !== newT.startDate) {oldT.startDate = newT.startDate; }
+  if (oldT.awards !== newT.awards) {oldT.awards = newT.awards; }
+  if (oldT.challongeParticipantsAdded !== newT.challongeParticipantsAdded)
+    { oldT.challongeParticipantsAdded = newT.challongeParticipantsAdded; }
+  if (oldT.challongeTournamentStarted !== newT.challongeTournamentStarted)
+  { oldT.challongeTournamentStarted = newT.challongeTournamentStarted; }
 
   if (oldT.gameMode !== newT.gameMode) { oldT.gameMode = newT.gameMode; }
   if (oldT.tournamentType !== newT.tournamentType) { oldT.tournamentType = newT.tournamentType; }

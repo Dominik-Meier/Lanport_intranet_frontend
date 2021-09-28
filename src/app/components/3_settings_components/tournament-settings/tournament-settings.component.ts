@@ -9,8 +9,8 @@ import {TournamentType} from '../../../models/TournamentType';
 import {Tournament} from '../../../models/Tournament';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import {Subscription} from "rxjs";
-import {EventEmitterService} from "../../../services/event-emitter.service";
+import {Subscription} from 'rxjs';
+import {EventEmitterService} from '../../../services/event-emitter.service';
 
 @Component({
   selector: 'app-tournament-settings',
@@ -91,12 +91,32 @@ export class TournamentSettingsComponent implements OnInit, OnDestroy {
     row.setName(event);
   }
 
-  public objectComparisonFunction = function( option, value ): boolean {
+  public objectComparisonFunction( option, value ): boolean {
     return option.id === value.id;
-  };
+  }
 
   deleteTournament(event, row: Tournament) {
     this.tournamentService.deleteTournament(row.id).subscribe();
+  }
+
+  createChallongeTournament(event, row: Tournament) {
+    this.tournamentService.createChallongeTournament(row.id).subscribe();
+  }
+
+  updateChallongeTournament(event, row: Tournament) {
+    this.tournamentService.updateChallongeTournament(row.id).subscribe();
+  }
+
+  createChallongeParticipants(event, row: Tournament) {
+    this.tournamentService.createChallongeParticipants(row.id).subscribe();
+  }
+
+  clearChallongeParticipants(event, row: Tournament) {
+    this.tournamentService.clearChallongeParticipants(row.id).subscribe();
+  }
+
+  startChallongeTournament(event, row: Tournament) {
+    this.tournamentService.startChallongeParticipants(row.id).subscribe();
   }
 
   applyConfig(event) {

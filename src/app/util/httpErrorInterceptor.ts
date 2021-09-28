@@ -6,7 +6,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 
-import {BehaviorSubject, Observable,} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {ErrorMsgService} from '../services/error-msg.service';
 import {catchError, filter, switchMap, take} from 'rxjs/operators';
 import {ErrorMsg} from '../models/errorMsg';
@@ -46,7 +46,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         } else if (err.status === 401) {
           return this.handle401Error(req, next);
         } else if (err.status === 403) {
-          errMsg =  new ErrorMsg('Please login at main page first.', 'Unauthorized: ');
+          errMsg = new ErrorMsg(err.error.server_error, err.error.server_message);
           this.errorMsgService.errorMsgSubject.next(errMsg);
           return err;
         } else if (err.status >= 404 && err.status < 600) {

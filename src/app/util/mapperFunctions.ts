@@ -12,19 +12,24 @@ import {HtmlDisplayerComponent} from '../components/1_registerOptions-Component/
 import {TournamentComponent} from '../components/1_registerOptions-Component/tournament/tournament.component';
 import {HtmlDisplayerConfigurationComponent} from '../components/1_registerOptions-Component/html-displayer/html-displayer-configuration/html-displayer-configuration.component';
 import {TournamentConfigurationComponent} from '../components/1_registerOptions-Component/tournament/tournament-configuration/tournament-configuration.component';
-import {HrefComponent} from "../components/1_registerOptions-Component/href-component/href.component";
-import {HrefConfigurationComponent} from "../components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component";
+import {HrefComponent} from '../components/1_registerOptions-Component/href-component/href.component';
+import {HrefConfigurationComponent} from '../components/1_registerOptions-Component/href-component/href-configuration/href-configuration.component';
+import {Feedback} from '../models/Feedback';
+import {FeedbackComponent} from '../components/1_registerOptions-Component/feedback/feedback.component';
+import {FeedbackConfigurationComponent} from '../components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
 
 
 export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
 navBarComponentSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerComponent);
 navBarComponentSelectorMap.set('TournamentComponent', TournamentComponent);
 navBarComponentSelectorMap.set('HrefComponent', HrefComponent);
+navBarComponentSelectorMap.set('FeedbackComponent', FeedbackComponent);
 
 export const navBarItemComponentConfigurationSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
 navBarItemComponentConfigurationSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('TournamentComponent', TournamentConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('HrefComponent', HrefConfigurationComponent);
+navBarItemComponentConfigurationSelectorMap.set('FeedbackComponent', FeedbackConfigurationComponent);
 
 
 export function mapJSONToTournamentParticipant(data: any): TournamentParticipant {
@@ -87,7 +92,7 @@ export function mapJSONToGameMode(gamemode: any): GameMode {
     gamemode.teamSize, gamemode.rules);
 }
 
-export function mapJSONToLanartyArray(data: any): Lanparty[] {
+export function mapJSONToLanpartyArray(data: any): Lanparty[] {
   const result: Lanparty[] = [];
   data.forEach( lanparty => result.push(new Lanparty(lanparty.id, lanparty.name, lanparty.active,
     lanparty.startDate, lanparty.endDate)));
@@ -112,7 +117,7 @@ export function mapJSONToTournament(t: any): Tournament {
     new GameMode(t.gamemode?.id, t.gamemode?.name, t.gamemode?.game, t.gamemode?.elimination, t.gamemode?.teamSize, t.gamemode?.rules),
     new TournamentType(t.tournamentType?.id, t.tournamentType?.name),
     t.teamRegistration, t.numberOfParticipants, t.published, t.started, t.startDate, t.endDate, t.registrationEndDate,
-    t.finished, t.awards);
+    t.finished, t.awards, t.challongeParticipantsAdded, t.challongeTournamentStarted);
 }
 
 export function mapJSONToTournamentTypeArray(data: any): TournamentType[] {
@@ -138,9 +143,21 @@ export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
       appComponents = mapJSONToAppSettingsArray(element.appComponents);
     }
 
-    resultArr.push( new NavBarItem(element.id, element.name, componentOuter, element.appComponentId, appComponents,
+    resultArr.push( new NavBarItem(element.id, element.name, element.usedComponent, element.appComponentId, appComponents,
       element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false, element.beamerTimer));
     appComponents = [];
   }
+  return resultArr;
+}
+
+export function mapJSONToFeedback(data: any): Feedback {
+  const user = mapJsonToUser(data.user);
+  return new Feedback(data.id, data.wasGood, data.wasBad, data.suggestions, data.isPublic, data.isAnonymous,
+    data.userId, user, data.lanpartyId);
+}
+
+export function mapJSONToFeedbackArray(data: any): Feedback[] {
+  const resultArr: Feedback[] = [];
+  data.forEach(feedback => resultArr.push(mapJSONToFeedback(feedback)));
   return resultArr;
 }

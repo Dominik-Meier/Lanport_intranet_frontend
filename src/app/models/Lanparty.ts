@@ -1,9 +1,9 @@
 export class Lanparty {
-  private id: number;
-  private name: string;
-  private active: boolean;
-  private startDate: Date;
-  private endDate: Date;
+  public id: number;
+  public name: string;
+  public active: boolean;
+  public startDate: Date;
+  public endDate: Date;
 
   constructor(id: number, name: string, active: boolean, startDate: Date, endDate: Date) {
     this.id = id;
@@ -26,11 +26,11 @@ export class Lanparty {
   }
 
   getStartDate() {
-    return this.startDate
+    return this.startDate;
   }
 
   getEndDate() {
-    return this.endDate
+    return this.endDate;
   }
 
   setName(name: string) {

@@ -17,10 +17,13 @@ export class Tournament {
   public registrationEndDate: Date;
   public finished: boolean;
   public awards: string;
+  public challongeParticipantsAdded: boolean;
+  public challongeTournamentStarted: boolean;
 
   constructor(id: number, name: string, lanparty: Lanparty, gameMode: GameMode, tournamentType: TournamentType,
               teamRegistration: boolean, numberOfParticipants: number, published: boolean, started: boolean,
-              startDate: Date, endDate: Date, registrationEndDate: Date, finished: boolean, awards: string) {
+              startDate: Date, endDate: Date, registrationEndDate: Date, finished: boolean, awards: string,
+              challongeParticipantsAdded: boolean, challongeTournamentStarted: boolean) {
     this.id = id;
     this.name = name;
     this.lanparty = lanparty;
@@ -35,6 +38,8 @@ export class Tournament {
     this.registrationEndDate = registrationEndDate;
     this.finished = finished;
     this.awards = awards;
+    this.challongeParticipantsAdded = challongeParticipantsAdded;
+    this.challongeTournamentStarted = challongeTournamentStarted;
   }
 
   getId() {

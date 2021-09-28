@@ -11,10 +11,24 @@
   width: 10vw;
 }
 
-.table-tournament {
-  width: 100%;
+mat-table {
+  overflow: auto;
 }
 
-.mat-form-field {
-  width: 140px;
+mat-form-field {
+  padding-right: 5px;
+}
+
+.table-container {
+  overflow-x: scroll;
+}
+
+.tournament-actions {
+  width: 250px;
+  display: flex;
+  justify-content: space-around;
+}
+
+mat-icon:hover {
+  cursor: pointer;
 }
