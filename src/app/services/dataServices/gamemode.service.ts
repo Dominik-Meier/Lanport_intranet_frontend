@@ -40,7 +40,7 @@ export class GamemodeService {
 
   removeGameModeFromList(gameMode: GameMode) {
     const index = this.gameModes.findIndex( x => x.id.toString() === gameMode.id.toString());
-    if (index) {
+    if (index > -1) {
       this.gameModes.splice(index, 1);
     }
   }

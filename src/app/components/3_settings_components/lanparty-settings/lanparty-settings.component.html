@@ -1,14 +1,9 @@
 <!--Toolbar-->
 <div class="toolbar">
-  <label>Lanparty Settings: </label>
-  <div class="button-box">
-    <button mat-raised-button (click)="addLanparty($event)"> Add Lanparty </button>
-  </div>
-  <div class="button-box">
-    <button mat-raised-button color="warn" (click)="applyConfig($event)"> Apply </button>
-  </div>
+  <label class="mr-3">Lanparty Settings: </label>
+    <button mat-raised-button (click)="addLanparty($event)" class="mr-3"> Add Lanparty </button>
+    <button mat-raised-button color="warn" (click)="applyConfig($event)" class="mr-3"> Apply </button>
 </div>
-
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 

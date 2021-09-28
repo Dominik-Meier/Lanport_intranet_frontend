@@ -75,7 +75,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
     if (row.id) {
       this.appConfigService.deleteAppComponent(row).subscribe();
     } else {
-      if (index !== -1) {
+      if (index > -1) {
         this.config.splice(index, 1);
         this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
       }

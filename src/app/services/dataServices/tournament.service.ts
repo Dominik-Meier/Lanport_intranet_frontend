@@ -58,7 +58,7 @@ export class TournamentService {
 
   removeTournamentFromList(tournament: Tournament) {
     const index = this.tournaments.findIndex( x => x.id.toString() === tournament.id.toString());
-    if (index) {
+    if (index > -1) {
       this.tournaments.splice(index, 1);
     }
   }

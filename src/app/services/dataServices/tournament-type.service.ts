@@ -57,7 +57,7 @@ export class TournamentTypeService {
 
   removeTournamentTypeFromList(tournamentTypeToDelete: TournamentType) {
     const index = this.tournamentTypes.findIndex( x => x.getId().toString() === tournamentTypeToDelete.getId().toString());
-    if (index) {
+    if (index > -1) {
       this.tournamentTypes.splice(index, 1);
     }
   }

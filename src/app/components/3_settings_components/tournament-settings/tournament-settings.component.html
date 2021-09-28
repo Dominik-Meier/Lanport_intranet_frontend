@@ -1,12 +1,8 @@
 <!--Toolbar-->
 <div class="toolbar">
-  <label>Tournament Settings: </label>
-  <div class="button-box">
-    <button mat-raised-button (click)="addTournament($event)"> Add Tournament </button>
-  </div>
-  <div class="button-box">
-    <button mat-raised-button color="warn" (click)="applyConfig($event)"> Apply </button>
-  </div>
+  <label class="mr-3">Tournament Settings: </label>
+    <button mat-raised-button (click)="addTournament($event)" class="mr-3"> Add Tournament </button>
+    <button mat-raised-button color="warn" (click)="applyConfig($event)" class="mr-3"> Apply </button>
 </div>
 
 <div class="mat-elevation-z8 table-container">
