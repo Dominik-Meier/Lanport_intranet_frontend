@@ -85,16 +85,18 @@
           class="add-pointer">
           </app-snack-bar-text-displayer>
           </mat-card-title>
-          <mat-card-content  *ngFor="let award of tournament.awards.split(','); let i = index">
-            <div class="mat-card-field">
-              <div class="label">
-                <p class="no-margin">{{i+1}}. Platz</p>
+          <ng-container *ngIf="tournament.awards">
+            <mat-card-content  *ngFor="let award of tournament.awards.split(','); let i = index">
+              <div class="mat-card-field">
+                <div class="label">
+                  <p class="no-margin">{{i+1}}. Platz</p>
+                </div>
+                <div class="content">
+                  <p class="no-margin">{{award}}</p>
+                </div>
               </div>
-              <div class="content">
-                <p class="no-margin">{{award}}</p>
-              </div>
-            </div>
-          </mat-card-content>
+            </mat-card-content>
+          </ng-container>
         </mat-card>
 
       </div>
