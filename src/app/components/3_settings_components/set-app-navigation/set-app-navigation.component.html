@@ -92,7 +92,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let row" >
-      <mat-icon (click)="deleteNavBarItem($event, row)">delete_forever</mat-icon>
+      <mat-icon (click)="deleteNavBarItem($event, row)" matTooltip="Delete Nav Item" class="add-pointer">delete_forever</mat-icon>
     </td>
   </ng-container>
 
