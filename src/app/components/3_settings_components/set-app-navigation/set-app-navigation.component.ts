@@ -1,9 +1,9 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   OnDestroy,
-  OnInit, Output,
+  OnInit, Output, SimpleChanges,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
@@ -22,7 +22,7 @@ import {MatDialog} from '@angular/material/dialog';
   templateUrl: './set-app-navigation.component.html',
   styleUrls: ['./set-app-navigation.component.scss']
 })
-export class SetAppNavigationComponent implements OnInit, OnDestroy {
+export class SetAppNavigationComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   @Input() parentAppNavItem: number;
   @Input() config: NavBarItem[];
@@ -40,11 +40,18 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
   constructor(private appConfigService: AppConfigService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.subscriptions.push(this.appConfigService.configObservable.subscribe(c => {
+      this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+    }));
     this.subscriptions.push(this.selection.changed.asObservable().subscribe( event => {
       if (event.added) {
         this.activeNavItem = event.added[0];
       }
     }));
+    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 

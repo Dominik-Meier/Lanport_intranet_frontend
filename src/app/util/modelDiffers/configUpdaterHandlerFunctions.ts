@@ -4,18 +4,22 @@ import {RegisterOptionItem} from '../../models/registerOptionItem';
 export function configDiffer(oldConfig: NavBarItem[], newConfig: NavBarItem[]) {
   if (oldConfig) {
     for (const oldConfigItem of oldConfig ) {
-      if ( newConfig.find( x => x.id.toString() === oldConfigItem.id.toString()) ) {
-        const newConfigNavBarItem = newConfig.find( x => x.id.toString() === oldConfigItem.id.toString());
+      const newConfigNavBarItem = newConfig.find( x => x.id.toString() === oldConfigItem.id.toString());
+      if (newConfigNavBarItem) {
         configDiffer(oldConfigItem.appComponents, newConfigNavBarItem.appComponents);
         updateNavBarItem(oldConfigItem, newConfigNavBarItem);
-        addMissingNavBarItems(oldConfig, newConfig);
       } else {
-        const index = oldConfig.findIndex( x => x.id.toString() === oldConfigItem.id.toString());
-        if (index !== null) {
-          oldConfig.splice(index, 1);
-        }
+        removeNavbarItems(oldConfig, oldConfigItem);
       }
     }
+    addMissingNavBarItems(oldConfig, newConfig);
+  }
+}
+
+function removeNavbarItems(oldConfig: NavBarItem[], oldConfigItem: NavBarItem) {
+  const index = oldConfig.findIndex( x => x.id.toString() === oldConfigItem.id.toString());
+  if (index !== null) {
+    oldConfig.splice(index, 1);
   }
 }
 

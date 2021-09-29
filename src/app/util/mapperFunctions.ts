@@ -132,20 +132,19 @@ export function mapJSONToTournamentType(tournamentType: any): TournamentType {
 
 export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
   const resultArr: NavBarItem[] = [];
-  let appComponents = [];
   for ( const element of data) {
+    let appComponents = [];
     let componentOuter = null;
     if (navBarComponentSelectorMap.has(element.usedComponent)) {
       componentOuter = navBarComponentSelectorMap.get(element.usedComponent);
     }
 
-    if (element.appComponents && element.appComponents.length > 0) {
+    if (element?.appComponents && element.appComponents?.length > 0) {
       appComponents = mapJSONToAppSettingsArray(element.appComponents);
     }
 
     resultArr.push( new NavBarItem(element.id, element.name, element.usedComponent, element.appComponentId, appComponents,
       element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false, element.beamerTimer));
-    appComponents = [];
   }
   return resultArr;
 }

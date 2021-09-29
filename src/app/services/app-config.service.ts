@@ -5,6 +5,8 @@ import {NavBarItem} from '../models/NavBarItem';
 import {map} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import {mapJSONToAppSettingsArray} from '../util/mapperFunctions';
+import {EventEmitterService} from './event-emitter.service';
+import {configDiffer} from '../util/modelDiffers/configUpdaterHandlerFunctions';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,8 @@ export class AppConfigService {
   private config: NavBarItem[];
   private url = environment.BASE_API_URL;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private eventEmitter: EventEmitterService) {
+    this.eventEmitter.appConfigChangedObservable.subscribe( aC => this.updateConfigLocal(aC));
     this.getAppConfig().subscribe( res => {
       this.config = res;
       this.configSubject.next(this.config);
@@ -24,6 +27,11 @@ export class AppConfigService {
 
   getConfig() {
     return this.config;
+  }
+
+  updateConfigLocal(newAppConfig: NavBarItem[]) {
+    configDiffer(this.config, newAppConfig);
+    this.configSubject.next(this.config);
   }
 
   createAppConfig(data: NavBarItem[]) {

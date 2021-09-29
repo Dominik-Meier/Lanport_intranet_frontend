@@ -64,16 +64,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   checkIfActiveIsRemoved() {
     let found = false;
+    let res;
     for (const i of this.config) {
       if (i.appComponents) {
-        for (const j of i.appComponents) {
-          const res = j.appComponents.find(x => x.id.toString() === this.activeNavBarItem.id.toString());
+          res = i.appComponents.find(x => x.id.toString() === this.activeNavBarItem.id.toString());
           if (res) { found = true; }
-        }
-      } else {
-        const res = i.appComponents.find(x => x.id.toString() === this.activeNavBarItem.id.toString());
-        if (res) { found = true; }
       }
+      res = i.id.toString() === this.activeNavBarItem.id.toString();
     }
     if (!found) {
       this.dynamicElementInsertionPoint.clear();
