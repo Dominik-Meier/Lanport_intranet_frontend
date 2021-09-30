@@ -79,7 +79,9 @@ export class GamemodeSettingsComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe( result => {
-      row.rules = result;
+      if (result) {
+        row.rules = result;
+      }
     });
   }
 }

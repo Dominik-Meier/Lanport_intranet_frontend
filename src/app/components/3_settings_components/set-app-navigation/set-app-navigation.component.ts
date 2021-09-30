@@ -106,7 +106,9 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe( result => {
-      row.data = result;
+      if (result && result !== '') {
+        row.data = result;
+      }
     });
   }
 }
