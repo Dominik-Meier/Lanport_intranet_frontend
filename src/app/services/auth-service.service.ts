@@ -33,6 +33,7 @@ export class AuthService {
     if (this.activeUser){
       if (this.activeUser.getLevel().toUpperCase() === 'ADMIN') { allowed = true; }
       if (this.activeUser.getLevel().toUpperCase() === 'MITGLIED') { allowed = true; }
+      if (this.activeUser.getLevel().toUpperCase() === 'KASSIE') { allowed = true; }
     }
     return allowed;
   }
