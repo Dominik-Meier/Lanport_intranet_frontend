@@ -13,7 +13,19 @@ export function configDiffer(oldConfig: NavBarItem[], newConfig: NavBarItem[]) {
       }
     }
     addMissingNavBarItems(oldConfig, newConfig);
+  } else {
+    oldConfig = newConfig;
   }
+  configSorter(oldConfig);
+}
+
+export function configSorter(config: NavBarItem[]) {
+  config.sort( (x, y) => x.order - y.order);
+  config.forEach(navItem => {
+    if (navItem.appComponents && navItem.appComponents.length > 0) {
+      configSorter(navItem.appComponents);
+    }
+  });
 }
 
 function removeNavbarItems(oldConfig: NavBarItem[], oldConfigItem: NavBarItem) {
@@ -43,6 +55,7 @@ function updateNavBarItem(oldNavBarItem: NavBarItem, newNabBarItem: NavBarItem) 
   { oldNavBarItem.activeForBeamerPresentation = newNabBarItem.activeForBeamerPresentation; }
   if (oldNavBarItem.icon !== newNabBarItem.icon) { oldNavBarItem.icon = newNabBarItem.icon; }
   if (oldNavBarItem.beamerTimer !== newNabBarItem.beamerTimer) { oldNavBarItem.beamerTimer = newNabBarItem.beamerTimer; }
+  if (oldNavBarItem.order !== newNabBarItem.order) { oldNavBarItem.order = newNabBarItem.order; }
 }
 
 export function resolveNewHtmlDisplayerValue(oldData: RegisterOptionItem, newConfig: NavBarItem[]) {

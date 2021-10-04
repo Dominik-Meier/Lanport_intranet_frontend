@@ -144,7 +144,8 @@ export function mapJSONToAppSettingsArray(data: any): NavBarItem[]  {
     }
 
     resultArr.push( new NavBarItem(element.id, element.name, element.usedComponent, element.appComponentId, appComponents,
-      element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false, element.beamerTimer));
+      element.data, element.activeForIntranet, element.activeForBeamerPresentation, element.icon, false, element.beamerTimer,
+      element.order));
   }
   return resultArr;
 }

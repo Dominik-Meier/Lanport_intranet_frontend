@@ -30,7 +30,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, OnChanges {
   public activeNavItem: NavBarItem;
   private subscriptions: Subscription[] = [];
   dataSource: MatTableDataSource<NavBarItem>;
-  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'enabledAtIntranet', 'activeForBeamerPresentation', 'beamerTimer', 'actions'];
+  columnsToDisplay = ['select', 'order', 'name', 'componentName', 'data', 'enabledAtIntranet', 'activeForBeamerPresentation', 'beamerTimer', 'actions'];
   selectableComponents = Array.from(navBarComponentSelectorMap.keys());
   selectableConfigurationComponents: Map<string, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
 
@@ -73,8 +73,40 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy, OnChanges {
 
   addNavBarItem(event) {
     const newNavBarItem = new NavBarItem(null, 'Placeholder', null, this.parentAppNavItem, [],
-      null, false, false, null, false, 5000);
+      null, false, false, null, false, 5000, null);
     this.appConfigService.addAppComponent(newNavBarItem).subscribe();
+  }
+
+  moveUp(row: NavBarItem) {
+    const rowOrder = row.order;
+    const sameOrder = this.config.find( x => x.order === (rowOrder - 1));
+    if (sameOrder) {
+      const rowIndex = this.config.findIndex( x => x.id.toString() === row.id.toString());
+      const sameOrderIndex = this.config.findIndex( x => x.id.toString() === sameOrder.id.toString());
+      row.order--;
+      sameOrder.order++;
+      this.config[rowIndex] = sameOrder;
+      this.config[sameOrderIndex] = row;
+    } else {
+      row.order--;
+    }
+    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+  }
+
+  moveDown(row: NavBarItem) {
+    const rowOrder = row.order;
+    const sameOrder = this.config.find( x => x.order === (rowOrder + 1));
+    if (sameOrder) {
+      const rowIndex = this.config.findIndex( x => x.id.toString() === row.id.toString());
+      const sameOrderIndex = this.config.findIndex( x => x.id.toString() === sameOrder.id.toString());
+      row.order++;
+      sameOrder.order--;
+      this.config[rowIndex] = sameOrder;
+      this.config[sameOrderIndex] = row;
+    } else {
+      row.order++;
+    }
+    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 
   deleteNavBarItem(event, row){

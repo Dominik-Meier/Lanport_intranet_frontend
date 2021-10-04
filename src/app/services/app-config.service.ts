@@ -14,14 +14,13 @@ import {configDiffer} from '../util/modelDiffers/configUpdaterHandlerFunctions';
 export class AppConfigService {
   private configSubject = new Subject<NavBarItem[]>();
   public configObservable = this.configSubject.asObservable();
-  private config: NavBarItem[];
+  private config: NavBarItem[] = [];
   private url = environment.BASE_API_URL;
 
   constructor(private http: HttpClient, private eventEmitter: EventEmitterService) {
     this.eventEmitter.appConfigChangedObservable.subscribe( aC => this.updateConfigLocal(aC));
     this.getAppConfig().subscribe( res => {
-      this.config = res;
-      this.configSubject.next(this.config);
+      this.updateConfigLocal(res);
     });
   }
 

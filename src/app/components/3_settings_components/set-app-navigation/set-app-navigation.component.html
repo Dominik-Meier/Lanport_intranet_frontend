@@ -19,6 +19,20 @@
     </td>
   </ng-container>
 
+  <!--Table Order -->
+  <ng-container matColumnDef="order">
+    <th mat-header-cell *matHeaderCellDef>Order</th>
+    <td mat-cell *matCellDef="let row" class="display-flex-row">
+      <mat-form-field [style.fontSize]="12" style="width: 50px">
+          <input matInput [(ngModel)]="row.order" disabled>
+      </mat-form-field>
+      <div class="display-flex-column">
+        <mat-icon (click)="moveUp(row)" class="add-pointer">expand_less</mat-icon>
+        <mat-icon (click)="moveDown(row)" class="add-pointer">expand_more</mat-icon>
+      </div>
+    </td>
+  </ng-container>
+
   <!--Table Name -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
