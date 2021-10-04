@@ -1,7 +1,7 @@
 <div class="componentDisplayer-SizeFitter display-flex-column" *ngIf="this.data">
   <mat-card class="componentDisplayer-matCard display-flex-column">
     <mat-card-title class="pb-3 display-flex-justify-center font-white">{{this.data.name}}</mat-card-title>
-    <div class="content">
+    <div class="html-displayer-content">
       <quill-editor
         [(ngModel)]="this.data.data"
         [readOnly]="true"
