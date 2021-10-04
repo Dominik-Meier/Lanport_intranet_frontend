@@ -1,7 +1,7 @@
 <mat-menu #childMenu="matMenu" [overlapTrigger]="false" class="mat-menu-bg">
   <span *ngFor="let item of items.appComponents">
     <!-- Handle branch node menu items -->
-    <span *ngIf="item.appComponents && item.appComponents.length > 0">
+    <span *ngIf="item.activeForIntranet && item.appComponents && item.appComponents.length > 0">
       <button mat-menu-item class="navBar-btn" [matMenuTriggerFor]="menu.childMenu">
         <!--<mat-icon>{{item.iconName}}</mat-icon>-->
         <span>{{item.name}}</span>
@@ -9,7 +9,7 @@
       <app-menu-item #menu [items]="item.appComponents" (itemSelected)="callItemSelected($event)"></app-menu-item>
     </span>
     <!-- Handle leaf node menu items -->
-    <span *ngIf="!item.appComponents || item.appComponents.length === 0">
+    <span *ngIf="item.activeForIntranet && (!item.appComponents || item.appComponents.length === 0)">
       <button mat-menu-item (click)="callItemSelected(item)" class="navBar-btn"> <!--[routerLink]="child.route"-->
         <!--<mat-icon>{{item.iconName}}</mat-icon>-->
         <span>{{item.name}}</span>

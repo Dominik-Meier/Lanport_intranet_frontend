@@ -135,3 +135,7 @@ app-beamer-view .content {
 quill-editor {
   width: inherit;
 }
+
+.mat-menu-panel {
+  min-height: 0 !important;
+}
