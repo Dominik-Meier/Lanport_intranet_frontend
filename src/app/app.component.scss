@@ -139,3 +139,8 @@ quill-editor {
 .mat-menu-panel {
   min-height: 0 !important;
 }
+
+.config-table-scrollable {
+  max-height: 90vh;
+  overflow-y: auto;
+}

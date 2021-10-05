@@ -5,77 +5,79 @@
     <button mat-raised-button color="warn" (click)="applyConfig($event)" class="mr-3"> Apply </button>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="config-table-scrollable">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <!--Table Select -->
-  <ng-container matColumnDef="select">
-    <th mat-header-cell *matHeaderCellDef>Selected</th>
-    <td *matCellDef="let row">
-      <mat-checkbox (click)="$event.stopPropagation()"
-                    (change)="$event ? selection.toggle(row) : null"
-                    [checked]="selection.isSelected(row)">
-      </mat-checkbox>
-    </td>
-  </ng-container>
+    <!--Table Select -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>Selected</th>
+      <td *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
 
-  <!--Table Name -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let row">
-      <mat-form-field [style.fontSize]="12">
-        <textarea matInput [ngModel]="row.name" (ngModelChange)="changeName($event, row)"
-                  cdkTextareaAutosize="1"
-                  cdkAutosizeMaxRows="1"
-        ></textarea>
-      </mat-form-field>
-    </td>
-  </ng-container>
+    <!--Table Name -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-form-field [style.fontSize]="12">
+          <textarea matInput [ngModel]="row.name" (ngModelChange)="changeName($event, row)"
+                    cdkTextareaAutosize="1"
+                    cdkAutosizeMaxRows="1"
+          ></textarea>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-  <!--Table Active -->
-  <ng-container matColumnDef="active">
-    <th mat-header-cell *matHeaderCellDef>Active</th>
-    <td mat-cell *matCellDef="let row" >
-      <mat-checkbox [(ngModel)]="row.active" (ngModelChange)="changeActive($event, row)"> </mat-checkbox>
-    </td>
-  </ng-container>
+    <!--Table Active -->
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef>Active</th>
+      <td mat-cell *matCellDef="let row" >
+        <mat-checkbox [(ngModel)]="row.active" (ngModelChange)="changeActive($event, row)"> </mat-checkbox>
+      </td>
+    </ng-container>
 
-  <!--Table StartDate -->
-  <ng-container matColumnDef="startDate">
-    <th mat-header-cell *matHeaderCellDef>Start Date</th>
-    <td mat-cell *matCellDef="let row; let i=index">
-      <mat-form-field>
-        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a Date" [(ngModel)]="row.startDate">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
-      </mat-form-field>
-    </td>
-  </ng-container>
+    <!--Table StartDate -->
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef>Start Date</th>
+      <td mat-cell *matCellDef="let row; let i=index">
+        <mat-form-field>
+          <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a Date" [(ngModel)]="row.startDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-  <!--Table EndDate -->
-  <ng-container matColumnDef="endDate">
-    <th mat-header-cell *matHeaderCellDef>end Date</th>
-    <td mat-cell *matCellDef="let row" >
-      <mat-form-field>
-        <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a Date" [(ngModel)]="row.endDate">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
-      </mat-form-field>
-    </td>
-  </ng-container>
-
-
-  <!--Table Actions -->
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Actions</th>
-    <td mat-cell *matCellDef="let row" >
-      <mat-icon (click)="deleteLanparty($event, row)" matTooltip="Delete Lanparty" class="add-pointer">delete_forever</mat-icon>
-    </td>
-  </ng-container>
+    <!--Table EndDate -->
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef>end Date</th>
+      <td mat-cell *matCellDef="let row" >
+        <mat-form-field>
+          <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a Date" [(ngModel)]="row.endDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-</table>
+    <!--Table Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let row" >
+        <mat-icon (click)="deleteLanparty($event, row)" matTooltip="Delete Lanparty" class="add-pointer">delete_forever</mat-icon>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+</div>
 
 <!-- Bottom component-->
 <div class="inserted-Configuration-Component">

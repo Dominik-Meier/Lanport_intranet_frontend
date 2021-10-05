@@ -5,81 +5,83 @@
     <button mat-raised-button color="warn" (click)="applyConfig($event)" class="mr-3"> Apply </button>
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="config-table-scrollable">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <!--Table Name -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let row">
-      <mat-form-field [style.fontSize]="12">
-        <textarea matInput [ngModel]="row.name" (ngModelChange)="changeName($event, row)"
-                  cdkTextareaAutosize="1"
-                  cdkAutosizeMaxRows="1"
-        ></textarea>
-      </mat-form-field>
-    </td>
-  </ng-container>
-
-
-  <!--Table Game -->
-  <ng-container matColumnDef="game">
-    <th mat-header-cell *matHeaderCellDef>Game</th>
-    <td mat-cell *matCellDef="let row">
-      <mat-form-field [style.fontSize]="12">
-        <textarea matInput [ngModel]="row.game" (ngModelChange)="changeGame($event, row)"
-                  cdkTextareaAutosize="1"
-                  cdkAutosizeMaxRows="1"
-        ></textarea>
-      </mat-form-field>
-    </td>
-  </ng-container>
-
-  <!--Table Elimination -->
-  <ng-container matColumnDef="elimination">
-    <th mat-header-cell *matHeaderCellDef>Elimination</th>
-    <td mat-cell *matCellDef="let row">
-      <mat-form-field [style.fontSize]="12">
-        <textarea matInput [ngModel]="row.elimination" (ngModelChange)="changeElimination($event, row)"
-                  cdkTextareaAutosize="1"
-                  cdkAutosizeMaxRows="1"
-        ></textarea>
-      </mat-form-field>
-    </td>
-  </ng-container>
-
-  <!--Table TeamSize -->
-  <ng-container matColumnDef="teamSize">
-    <th mat-header-cell *matHeaderCellDef>Team Size</th>
-    <td mat-cell *matCellDef="let row" >
-      <mat-form-field>
-        <textarea matInput [ngModel]="row.teamSize" inputmode="numeric" (ngModelChange)="changeTeamSize($event, row)"
-                  cdkTextareaAutosize="1"
-                  cdkAutosizeMaxRows="1"
-        ></textarea>
-      </mat-form-field>
-    </td>
-  </ng-container>
-
-  <!--Table rules -->
-  <ng-container matColumnDef="rules">
-    <th mat-header-cell *matHeaderCellDef>Rules</th>
-    <td mat-cell *matCellDef="let row" >
-      <button mat-raised-button (click)="changeRules($event, row)"> Set Rules </button>
-    </td>
-  </ng-container>
+    <!--Table Name -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-form-field [style.fontSize]="12">
+          <textarea matInput [ngModel]="row.name" (ngModelChange)="changeName($event, row)"
+                    cdkTextareaAutosize="1"
+                    cdkAutosizeMaxRows="1"
+          ></textarea>
+        </mat-form-field>
+      </td>
+    </ng-container>
 
 
-  <!--Table Actions -->
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Actions</th>
-    <td mat-cell *matCellDef="let row" >
-      <mat-icon (click)="deleteGameMode($event, row)" matTooltip="Delete GameMode" class="add-pointer">delete_forever</mat-icon>
-    </td>
-  </ng-container>
+    <!--Table Game -->
+    <ng-container matColumnDef="game">
+      <th mat-header-cell *matHeaderCellDef>Game</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-form-field [style.fontSize]="12">
+          <textarea matInput [ngModel]="row.game" (ngModelChange)="changeGame($event, row)"
+                    cdkTextareaAutosize="1"
+                    cdkAutosizeMaxRows="1"
+          ></textarea>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <!--Table Elimination -->
+    <ng-container matColumnDef="elimination">
+      <th mat-header-cell *matHeaderCellDef>Elimination</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-form-field [style.fontSize]="12">
+          <textarea matInput [ngModel]="row.elimination" (ngModelChange)="changeElimination($event, row)"
+                    cdkTextareaAutosize="1"
+                    cdkAutosizeMaxRows="1"
+          ></textarea>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <!--Table TeamSize -->
+    <ng-container matColumnDef="teamSize">
+      <th mat-header-cell *matHeaderCellDef>Team Size</th>
+      <td mat-cell *matCellDef="let row" >
+        <mat-form-field>
+          <textarea matInput [ngModel]="row.teamSize" inputmode="numeric" (ngModelChange)="changeTeamSize($event, row)"
+                    cdkTextareaAutosize="1"
+                    cdkAutosizeMaxRows="1"
+          ></textarea>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <!--Table rules -->
+    <ng-container matColumnDef="rules">
+      <th mat-header-cell *matHeaderCellDef>Rules</th>
+      <td mat-cell *matCellDef="let row" >
+        <button mat-raised-button (click)="changeRules($event, row)"> Set Rules </button>
+      </td>
+    </ng-container>
 
 
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-</table>
+    <!--Table Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let row" >
+        <mat-icon (click)="deleteGameMode($event, row)" matTooltip="Delete GameMode" class="add-pointer">delete_forever</mat-icon>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+</div>
 
 
