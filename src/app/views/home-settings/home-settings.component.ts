@@ -2,10 +2,7 @@ import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild, ViewC
 import {AdminPageService} from '../../services/admin-page.service';
 import {NavBarItem} from '../../models/NavBarItem';
 import {AppConfigService} from '../../services/app-config.service';
-import {EventEmitterService} from '../../services/event-emitter.service';
 import {Subscription} from 'rxjs';
-import {configDiffer} from '../../util/modelDiffers/configUpdaterHandlerFunctions';
-import {navBarItemComponentConfigurationSelectorMap} from '../../util/mapperFunctions';
 
 @Component({
   selector: 'app-home-settings',
@@ -21,17 +18,11 @@ export class HomeSettingsComponent implements OnInit, OnDestroy {
 
   constructor( private adminPageService: AdminPageService,
                private appConfigService: AppConfigService,
-               private componentFactoryResolver: ComponentFactoryResolver,
-               private eventEmitter: EventEmitterService) { }
+               private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
     this.config = this.appConfigService.getConfig();
-    this.subscriptions.push(this.eventEmitter.appConfigChangedObservable.subscribe( config => {
-      configDiffer(this.config, config);
-      this.adminPageService.setNewActiveItem(null);
-      this.setUsedComponent();
-    }));
-
+    this.subscriptions.push(this.appConfigService.configObservable.subscribe( c => this.config = c));
     this.subscriptions.push(this.adminPageService.activeNavBarItemsObservable.subscribe( activeNavItem => {
       this.activeNavBarItem = activeNavItem;
       this.setUsedComponent();

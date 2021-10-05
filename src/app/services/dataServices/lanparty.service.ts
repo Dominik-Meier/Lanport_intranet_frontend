@@ -50,7 +50,7 @@ export class LanpartyService {
 
   removeLanpartyFromList(lanparty: Lanparty) {
     const index = this.lanparties.findIndex( x => x.getId().toString() === lanparty.getId().toString());
-    if (index) {
+    if (index  > -1) {
       this.lanparties.splice(index, 1);
     }
   }

@@ -53,6 +53,8 @@ import { FeedbackComponent } from './components/1_registerOptions-Component/feed
 import { FeedbackConfigurationComponent } from './components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
 import { FeedbackModalComponent } from './components/1_registerOptions-Component/feedback/feedback-modal/feedback-modal.component';
 import { FeedbackCardComponent } from './components/1_registerOptions-Component/feedback/feedback-card/feedback-card.component';
+// @ts-ignore
+import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,7 @@ import { FeedbackCardComponent } from './components/1_registerOptions-Component/
     FeedbackComponent,
     FeedbackConfigurationComponent,
     FeedbackModalComponent,
-    FeedbackCardComponent
+    FeedbackCardComponent,
     HrefConfigurationComponent
   ],
   imports: [
@@ -108,32 +110,13 @@ import { FeedbackCardComponent } from './components/1_registerOptions-Component/
     MatMenuModule,
     DigitOnlyModule,
     QuillModule.forRoot(),
-    OAuthModule.forRoot()
+    OAuthModule.forRoot(),
+    MatTooltipModule,
+    NgxMatDatetimePickerModule,
+    MatDatepickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FontAwesomeModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        MatCardModule,
-        MatTableModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatInputModule,
-        FormsModule,
-        MatDialogModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatMenuModule,
-        DigitOnlyModule,
-        QuillModule.forRoot(),
-        OAuthModule.forRoot(),
-        MatTooltipModule
-    ],
   exports: [
     MatIconModule,
     MatCardModule,

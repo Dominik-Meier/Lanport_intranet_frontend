@@ -15,10 +15,11 @@ export class NavBarItem {
   public icon: string;
   public active: boolean;
   public beamerTimer: number;
+  public order: number;
 
   constructor(id: number, name: string, usedComponent: string, parentNavBarItem: number,
               appComponents: NavBarItem[] = [], data: any, activeForIntranet: boolean,
-              activeForBeamerPresentation: boolean, icon: string, active: boolean, beamerTimer: number) {
+              activeForBeamerPresentation: boolean, icon: string, active: boolean, beamerTimer: number, order: number) {
     this.id = id;
     this.name = name;
     this.usedComponent = usedComponent;
@@ -30,6 +31,7 @@ export class NavBarItem {
     this.icon = icon;
     this.active = active;
     this.beamerTimer = beamerTimer;
+    this.order = order;
   }
 
   getId() {
@@ -91,7 +93,8 @@ export class NavBarItem {
       activeForBeamerPresentation: this.activeForBeamerPresentation,
       icon: this.icon,
       beamerTimer: this.beamerTimer,
-      active: false
+      active: false,
+      order: this.order
     };
   }
 }

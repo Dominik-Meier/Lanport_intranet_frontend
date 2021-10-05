@@ -18,9 +18,6 @@ export class LanpartySettingsComponent implements OnInit, OnDestroy {
   oldLanparties: Lanparty[];
   subscriptions: Subscription[] = [];
 
-  startDate = new FormControl(new Date());
-  endDate = new FormControl(new Date());
-
   /** Table parameters */
   dataSource: MatTableDataSource<Lanparty>;
   columnsToDisplay = ['select', 'name', 'active', 'startDate', 'endDate', 'actions'];

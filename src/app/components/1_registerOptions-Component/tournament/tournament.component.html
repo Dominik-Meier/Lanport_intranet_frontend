@@ -77,24 +77,30 @@
       <div class="tournament-column-grid">
         <mat-card class="scrollable-content componentDisplayer-secondMatCard">
           <mat-card-title>Preise
-          <app-snack-bar-text-displayer [horizontalPosition]="'center'"
-                                        [verticalPosition]="'top'"
-                                        [action]="'Schliesen'"
-                                        [iconText]="'info'"
-                                        [message]="'Preise können sich jederzeit ändern, auch während dem Turnier!'"
-          class="add-pointer">
-          </app-snack-bar-text-displayer>
-          </mat-card-title>
-          <mat-card-content  *ngFor="let award of tournament.awards.split(','); let i = index">
-            <div class="mat-card-field">
-              <div class="label">
-                <p class="no-margin">{{i+1}}. Platz</p>
-              </div>
-              <div class="content">
-                <p class="no-margin">{{award}}</p>
-              </div>
+            <div class="float-right">
+              <app-snack-bar-text-displayer [horizontalPosition]="'center'"
+                                            [verticalPosition]="'top'"
+                                            [action]="'Schliesen'"
+                                            [iconText]="'lightbulb'"
+                                            [showButton]="true"
+                                            [showIcon]="true"
+                                            [message]="'Preise können sich jederzeit ändern, auch während dem Turnier!'"
+                                            class="add-pointer">
+              </app-snack-bar-text-displayer>
             </div>
-          </mat-card-content>
+          </mat-card-title>
+          <ng-container *ngIf="tournament.awards">
+            <mat-card-content  *ngFor="let award of tournament.awards.split(','); let i = index">
+              <div class="mat-card-field">
+                <div class="label">
+                  <p class="no-margin">{{i+1}}. Platz</p>
+                </div>
+                <div class="content">
+                  <p class="no-margin">{{award}}</p>
+                </div>
+              </div>
+            </mat-card-content>
+          </ng-container>
         </mat-card>
 
       </div>

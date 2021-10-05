@@ -7,6 +7,10 @@ import {Tournament} from '../../models/Tournament';
 import {mapJSONToTournamentArray} from '../../util/mapperFunctions';
 import {EventEmitterService} from '../event-emitter.service';
 import {tournamentsDiffer} from '../../util/modelDiffers/tournamentUpdaterFunctions';
+import {GameMode} from '../../models/GameMode';
+import {gameModeDiffer} from '../../util/modelDiffers/gameModeUpdater';
+import {TournamentType} from '../../models/TournamentType';
+import {tournamentTypeDiffer} from '../../util/modelDiffers/tournamentTypeUpdater';
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +32,10 @@ export class TournamentService {
       this.tournaments = res;
       this.tournamentsSubject.next(this.tournaments);
     });
-    this.eventEmitter.tournamentsUpdatedObservable.subscribe( event => {
-      this.updateTournamentAction(event);
-    });
     this.eventEmitter.tournamentDeletedObservable.subscribe( t => this.removeTournamentFromList(t));
+    this.eventEmitter.tournamentsUpdatedObservable.subscribe(t => this.updateTournamentAction(t));
+    this.eventEmitter.gameModesUpdatedObservable.subscribe(gm => this.updateTournamentGameModeAction(gm));
+    this.eventEmitter.tournamentTypesUpdatedObservable.subscribe(tt => this.updateTournamentTypeAction(tt));
   }
 
   updateTournamentAction(tournaments: Tournament[]) {
@@ -58,9 +62,27 @@ export class TournamentService {
 
   removeTournamentFromList(tournament: Tournament) {
     const index = this.tournaments.findIndex( x => x.id.toString() === tournament.id.toString());
-    if (index) {
+    if (index > -1) {
       this.tournaments.splice(index, 1);
     }
+  }
+
+  updateTournamentGameModeAction(gameModes: GameMode[]) {
+    this.tournaments.forEach( x => {
+      const newGameMode = gameModes.find( y => y.id.toString() === x.id.toString());
+      if (newGameMode !== null) {
+        gameModeDiffer(x.gameMode, newGameMode);
+      }
+    });
+  }
+
+  updateTournamentTypeAction(tournamentTypes: TournamentType[]) {
+    this.tournaments.forEach( x => {
+      const newTournamentType = tournamentTypes.find( y => y.id.toString() === x.id.toString());
+      if (newTournamentType !== null) {
+        tournamentTypeDiffer(x.tournamentType, newTournamentType);
+      }
+    });
   }
 
   /**

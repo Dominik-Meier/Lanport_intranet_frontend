@@ -1,6 +1,6 @@
 <mat-card class="feedback-card">
   <mat-card-title>
-    <p *ngIf="feedback.isAnonymous"> Anonyme schreibt: </p>
+    <p *ngIf="feedback.isAnonymous"> Anonym schreibt: </p>
     <p *ngIf="!feedback.isAnonymous"> {{feedback.user.nickname}} schreibt: </p>
   </mat-card-title>
   <mat-card-content>

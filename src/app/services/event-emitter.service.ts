@@ -89,7 +89,6 @@ export class EventEmitterService {
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
       const event = msg as WebSocketEvent;
-      console.log(msg);
 
       switch (event.event) {
         case 'AppConfigChangedEvent': {

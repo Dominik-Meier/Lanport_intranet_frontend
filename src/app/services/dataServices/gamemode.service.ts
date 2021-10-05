@@ -12,7 +12,6 @@ import {gameModesDiffer} from '../../util/modelDiffers/gameModeUpdater';
   providedIn: 'root'
 })
 
-// TODO implement new add method which create the object first and than adds it to the list that the id is always present
 export class GamemodeService {
   constructor(private http: HttpClient,
               private eventEmitter: EventEmitterService) {
@@ -40,7 +39,7 @@ export class GamemodeService {
 
   removeGameModeFromList(gameMode: GameMode) {
     const index = this.gameModes.findIndex( x => x.id.toString() === gameMode.id.toString());
-    if (index) {
+    if (index > -1) {
       this.gameModes.splice(index, 1);
     }
   }
