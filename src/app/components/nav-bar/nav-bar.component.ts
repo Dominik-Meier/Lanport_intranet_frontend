@@ -57,4 +57,14 @@ export class NavBarComponent implements OnInit, OnDestroy {
   callItemSelected(item) {
     this.itemSelected.emit(item);
   }
+
+  hasActiveChildItems(navItem: NavBarItem): boolean {
+    let result = false;
+    navItem.appComponents?.forEach( item => {
+      if (item.activeForIntranet === true) {
+        result = true;
+      }
+    });
+    return result;
+  }
 }

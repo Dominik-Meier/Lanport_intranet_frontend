@@ -1,5 +1,9 @@
-<mat-icon *ngIf="showIcon === true" (click)="openSnackBar()" color="primary">{{iconText}}</mat-icon>
+<mat-icon *ngIf="showIcon === true && showButton === false" (click)="openSnackBar()" color="primary">{{iconText}}</mat-icon>
 
-<button mat-stroked-button *ngIf="showButton === true" (click)="openSnackBar()" color="primary">
+<button mat-stroked-button *ngIf="showButton === true && showIcon === false" (click)="openSnackBar()" color="primary">
   {{buttonText}}
+</button>
+
+<button mat-mini-fab color="primary" *ngIf="showIcon === true && showButton === true" (click)="openSnackBar()">
+  <mat-icon (click)="openSnackBar()">{{iconText}}</mat-icon>
 </button>

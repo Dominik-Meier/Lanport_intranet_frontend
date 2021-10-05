@@ -1,12 +1,8 @@
 <!--Toolbar-->
 <div class="toolbar">
-  <label>NavBar Settings: </label>
-  <div class="button-box">
-    <button mat-raised-button (click)="addNavBarItem($event)"> Add </button>
-  </div>
-  <div class="button-box">
-    <button mat-raised-button color="warn" (click)="applyConfig($event)"> Apply </button>
-  </div>
+  <label class="mr-3">NavBar Settings: </label>
+    <button mat-raised-button (click)="addNavBarItem($event)" class="mr-3"> Add </button>
+    <button mat-raised-button color="warn" (click)="applyConfig($event)" class="mr-3"> Apply </button>
 </div>
 
 <!--Nav Bar Items Navigation set Up-->
@@ -20,6 +16,20 @@
                     (change)="$event ? selection.toggle(row) : null"
                     [checked]="selection.isSelected(row)">
       </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!--Table Order -->
+  <ng-container matColumnDef="order">
+    <th mat-header-cell *matHeaderCellDef>Order</th>
+    <td mat-cell *matCellDef="let row" class="display-flex-row">
+      <mat-form-field [style.fontSize]="12" style="width: 50px">
+          <input matInput [(ngModel)]="row.order" disabled>
+      </mat-form-field>
+      <div class="display-flex-column">
+        <mat-icon (click)="moveUp(row)" class="add-pointer">expand_less</mat-icon>
+        <mat-icon (click)="moveDown(row)" class="add-pointer">expand_more</mat-icon>
+      </div>
     </td>
   </ng-container>
 
@@ -96,7 +106,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let row" >
-      <mat-icon (click)="deleteNavBarItem($event, row)">delete_forever</mat-icon>
+      <mat-icon (click)="deleteNavBarItem($event, row)" matTooltip="Delete Nav Item" class="add-pointer">delete_forever</mat-icon>
     </td>
   </ng-container>
 

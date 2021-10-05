@@ -1,9 +1,9 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   OnDestroy,
-  OnInit, Output,
+  OnInit, Output, SimpleChanges,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
@@ -22,7 +22,7 @@ import {MatDialog} from '@angular/material/dialog';
   templateUrl: './set-app-navigation.component.html',
   styleUrls: ['./set-app-navigation.component.scss']
 })
-export class SetAppNavigationComponent implements OnInit, OnDestroy {
+export class SetAppNavigationComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('dynamicElementInsertionPoint', { read: ViewContainerRef }) dynamicElementInsertionPoint: ViewContainerRef;
   @Input() parentAppNavItem: number;
   @Input() config: NavBarItem[];
@@ -30,7 +30,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
   public activeNavItem: NavBarItem;
   private subscriptions: Subscription[] = [];
   dataSource: MatTableDataSource<NavBarItem>;
-  columnsToDisplay = ['select', 'name', 'componentName', 'data', 'enabledAtIntranet', 'activeForBeamerPresentation', 'beamerTimer', 'actions'];
+  columnsToDisplay = ['select', 'order', 'name', 'componentName', 'data', 'enabledAtIntranet', 'activeForBeamerPresentation', 'beamerTimer', 'actions'];
   selectableComponents = Array.from(navBarComponentSelectorMap.keys());
   selectableConfigurationComponents: Map<string, ComponentWithNameComponent> = navBarItemComponentConfigurationSelectorMap;
 
@@ -40,11 +40,18 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
   constructor(private appConfigService: AppConfigService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.subscriptions.push(this.appConfigService.configObservable.subscribe(c => {
+      this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+    }));
     this.subscriptions.push(this.selection.changed.asObservable().subscribe( event => {
       if (event.added) {
         this.activeNavItem = event.added[0];
       }
     }));
+    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 
@@ -66,8 +73,40 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
 
   addNavBarItem(event) {
     const newNavBarItem = new NavBarItem(null, 'Placeholder', null, this.parentAppNavItem, [],
-      null, false, false, null, false, 5000);
+      null, false, false, null, false, 5000, null);
     this.appConfigService.addAppComponent(newNavBarItem).subscribe();
+  }
+
+  moveUp(row: NavBarItem) {
+    const rowOrder = row.order;
+    const sameOrder = this.config.find( x => x.order === (rowOrder - 1));
+    if (sameOrder) {
+      const rowIndex = this.config.findIndex( x => x.id.toString() === row.id.toString());
+      const sameOrderIndex = this.config.findIndex( x => x.id.toString() === sameOrder.id.toString());
+      row.order--;
+      sameOrder.order++;
+      this.config[rowIndex] = sameOrder;
+      this.config[sameOrderIndex] = row;
+    } else {
+      row.order--;
+    }
+    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
+  }
+
+  moveDown(row: NavBarItem) {
+    const rowOrder = row.order;
+    const sameOrder = this.config.find( x => x.order === (rowOrder + 1));
+    if (sameOrder) {
+      const rowIndex = this.config.findIndex( x => x.id.toString() === row.id.toString());
+      const sameOrderIndex = this.config.findIndex( x => x.id.toString() === sameOrder.id.toString());
+      row.order++;
+      sameOrder.order--;
+      this.config[rowIndex] = sameOrder;
+      this.config[sameOrderIndex] = row;
+    } else {
+      row.order++;
+    }
+    this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
   }
 
   deleteNavBarItem(event, row){
@@ -75,7 +114,7 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
     if (row.id) {
       this.appConfigService.deleteAppComponent(row).subscribe();
     } else {
-      if (index !== -1) {
+      if (index > -1) {
         this.config.splice(index, 1);
         this.dataSource = new MatTableDataSource<NavBarItem>(this.config);
       }
@@ -99,7 +138,9 @@ export class SetAppNavigationComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe( result => {
-      row.data = result;
+      if (result && result !== '') {
+        row.data = result;
+      }
     });
   }
 }

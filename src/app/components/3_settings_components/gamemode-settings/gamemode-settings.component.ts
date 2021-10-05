@@ -14,7 +14,6 @@ import {MatDialog} from '@angular/material/dialog';
 })
 export class GamemodeSettingsComponent implements OnInit, OnDestroy {
   gameModes: GameMode[];
-  oldGameModes: GameMode[];
   subscriptions: Subscription[] = [];
 
   /** Table parameters */
@@ -42,7 +41,6 @@ export class GamemodeSettingsComponent implements OnInit, OnDestroy {
 
   setGameModes(gameModes: GameMode[]) {
     this.gameModes = gameModes;
-    this.oldGameModes = gameModes;
     this.dataSource = new MatTableDataSource<GameMode>(this.gameModes);
   }
 
@@ -81,7 +79,9 @@ export class GamemodeSettingsComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe( result => {
-      row.rules = result;
+      if (result) {
+        row.rules = result;
+      }
     });
   }
 }

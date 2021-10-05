@@ -5,9 +5,10 @@ $nav-bar-item-line-height: 3.5vh;
 $nav-bar-item-line-width: 10vw;
 $nav-bar-item-line-min-width: 160px;
 $header-height: 64px;
-$background-main-window: linear-gradient(90deg, #565656 0%, rgba(160, 160, 160, 0.81) 100%);
-$main-background-mat-card: linear-gradient(90deg, #1F1F1F 0%, rgba(91, 91, 91, 0.81) 100%);
-$second-background-mat-card: linear-gradient(90deg, #7a7a7a 0%, rgba(200, 200, 200, 0.81) 100%);
+$background-main-window: #565656 0%;
+$main-background-mat-card: #404040 0%;
+$second-background-mat-card: rgba(200, 200, 200, 0.81);
+
 
 .mat-card-field {
   display: flex;
@@ -39,10 +40,13 @@ mat-card {
 
 .mat-menu-content {
   background-color: #a9a9a9 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .home-window-background {
   background: $background-main-window;
+  background-blend-mode: luminosity;
   height: 100%;
 }
 
@@ -93,7 +97,7 @@ mat-card {
 }
 
 app-html-displayer-configuration .ql-editor {
-  background-color: black;
+  background-color: #a4a4a4;
 }
 
 app-home .componentDisplayer-SizeFitter {
@@ -132,3 +136,6 @@ quill-editor {
   width: inherit;
 }
 
+.mat-menu-panel {
+  min-height: 0 !important;
+}

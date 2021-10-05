@@ -12,7 +12,6 @@ import {tournamentTypesDiffer} from '../../util/modelDiffers/tournamentTypeUpdat
   providedIn: 'root'
 })
 
-// TODO implement new add method which create the object first and than adds it to the list that the id is always present
 export class TournamentTypeService {
   constructor(private http: HttpClient,
               private eventEmitter: EventEmitterService) {
@@ -57,7 +56,7 @@ export class TournamentTypeService {
 
   removeTournamentTypeFromList(tournamentTypeToDelete: TournamentType) {
     const index = this.tournamentTypes.findIndex( x => x.getId().toString() === tournamentTypeToDelete.getId().toString());
-    if (index) {
+    if (index > -1) {
       this.tournamentTypes.splice(index, 1);
     }
   }

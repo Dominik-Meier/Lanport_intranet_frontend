@@ -1,8 +1,21 @@
+@import "src/app/app.component";
+
 .feedback-card {
   margin: 1vh 1vw 1vh 1vw;
-  background: #b3b3b3;
+  background: $second-background-mat-card;
   width: 250px;
   height: 150px;
+  border: 1px solid rgba(0,39,255,0.75);
+}
+
+.feedback-card:hover {
+  margin: 1vh 1vw 1vh 1vw;
+  background: $second-background-mat-card;
+  width: 250px;
+  height: 150px;
+  border: 2px solid rgba(0,39,255,0.75);
+  cursor: pointer;
+  box-shadow: 3px 3px 5px 0px rgba(0,39,255,0.75);
 }
 
 .feedback-label {

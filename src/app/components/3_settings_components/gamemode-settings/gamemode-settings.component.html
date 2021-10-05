@@ -1,14 +1,9 @@
 <!--Toolbar-->
 <div class="toolbar">
-  <label>Game Mode Settings: </label>
-  <div class="button-box">
-    <button mat-raised-button (click)="addGameMode($event)"> Add Game Mode </button>
-  </div>
-  <div class="button-box">
-    <button mat-raised-button color="warn" (click)="applyConfig($event)"> Apply </button>
-  </div>
+  <label class="mr-3">Game Mode Settings: </label>
+    <button mat-raised-button (click)="addGameMode($event)" class="mr-3"> Add Game Mode </button>
+    <button mat-raised-button color="warn" (click)="applyConfig($event)" class="mr-3"> Apply </button>
 </div>
-
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -78,7 +73,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>
     <td mat-cell *matCellDef="let row" >
-      <mat-icon (click)="deleteGameMode($event, row)">delete_forever</mat-icon>
+      <mat-icon (click)="deleteGameMode($event, row)" matTooltip="Delete GameMode" class="add-pointer">delete_forever</mat-icon>
     </td>
   </ng-container>
 

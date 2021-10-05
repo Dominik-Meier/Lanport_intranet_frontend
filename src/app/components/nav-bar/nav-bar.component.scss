@@ -38,3 +38,12 @@ h1 {
 .navbar-bg {
   background: linear-gradient(90deg, #1F1F1F 0%, rgba(91, 91, 91, 0.81) 100%);
 }
+
+.navBar-btn:hover {
+  background-color: #a9a9a9;
+  border-radius: 7px;
+  width: 150px;
+  height: 48px;
+  border: 1px solid rgba(0,39,255,0.75);
+  box-shadow: 3px 3px 5px 0px rgba(0,39,255,0.75);
+}

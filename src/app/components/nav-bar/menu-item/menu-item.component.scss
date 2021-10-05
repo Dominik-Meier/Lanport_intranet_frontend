@@ -1,11 +1,15 @@
-.mat-menu-bg {
-  background-color: #a9a9a9;
-}
-
 .navBar-btn {
   background-color: #a9a9a9;
   border-color: #a9a9a9;
   border-radius: 7px;
   width: 150px;
   height: 48px;
+}
+
+.navBar-btn:hover {
+  background-color: #a9a9a9;
+  border-radius: 7px;
+  width: 150px;
+  height: 48px;
+  border: 1px solid rgba(0,39,255,0.75);
 }
