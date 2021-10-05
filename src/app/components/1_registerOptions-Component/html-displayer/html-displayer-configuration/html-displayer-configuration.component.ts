@@ -19,7 +19,6 @@ export class HtmlDisplayerConfigurationComponent extends ComponentWithNameCompon
   startString: string;
   quillConfig = quillConfig;
 
-  // TODO check this shit https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/angular.html
   constructor( public dialogRef: MatDialogRef<HtmlDisplayerConfigurationComponent>,
                @Inject(MAT_DIALOG_DATA) public data: any) {
     super();

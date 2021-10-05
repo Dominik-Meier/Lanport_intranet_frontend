@@ -13,9 +13,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   styleUrls: ['./app.component.scss']
 })
 
-// TODO NavItems order -> changeable
 // TODO NavItems unsaved names data -> add new item deletes changes of unsaved items
 
+// TODO survey
 // TODO implement chat
 // TODO implement sponsors
 // TODO landing page
