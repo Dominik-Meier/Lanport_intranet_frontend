@@ -14,6 +14,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 
 // TODO NavItems unsaved names data -> add new item deletes changes of unsaved items
+// TODO cursor on htmldisplay is not easy to find
 
 // TODO survey
 // TODO implement chat
