@@ -77,13 +77,17 @@
       <div class="tournament-column-grid">
         <mat-card class="scrollable-content componentDisplayer-secondMatCard">
           <mat-card-title>Preise
-          <app-snack-bar-text-displayer [horizontalPosition]="'center'"
-                                        [verticalPosition]="'top'"
-                                        [action]="'Schliesen'"
-                                        [iconText]="'info'"
-                                        [message]="'Preise können sich jederzeit ändern, auch während dem Turnier!'"
-          class="add-pointer">
-          </app-snack-bar-text-displayer>
+            <div class="float-right">
+              <app-snack-bar-text-displayer [horizontalPosition]="'center'"
+                                            [verticalPosition]="'top'"
+                                            [action]="'Schliesen'"
+                                            [iconText]="'lightbulb'"
+                                            [showButton]="true"
+                                            [showIcon]="true"
+                                            [message]="'Preise können sich jederzeit ändern, auch während dem Turnier!'"
+                                            class="add-pointer">
+              </app-snack-bar-text-displayer>
+            </div>
           </mat-card-title>
           <ng-container *ngIf="tournament.awards">
             <mat-card-content  *ngFor="let award of tournament.awards.split(','); let i = index">
