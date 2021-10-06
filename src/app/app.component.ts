@@ -15,6 +15,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 // TODO NavItems unsaved names data -> add new item deletes changes of unsaved items
 // TODO cursor on htmldisplay is not easy to find
+// TODO Intranet can only be opended once cause
 
 // TODO survey
 // TODO implement chat
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
       router.navigate(['/home']);
     }));
     this.subscriptions.push(errorMsgService.errorMsgObservable.subscribe( errMsg => {
-      this.snackBar.open(errMsg.serverMsg.concat(errMsg.errorMsg), 'Close');
+      this.snackBar.open(errMsg?.serverMsg.concat(errMsg.errorMsg), 'Close');
     }));
   }
 
