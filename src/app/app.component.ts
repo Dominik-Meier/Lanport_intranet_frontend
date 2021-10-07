@@ -17,6 +17,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 // TODO cursor on htmldisplay is not easy to find
 // TODO Intranet can only be opended once cause
 
+// TODO add more options like size to quill editor (custom Stuff)
+// TODO sometimes the page closes on Update Event -> on HTMLDisplayer the bug was reported
 // TODO survey
 // TODO implement chat
 // TODO implement sponsors
