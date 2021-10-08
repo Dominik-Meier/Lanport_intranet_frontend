@@ -114,6 +114,11 @@ app-beamer-view .mat-card {
   display: inherit;
 }
 
+app-beamer-view .mat-card-title {
+  padding-top: 12px;
+  font-size: 64px;
+}
+
 app-home .content {
   height: 100%;
   width: 100%;
