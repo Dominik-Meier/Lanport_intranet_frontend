@@ -23,6 +23,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 // TODO random scroll bar @feedback
 // TODO Tournament 12:00 -> registration time was changed and not published to frontend -> no updatedEvent on user seen
 // TODO if tournament delete on challonge and reuploaded challongeParticipantsAdded is false instead of true (not bracket shown then)
+// TODO user can not reporte there scorce as long they do not have a own challonge account
+// TODO Preisverleihung
+// TODO change pages to fit different size or devices like beamer <-> PC better fit and later fit for mobile as kitchen needs it
 
 // TODO add more options like size to quill editor (custom Stuff)
 // TODO sometimes the page closes on Update Event -> on HTMLDisplayer the bug was reported
