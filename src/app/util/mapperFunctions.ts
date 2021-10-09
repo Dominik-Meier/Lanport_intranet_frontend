@@ -212,5 +212,5 @@ export function mapJSONToSurveyQuestionUserAnswerArray(surveyQuestionUserAnswers
 }
 
 export function mapJSONToSurveyQuestionUserAnswer(sQUA: any): SurveyQuestionUserAnswer {
-  return new SurveyQuestionUserAnswer(sQUA.id, sQUA.booleanAnswer, sQUA.stringAnswer, sQUA.userId, sQUA.surveyQuestionId);
+  return new SurveyQuestionUserAnswer(sQUA.id, sQUA.booleanAnswer, sQUA.stringAnswer, sQUA.userId, sQUA.surveyQuestionId, sQUA.surveyQuestionOptionId);
 }
