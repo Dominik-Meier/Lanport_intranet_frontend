@@ -22,6 +22,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 //  -> searching flag show as status for the team
 // TODO random scroll bar @feedback
 // TODO Tournament 12:00 -> registration time was changed and not published to frontend -> no updatedEvent on user seen
+// TODO if tournament delete on challonge and reuploaded challongeParticipantsAdded is false instead of true (not bracket shown then)
 
 // TODO add more options like size to quill editor (custom Stuff)
 // TODO sometimes the page closes on Update Event -> on HTMLDisplayer the bug was reported
