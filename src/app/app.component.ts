@@ -15,7 +15,13 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 
 // TODO NavItems unsaved names data -> add new item deletes changes of unsaved items
 // TODO cursor on htmldisplay is not easy to find
-// TODO Intranet can only be opended once cause
+// TODO Intranet can only be opened once cause token saved to user at DB
+// TODO Beamer View does not changed on remove page when just beamer flag is deactivated -> Write test
+// TODO price -> add pool options to show indication range -> on registration price will be (ex. 200-350)
+// TODO Team add search functions -> like single player options for teams -> Or searching flag if not full
+//  -> searching flag show as status for the team
+// TODO random scroll bar @feedback
+// TODO Tournament 12:00 -> registration time was changed and not published to frontend -> no updatedEvent on user seen
 
 // TODO add more options like size to quill editor (custom Stuff)
 // TODO sometimes the page closes on Update Event -> on HTMLDisplayer the bug was reported
