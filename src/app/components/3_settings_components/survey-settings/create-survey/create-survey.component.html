@@ -1,0 +1,69 @@
+<h1 mat-dialog-title >Neue Umfrage</h1>
+<div>
+  <button mat-raised-button (click)="addSurveyQuestion()" class="mr-3"> Add Frage </button>
+</div>
+<div>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="survey.name">
+  </mat-form-field>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Startdatum</mat-label>
+      <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a Date" [(ngModel)]="survey.startDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Enddatum</mat-label>
+      <input matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a Date" [(ngModel)]="survey.endDate">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
+    </mat-form-field>
+  </div>
+</div>
+
+<div>
+  <ng-container *ngFor="let question of survey.surveyQuestions">
+    <div>
+      <mat-form-field>
+        <mat-label>Frage</mat-label>
+        <input matInput [(ngModel)]="question.question">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Wie viele Antworten sidn erlaubt?</mat-label>
+        <input matInput [(ngModel)]="question.howManyAnswersAreAllowed">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Antworten Type</mat-label>
+        <mat-select [(ngModel)]="question.answerType">
+          <mat-option value="boolean">Ja / Nein Antworten</mat-option>
+          <mat-option value="string">Text</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button (click)="addSurveyQuestionOption(question)" class="mr-3" *ngIf="question.answerType === 'boolean'"> Add Antwortmöglichkeit </button>
+
+      <div *ngIf="question.answerType === 'boolean'">
+        <ng-container *ngFor="let option of question.surveyQuestionOptions">
+          <mat-form-field>
+            <mat-label>Fragenoption</mat-label>
+            <input matInput [(ngModel)]="option.questionOption">
+          </mat-form-field>
+        </ng-container>
+      </div>
+
+    </div>
+  </ng-container>
+</div>
+
+<div mat-dialog-actions>
+  <button type="button" class="btn btn-default" (click)="onNoClick()">No Thanks</button>
+  <button type="submit" class="btn btn-success" [mat-dialog-close]="survey">Ok</button>
+</div>

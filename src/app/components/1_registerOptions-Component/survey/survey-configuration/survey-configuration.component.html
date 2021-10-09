@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Umfrage auswählen</h1>
+<mat-form-field *ngIf="surveys">
+  <mat-select [(ngModel)]="selectedSurvey" [compareWith]="surveyComparator">
+    <mat-option *ngFor=" let survey of surveys" [value]="survey">
+      {{survey.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button *ngIf="selectedSurvey" mat-button [mat-dialog-close]="selectedSurvey.id" cdkFocusInitial>Ok</button>
+</div>

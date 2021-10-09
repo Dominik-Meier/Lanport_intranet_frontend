@@ -16,7 +16,7 @@ import {
   mapJSONToTournamentType,
   mapJSONToGameModeArray,
   mapJSONToTournamentTypeArray,
-  mapJSONToFeedback
+  mapJSONToFeedback, mapJSONToSurvey
 } from '../util/mapperFunctions';
 import {Team} from '../models/Team';
 import {TeamMember} from '../models/TeamMember';
@@ -26,6 +26,7 @@ import {TournamentType} from '../models/TournamentType';
 import {GameMode} from '../models/GameMode';
 import {Lanparty} from '../models/Lanparty';
 import {Feedback} from '../models/Feedback';
+import {Survey} from '../models/Survey';
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +86,18 @@ export class EventEmitterService {
 
   private feedbackDeletedSubject = new Subject<Feedback>();
   public feedbackDeletedObservable = this.feedbackDeletedSubject.asObservable();
+
+  private surveyCreatedSubject = new Subject<Survey>();
+  public surveyCreatedObservable = this.surveyCreatedSubject.asObservable();
+
+  private surveyUpdatedSubject = new Subject<Survey>();
+  public surveyUpdatedObservable = this.surveyUpdatedSubject.asObservable();
+
+  private surveyDeletedSubject = new Subject<Survey>();
+  public surveyDeletedObservable = this.surveyDeletedSubject.asObservable();
+
+  private surveyAnswerCreatedSubject = new Subject<Survey>();
+  public surveyAnswerCreatedObservable = this.surveyAnswerCreatedSubject.asObservable();
 
   constructor(private ws: WebSocketService) {
     ws.eventObservable.subscribe( msg => {
@@ -178,6 +191,27 @@ export class EventEmitterService {
 
         case 'FeedbackDeletedEvent': {
           this.feedbackDeletedSubject.next(mapJSONToFeedback(event.data));
+          break;
+        }
+
+        case 'SurveyCreatedEvent': {
+          this.surveyCreatedSubject.next(mapJSONToSurvey(event.data));
+          break;
+        }
+
+        case 'SurveyUpdatedEvent': {
+          this.surveyUpdatedSubject.next(mapJSONToSurvey(event.data));
+          break;
+        }
+
+        case 'SurveyDeletedEvent': {
+          this.surveyDeletedSubject.next(mapJSONToSurvey(event.data));
+          break;
+        }
+
+        // TODO
+        case 'CreatedSurveyAnswerEvent': {
+          this.surveyAnswerCreatedSubject.next(mapJSONToSurvey(event.data));
           break;
         }
       }

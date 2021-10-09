@@ -55,6 +55,10 @@ import { FeedbackModalComponent } from './components/1_registerOptions-Component
 import { FeedbackCardComponent } from './components/1_registerOptions-Component/feedback/feedback-card/feedback-card.component';
 // @ts-ignore
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
+import { SurveySettingsComponent } from './components/3_settings_components/survey-settings/survey-settings.component';
+import { CreateSurveyComponent } from './components/3_settings_components/survey-settings/create-survey/create-survey.component';
+import { SurveyComponent } from './components/1_registerOptions-Component/survey/survey.component';
+import { SurveyConfigurationComponent } from './components/1_registerOptions-Component/survey/survey-configuration/survey-configuration.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +91,11 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
     FeedbackConfigurationComponent,
     FeedbackModalComponent,
     FeedbackCardComponent,
-    HrefConfigurationComponent
+    HrefConfigurationComponent,
+    SurveySettingsComponent,
+    CreateSurveyComponent,
+    SurveyComponent,
+    SurveyConfigurationComponent
   ],
   imports: [
     BrowserModule,

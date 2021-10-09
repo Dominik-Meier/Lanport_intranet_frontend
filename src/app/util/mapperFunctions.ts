@@ -17,6 +17,12 @@ import {HrefConfigurationComponent} from '../components/1_registerOptions-Compon
 import {Feedback} from '../models/Feedback';
 import {FeedbackComponent} from '../components/1_registerOptions-Component/feedback/feedback.component';
 import {FeedbackConfigurationComponent} from '../components/1_registerOptions-Component/feedback/feedback-configuration/feedback-configuration.component';
+import {Survey} from '../models/Survey';
+import {SurveyQuestion} from '../models/SurveyQuestion';
+import {SurveyQuestionOption} from '../models/SurveyQuestionOption';
+import {SurveyQuestionUserAnswer} from '../models/SurveyQuestionUserAnswer';
+import {SurveyComponent} from '../components/1_registerOptions-Component/survey/survey.component';
+import {SurveyConfigurationComponent} from '../components/1_registerOptions-Component/survey/survey-configuration/survey-configuration.component';
 
 
 export const navBarComponentSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
@@ -24,12 +30,14 @@ navBarComponentSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerComponent)
 navBarComponentSelectorMap.set('TournamentComponent', TournamentComponent);
 navBarComponentSelectorMap.set('HrefComponent', HrefComponent);
 navBarComponentSelectorMap.set('FeedbackComponent', FeedbackComponent);
+navBarComponentSelectorMap.set('SurveyComponent', SurveyComponent);
 
 export const navBarItemComponentConfigurationSelectorMap: Map<string, ComponentWithNameComponent> = new Map<string, any>();
 navBarItemComponentConfigurationSelectorMap.set('HtmlDisplayerComponent', HtmlDisplayerConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('TournamentComponent', TournamentConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('HrefComponent', HrefConfigurationComponent);
 navBarItemComponentConfigurationSelectorMap.set('FeedbackComponent', FeedbackConfigurationComponent);
+navBarItemComponentConfigurationSelectorMap.set('SurveyComponent', SurveyConfigurationComponent);
 
 
 export function mapJSONToTournamentParticipant(data: any): TournamentParticipant {
@@ -160,4 +168,49 @@ export function mapJSONToFeedbackArray(data: any): Feedback[] {
   const resultArr: Feedback[] = [];
   data.forEach(feedback => resultArr.push(mapJSONToFeedback(feedback)));
   return resultArr;
+}
+
+export function mapJSONToSurveyArray(surveys: any): Survey[] {
+  const resultArr: Survey[] = [];
+  surveys.forEach(survey => resultArr.push(mapJSONToSurvey(survey)));
+  return resultArr;
+}
+
+export function mapJSONToSurvey(s: any): Survey {
+  const surveyQuestions = mapJSONToSurveyQuestionArray(s.surveyQuestions);
+  return new Survey(s.id, s.name, s.lanpartyId, s.startDate, s.endDate, surveyQuestions);
+}
+
+export function mapJSONToSurveyQuestionArray(surveyQuestions: any): SurveyQuestion[] {
+  const resultArr: SurveyQuestion[] = [];
+  surveyQuestions?.forEach(surveyQuestion => resultArr.push(mapJSONToSurveyQuestion(surveyQuestion)));
+  return resultArr;
+}
+
+export function mapJSONToSurveyQuestion(sQ: any): SurveyQuestion {
+  const surveyQuestionOptions = mapJSONToSurveyQuestionOptionArray(sQ.surveyQuestionOptions);
+  const surveyQuestionOptionUserAnswers = mapJSONToSurveyQuestionUserAnswerArray(sQ.surveyQuestionUserAnswers);
+  return new SurveyQuestion(sQ.id, sQ.question, sQ.surveyId, sQ.howManyAnswersAreAllowed,
+    sQ.answerType, surveyQuestionOptions, surveyQuestionOptionUserAnswers);
+}
+
+export function mapJSONToSurveyQuestionOptionArray(surveyQuestionOptions: any): SurveyQuestionOption[] {
+  const resultArr: SurveyQuestionOption[] = [];
+  surveyQuestionOptions?.forEach(surveyQuestionOption => resultArr.push(mapJSONToSurveyQuestionOption(surveyQuestionOption)));
+  return resultArr;
+}
+
+export function mapJSONToSurveyQuestionOption(sQO: any): SurveyQuestionOption {
+  return new SurveyQuestionOption(sQO.id, sQO.questionOption, sQO.surveyQuestionId);
+}
+
+export function mapJSONToSurveyQuestionUserAnswerArray(surveyQuestionUserAnswers: any): SurveyQuestionUserAnswer[] {
+  const resultArr: SurveyQuestionUserAnswer[] = [];
+  surveyQuestionUserAnswers?.forEach(surveyQuestionUserAnswer =>
+    resultArr.push(mapJSONToSurveyQuestionUserAnswer(surveyQuestionUserAnswer)));
+  return resultArr;
+}
+
+export function mapJSONToSurveyQuestionUserAnswer(sQUA: any): SurveyQuestionUserAnswer {
+  return new SurveyQuestionUserAnswer(sQUA.id, sQUA.booleanAnswer, sQUA.stringAnswer, sQUA.userId, sQUA.surveyQuestionId);
 }

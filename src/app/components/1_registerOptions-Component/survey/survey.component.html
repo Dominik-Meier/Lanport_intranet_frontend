@@ -1,0 +1,32 @@
+<div class="componentDisplayer-SizeFitter display-flex-column" *ngIf="survey">
+  <mat-card class="componentDisplayer-matCard display-flex-column">
+    <mat-card-title class="pb-3 display-flex-justify-center font-white">{{survey.name}}</mat-card-title>
+
+    <mat-card class="componentDisplayer-secondMatCard">
+    <ng-container *ngFor="let question of survey.surveyQuestions">
+      <div>
+        <ng-container *ngIf="question.answerType === 'boolean'">
+          <mat-label>{{question.question}}</mat-label>
+          <div>
+            <ng-container *ngFor="let answer of question.surveyQuestionUserAnswers">
+              <mat-checkbox (change)="optionSelected($event, answer)" [disabled]="isDisabled(question, answer)">{{getOptionName(answer)}}</mat-checkbox>
+            </ng-container>
+          </div>
+
+        </ng-container>
+
+
+        <ng-container *ngIf="question.answerType === 'string'">
+          <mat-label>{{question.question}}</mat-label>
+          <div>
+            <input matInput type="text" #answerString (keyup)="stringAnswer(question, answerString.value)">
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    </mat-card>
+
+    <button mat-raised-button (click)="sendSurveyAnswers()">Senden</button>
+
+  </mat-card>
+</div>

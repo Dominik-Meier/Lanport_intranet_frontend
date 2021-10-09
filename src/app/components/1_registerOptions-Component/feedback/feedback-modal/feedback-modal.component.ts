@@ -8,7 +8,6 @@ import {Feedback} from '../../../../models/Feedback';
   styleUrls: ['./feedback-modal.component.scss']
 })
 export class FeedbackModalComponent implements OnInit {
-
   feedback: Feedback;
   disabled: true;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,

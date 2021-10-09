@@ -6,6 +6,7 @@ import {LanpartySettingsComponent} from '../components/3_settings_components/lan
 import {GamemodeSettingsComponent} from '../components/3_settings_components/gamemode-settings/gamemode-settings.component';
 import {TournamentTypeSettingsComponent} from '../components/3_settings_components/tournament-type-settings/tournament-type-settings.component';
 import {TournamentSettingsComponent} from '../components/3_settings_components/tournament-settings/tournament-settings.component';
+import {SurveySettingsComponent} from '../components/3_settings_components/survey-settings/survey-settings.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class AdminPageService {
     this.addNavBarItem( new NavBarItemSettings('Game Mode', [], GamemodeSettingsComponent));
     this.addNavBarItem( new NavBarItemSettings('Tournament Type', [], TournamentTypeSettingsComponent));
     this.addNavBarItem( new NavBarItemSettings('Tournament', [], TournamentSettingsComponent));
+    this.addNavBarItem( new NavBarItemSettings('Umfragen', [], SurveySettingsComponent));
   }
 
   getNavBarItems() {
